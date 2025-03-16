@@ -6,7 +6,7 @@ import {
   APP_DESCRIPTION,
   APP_NAME,
   APP_TITLE,
-} from "@/lib/constants";
+} from "@/lib/constants/app";
 import "@/assets/styles/globals.css";
 
 const inter = Inter({

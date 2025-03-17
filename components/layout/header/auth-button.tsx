@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export const AuthButton = () => {
   return (
-    <Button asChild variant="ghost">
+    <Button asChild>
       <Link href="/entrar">
         <UserIcon /> Entrar
       </Link>

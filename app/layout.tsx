@@ -5,7 +5,7 @@ import {
   APP_BASE_URL,
   APP_DESCRIPTION,
   APP_NAME,
-  APP_TITLE,
+  APP_BRAND,
 } from "@/lib/constants/app";
 import "@/assets/styles/globals.css";
 
@@ -13,7 +13,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const defaultTitle = `${APP_TITLE} - ${APP_NAME}`;
+const defaultTitle = `${APP_BRAND} - ${APP_NAME}`;
 
 export const metadata: Metadata = {
   title: {

@@ -53,6 +53,7 @@ export const ModeToggle = () => {
             <DropdownMenuCheckboxItem
               key={value}
               checked={checked}
+              className="hover:cursor-pointer"
               onClick={() => setTheme(value)}
             >
               {label}

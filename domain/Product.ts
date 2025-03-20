@@ -1,0 +1,30 @@
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  banner: string;
+  images: string[];
+  stock: number;
+  onSale: boolean;
+  discount: number;
+  category: string;
+  rating: number;
+  reviews: number;
+  brand: string;
+  colors: string[];
+  sizes: string[];
+  tags: string[];
+  features: string[];
+  relatedProducts: Product[];
+  similarProducts: Product[];
+  bestSelling: boolean;
+  newArrival: boolean;
+  topRated: boolean;
+  sale: boolean;
+  isFeatured: boolean;
+  trending: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  slug: string;
+}

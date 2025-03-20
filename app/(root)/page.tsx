@@ -1,9 +1,13 @@
+import { productAPIAdapter } from "@/adapters/product/product-api-adapter";
+import { FeaturedProductList } from "@/components/product/featured-product-list";
+
 export const metadata = {
   title: "Página Inicial",
 };
 
-const HomePage = () => {
-  return <div className="wrapper">Lojinha</div>;
+const HomePage = async () => {
+  const products = await productAPIAdapter.getProducts();
+  return <FeaturedProductList data={products} title="Novidades" limit={4} />;
 };
 
 export default HomePage;

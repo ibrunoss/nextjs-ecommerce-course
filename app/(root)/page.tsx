@@ -1,4 +1,4 @@
-import { productAPIAdapter } from "@/adapters/product-api-adapter";
+import { productAPIAdapter } from "@/adapters/product/product-api-adapter";
 import { ProductList } from "@/components/product/product-list";
 
 export const metadata = {

@@ -1,4 +1,4 @@
-import { ProductAdapter } from "@/adapters/product-adapter";
+import { ProductAdapter } from "@/adapters/product/product-adapter";
 import { Product } from "@/domain/Product";
 import {
   APIProduct,

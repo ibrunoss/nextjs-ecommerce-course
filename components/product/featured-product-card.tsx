@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { RenderIf } from "@/components/common/render-if";
 import { ProductCard } from "@/components/product/product-card";
+import { ProductPrice } from "@/components/product/product-price";
 
 export type FeaturedProductCardProps = {
   link: string;
@@ -53,7 +54,7 @@ const Content = ({
           when={isAvailable}
           fallback={<p className="text-destructive">Indisponível</p>}
         >
-          <p className="font-bold">{price}</p>
+          <ProductPrice value={price} />
         </RenderIf>
       </div>
     </>

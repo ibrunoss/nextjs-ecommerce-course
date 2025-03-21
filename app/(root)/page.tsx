@@ -7,7 +7,7 @@ export const metadata = {
 
 const HomePage = async () => {
   const products = await productAPIAdapter.getProducts();
-  return <FeaturedProductList data={products} title="Novidades" limit={4} />;
+  return <FeaturedProductList data={products} title="Novidades" />;
 };
 
 export default HomePage;

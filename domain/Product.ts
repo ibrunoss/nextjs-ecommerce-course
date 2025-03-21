@@ -6,7 +6,6 @@ export interface Product {
   banner: string;
   images: string[];
   stock: number;
-  onSale: boolean;
   discount: number;
   category: string;
   rating: number;
@@ -16,12 +15,9 @@ export interface Product {
   sizes: string[];
   tags: string[];
   features: string[];
-  relatedProducts: Product[];
-  similarProducts: Product[];
   bestSelling: boolean;
   newArrival: boolean;
   topRated: boolean;
-  sale: boolean;
   isFeatured: boolean;
   trending: boolean;
   createdAt: Date;

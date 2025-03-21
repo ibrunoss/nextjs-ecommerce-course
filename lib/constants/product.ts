@@ -1,0 +1,2 @@
+export const LATEST_PRODUCTS_LIMIT =
+  Number(process.env.NEXT_PUBLIC_LATEST_PRODUCTS_LIMIT) || 2;

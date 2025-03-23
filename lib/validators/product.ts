@@ -11,7 +11,7 @@ export const currencySchema = z
   );
 
 // Schema for inserting a new product
-export const productInsertSchema = z.object({
+export const productDatabaseInsertSchema = z.object({
   name: z
     .string()
     .min(3, "O nome deve conter no mínimo (3) caracteres")
@@ -36,4 +36,12 @@ export const productInsertSchema = z.object({
     .min(1, "O produto deve conter ao menos uma imagem"),
   isFeatured: z.boolean(),
   banner: z.string().nullable(),
+});
+
+export const productDatabaseSchema = productDatabaseInsertSchema.extend({
+  id: z.string(),
+  numReviews: z.number(),
+  rating: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });

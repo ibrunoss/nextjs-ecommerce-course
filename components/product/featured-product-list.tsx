@@ -1,9 +1,9 @@
-import { Product } from "@/domain/Product";
+import { ProductEntity } from "@/domain/product.entity";
 import { RenderIf } from "@/components/common/render-if";
 import { FeaturedProductCard } from "./featured-product-card";
 
 export type FeaturedProductListProps = {
-  data: Product[];
+  data: ProductEntity[];
   title?: string;
   limit?: number;
 };

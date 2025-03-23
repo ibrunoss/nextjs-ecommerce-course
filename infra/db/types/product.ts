@@ -1,0 +1,10 @@
+import { z } from "zod";
+
+import {
+  productDatabaseInsertSchema,
+  productDatabaseSchema,
+} from "@/lib/validators/product";
+
+export type ProductDatabaseInsert = z.infer<typeof productDatabaseInsertSchema>;
+
+export type ProductDatabase = z.infer<typeof productDatabaseSchema>;

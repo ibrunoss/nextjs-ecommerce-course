@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { productDatabaseAdapter } from "@/adapters/product/database/product-database.adapter";
 import { ProductDetails } from "@/components/product/product-details";
 import { ProductPurchaseCard } from "@/components/product/product-purchase-card";
+import { ProductImages } from "@/components/product/product-images";
 
 type ProductDetailsPageProps = Readonly<{
   params: Promise<{ slug: string }>;
@@ -22,7 +23,11 @@ export default async function ProductDetailsPage({
     <section>
       <div className="grid grid-cols-1 md:grid-cols-5">
         {/* Images Column */}
-        <div className="col-span-2">{/* Images Component */}</div>
+        <ProductImages
+          className="col-span-2"
+          productName={product.name}
+          srcImages={product.images}
+        />
         {/* Details Column */}
         <ProductDetails
           className="col-span-2"

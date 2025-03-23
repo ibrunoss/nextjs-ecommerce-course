@@ -9,3 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 export function prismaToJS<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
 }
+
+// Format currency value
+export function formatCurrency(value: number) {
+  const [int, decimal] = value.toString().split(".");
+  return decimal ? `${int},${decimal.padEnd(2, "0")}` : `${int},00`;
+}

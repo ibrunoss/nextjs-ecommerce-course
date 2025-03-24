@@ -35,6 +35,9 @@ export const ProductImages = ({
       <div className="flex">
         {srcImages.map((src, idx) => (
           <button
+            aria-label={`Seleciona a imagem miniatura ${
+              idx + 1
+            } do produto ${productName}`}
             key={src}
             className={cn(
               "border mr-2 cursor-pointer hover:border-orange-600",

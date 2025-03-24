@@ -15,6 +15,8 @@ export type ProductPurchaseCardProps = {
 
 export const ProductPurchaseCard = ({
   isAvailable,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  idProduct,
   price,
   ...props
 }: ProductPurchaseCardProps) => {

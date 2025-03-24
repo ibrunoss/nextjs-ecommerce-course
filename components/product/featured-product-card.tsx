@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { RenderIf } from "@/components/common/render-if";
+import { Render } from "@/components/common/render";
 import { ProductCard } from "@/components/product/product-card";
 import { ProductPrice } from "@/components/product/product-price";
 
@@ -50,12 +50,12 @@ const Content = ({
       </Link>
       <div className="flex-between gap-4">
         <p>Avaliação: {rating}</p>
-        <RenderIf
+        <Render
           when={isAvailable}
           fallback={<p className="text-destructive">Indisponível</p>}
         >
           <ProductPrice value={price} />
-        </RenderIf>
+        </Render>
       </div>
     </>
   );

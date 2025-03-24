@@ -1,5 +1,5 @@
 import { ProductEntity } from "@/domain/product.entity";
-import { RenderIf } from "@/components/common/render-if";
+import { Render } from "@/components/common/render";
 import { FeaturedProductCard } from "./featured-product-card";
 
 export type FeaturedProductListProps = {
@@ -17,7 +17,7 @@ export const FeaturedProductList = ({
   return (
     <div className="my-10">
       <h2 className="h2-bold mb-4">{title}</h2>
-      <RenderIf when={hasProducts} fallback={<p>Nenhum produto encontrado.</p>}>
+      <Render when={hasProducts} fallback={<p>Nenhum produto encontrado.</p>}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {limitedData.map((product) => (
             <FeaturedProductCard
@@ -33,7 +33,7 @@ export const FeaturedProductList = ({
             />
           ))}
         </div>
-      </RenderIf>
+      </Render>
     </div>
   );
 };

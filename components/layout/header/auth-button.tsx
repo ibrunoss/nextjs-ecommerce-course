@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export const AuthButton = () => {
   return (
     <Button asChild>
-      <Link href="/entrar">
+      <Link href="/acesso/entrar">
         <UserIcon /> Entrar
       </Link>
     </Button>

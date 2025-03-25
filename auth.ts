@@ -12,7 +12,7 @@ export const config: NextAuthConfig = {
     signOut: "/acesso/sair",
     error: "/acesso/erro", // Error code passed in query string as ?error=
     verifyRequest: "/acesso/verificacao", // (used for check email message)
-    newUser: "/acesso/novo-usuario", // New users will be directed here on first sign in (leave the property out if not of interest)
+    newUser: "/acesso/cadastrar", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
   session: {
     strategy: "jwt",

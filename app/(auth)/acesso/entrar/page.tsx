@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CredentialsSignInForm } from "@/components/auth/credentials-signin-form";
 
 export const metadata: Metadata = {
   title: "Entrar",
@@ -20,7 +21,9 @@ export default function SignInPage() {
           <CardTitle>Entrar</CardTitle>
           <CardDescription>Entre na sua conta</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">{/* FORM HERE */}</CardContent>
+        <CardContent className="space-y-4">
+          <CredentialsSignInForm />
+        </CardContent>
       </Card>
     </div>
   );

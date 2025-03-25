@@ -1,48 +1,27 @@
 "use client";
-import Link from "next/link";
+import { useActionState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { signInDefaultValues } from "@/lib/constants/auth";
+import { signInWithCredentials } from "@/lib/actions/user.actions";
+import { SignInButton } from "@/components/auth/sign-in-button";
+import { SignUpPrompt } from "@/components/auth/sign-up-prompt";
+import { SubmitFeedback } from "./submit-feedback";
+import { InputEmail } from "@/components/auth/input-email";
+import { InputPassword } from "@/components/auth/input-password";
 
-export type CredentialsSignInFormProps = {};
+export const CredentialsSignInForm = () => {
+  const [data, action] = useActionState(signInWithCredentials, {
+    success: false,
+    message: "",
+  });
 
-export const CredentialsSignInForm = ({}: CredentialsSignInFormProps) => {
   return (
-    <form>
+    <form action={action}>
       <div className="space-y-6">
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            defaultValue={signInDefaultValues.email}
-            required
-          />
-        </div>
-        <div>
-          <Label htmlFor="password">Senha</Label>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="password"
-            defaultValue={signInDefaultValues.password}
-            required
-          />
-        </div>
-        <div>
-          <Button className="w-full">Entrar</Button>
-        </div>
-        <div className="text-sm text-center text-muted-foreground">
-          Não tem uma conta?{" "}
-          <Link className="link" href="/acesso/cadastrar" target="_self">
-            Cadastre-se
-          </Link>
-        </div>
+        <InputEmail />
+        <InputPassword />
+        <SignInButton />
+        <SubmitFeedback error={!data.success} message={data.message} />
+        <SignUpPrompt />
       </div>
     </form>
   );

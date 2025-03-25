@@ -20,7 +20,6 @@ export const config: NextAuthConfig = {
   },
   providers: [
     CredentialsProvider({
-      name: "eVoluir",
       credentials: {
         email: {
           label: "E-mail",
@@ -43,7 +42,7 @@ export const config: NextAuthConfig = {
         });
 
         if (user?.password) {
-          isMatch = compareSync(String(credentials.password), user.email);
+          isMatch = compareSync(String(credentials.password), user.password);
         }
 
         if (user && isMatch) {

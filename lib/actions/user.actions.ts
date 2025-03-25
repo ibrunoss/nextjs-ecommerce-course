@@ -15,7 +15,7 @@ export async function signInWithCredentials(
       password: formData.get("password"),
     });
 
-    await signIn("eVoluir", user);
+    await signIn("credentials", user);
 
     return { success: true, message: "Login realizado com sucesso" };
   } catch (error) {

@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
-import { AuthButton } from "@/components/layout/header/auth-button";
 import { Render } from "@/components/common/render";
-import { UserMenu } from "./user-menu";
+import { AuthButton } from "@/components/layout/header/menu/user/auth-button";
+import { UserMenu } from "@/components/layout/header/menu/user/user-menu";
 
 export const AuthButtonOrMenuButton = async () => {
   const session = await auth();

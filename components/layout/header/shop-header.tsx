@@ -1,10 +1,10 @@
 import { MainHeader } from "@/components/layout/header/main-header";
-import { Menu } from "./menu";
+import { HeaderMenu } from "@/components/layout/header/menu/header-menu";
 
 export const ShopHeader = () => {
   return (
     <MainHeader>
-      <Menu />
+      <HeaderMenu />
     </MainHeader>
   );
 };

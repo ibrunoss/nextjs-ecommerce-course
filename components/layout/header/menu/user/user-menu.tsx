@@ -2,9 +2,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
-import { UserMenuTrigger } from "@/components/layout/header/user-menu-trigger";
-import { UserMenuLabel } from "@/components/layout/header/user-menu-label";
-import { UserMenuItemSignOut } from "@/components/layout/header/user-menu-item-sign-out";
+import { UserMenuTrigger } from "@/components/layout/header/menu/user/user-menu-trigger";
+import { UserMenuLabel } from "@/components/layout/header/menu/user/user-menu-label";
+import { UserMenuItemSignOut } from "@/components/layout/header/menu/user/user-menu-item-sign-out";
 
 export type UserMenuProps = {
   email: string;

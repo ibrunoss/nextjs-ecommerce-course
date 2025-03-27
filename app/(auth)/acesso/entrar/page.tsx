@@ -15,11 +15,18 @@ export const metadata: Metadata = {
   title: "Entrar",
 };
 
-export default async function SignInPage() {
+export type SignInPageProps = Readonly<{
+  searchParams: Promise<{
+    callbackUrl: string;
+  }>;
+}>;
+
+export default async function SignInPage({ searchParams }: SignInPageProps) {
+  const { callbackUrl } = await searchParams;
   const session = await auth();
 
   if (session) {
-    redirect("/");
+    redirect(callbackUrl || "/");
   }
 
   return (

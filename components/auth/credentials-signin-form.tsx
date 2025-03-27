@@ -1,5 +1,6 @@
 "use client";
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { signInWithCredentials } from "@/lib/actions/user.actions";
 import { SignInButton } from "@/components/auth/sign-in-button";
@@ -14,8 +15,12 @@ export const CredentialsSignInForm = () => {
     message: "",
   });
 
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+
   return (
     <form action={action}>
+      <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="space-y-6">
         <InputEmail />
         <InputPassword />

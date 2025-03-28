@@ -1,17 +1,19 @@
 import { hashSync } from "bcrypt-ts-edge";
 
+import { PASSWORD_SALT } from "@/lib/constants/auth";
+
 const sampleData = {
   users: [
     {
       name: "Maria",
       email: "maria@email.com",
-      password: hashSync("123456", 10),
+      password: hashSync("123456", PASSWORD_SALT),
       role: "admin",
     },
     {
       name: "Jose",
       email: "jose@email.com",
-      password: hashSync("123456", 10),
+      password: hashSync("123456", PASSWORD_SALT),
       role: "user",
     },
   ],

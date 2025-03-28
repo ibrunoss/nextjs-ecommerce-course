@@ -1,8 +1,11 @@
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/auth/label";
-import { signInDefaultValues } from "@/lib/constants/auth";
+import { Label } from "@/components/ui/label";
 
-export const InputEmail = () => {
+export type EmailFieldProps = {
+  defaultValue?: string;
+};
+
+export const EmailField = ({ defaultValue }: EmailFieldProps) => {
   return (
     <div>
       <Label htmlFor="email">Email</Label>
@@ -11,7 +14,7 @@ export const InputEmail = () => {
         name="email"
         type="email"
         autoComplete="email"
-        defaultValue={signInDefaultValues.email}
+        defaultValue={defaultValue}
         required
       />
     </div>

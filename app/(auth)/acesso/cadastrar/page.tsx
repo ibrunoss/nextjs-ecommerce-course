@@ -9,19 +9,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CredentialsSignInForm } from "@/components/auth/sign-in/credentials-sign-in-form";
+import { CredentialsSignUpForm } from "@/components/auth/sign-up/credentials-sign-up-form";
 
 export const metadata: Metadata = {
-  title: "Entrar",
+  title: "Cadastrar",
 };
 
-export type SignInPageProps = Readonly<{
+export type SignUpPageProps = Readonly<{
   searchParams: Promise<{
     callbackUrl: string;
   }>;
 }>;
 
-export default async function SignInPage({ searchParams }: SignInPageProps) {
+export default async function SignUpPage({ searchParams }: SignUpPageProps) {
   const { callbackUrl } = await searchParams;
   const session = await auth();
 
@@ -33,11 +33,13 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
     <div className="w-full max-w-md mx-auto">
       <Card>
         <CardHeader className="space-y-4 text-center">
-          <CardTitle>Entrar</CardTitle>
-          <CardDescription>Entre na sua conta</CardDescription>
+          <CardTitle>Cadastrar Conta</CardTitle>
+          <CardDescription>
+            Preencha suas informações para se cadastrar
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <CredentialsSignInForm />
+          <CredentialsSignUpForm />
         </CardContent>
       </Card>
     </div>

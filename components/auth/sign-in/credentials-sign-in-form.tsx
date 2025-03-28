@@ -3,11 +3,12 @@ import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { signInWithCredentials } from "@/lib/actions/user.actions";
-import { SignInButton } from "@/components/auth/sign-in-button";
-import { SignUpPrompt } from "@/components/auth/sign-up-prompt";
-import { SubmitFeedback } from "./submit-feedback";
-import { InputEmail } from "@/components/auth/input-email";
-import { InputPassword } from "@/components/auth/input-password";
+import { SignInButton } from "@/components/auth/sign-in/sign-in-button";
+import { SignInPrompt } from "@/components/auth/sign-in/sign-in-prompt";
+import { SubmitFeedback } from "@/components/auth/submit-feedback";
+import { EmailField } from "@/components/auth/email-field";
+import { PasswordField } from "@/components/auth/password-field";
+import { signInDefaultValues } from "@/lib/constants/auth";
 
 export const CredentialsSignInForm = () => {
   const [data, action] = useActionState(signInWithCredentials, {
@@ -22,11 +23,11 @@ export const CredentialsSignInForm = () => {
     <form action={action}>
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="space-y-6">
-        <InputEmail />
-        <InputPassword />
+        <EmailField defaultValue={signInDefaultValues.email} />
+        <PasswordField defaultValue={signInDefaultValues.password} />
         <SignInButton />
         <SubmitFeedback error={!data.success} message={data.message} />
-        <SignUpPrompt />
+        <SignInPrompt />
       </div>
     </form>
   );

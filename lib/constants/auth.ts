@@ -3,4 +3,11 @@ export const signInDefaultValues = {
   password: "",
 };
 
-export const PASSWORD_SALT = process.env.PASSWORD_SALT;
+export const signUpDefaultValues = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+export const PASSWORD_SALT = Number(process.env.PASSWORD_SALT);

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const SignUpPrompt = () => {
+export const SignInPrompt = () => {
   return (
     <div className="text-sm text-center text-muted-foreground">
       Não tem uma conta?{" "}

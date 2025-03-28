@@ -1,5 +1,5 @@
-import { MobileMenu } from "@/components/layout/header/menu/mobile-menu";
-import { DesktopMenu } from "@/components/layout/header/menu/desktop-menu";
+import { MobileMenu } from "@/components/header/menu/mobile-menu";
+import { DesktopMenu } from "@/components/header/menu/desktop-menu";
 
 export const HeaderMenu = () => {
   return (

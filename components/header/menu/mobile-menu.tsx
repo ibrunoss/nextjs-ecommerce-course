@@ -8,8 +8,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { AuthButtonOrMenuButton } from "./auth-button-or-menu-button";
-import { CartButton } from "@/components/layout/header/menu/cart-button";
-import { ModeToggle } from "@/components/layout/header/menu/mode-toggle";
+import { CartButton } from "@/components/header/menu/cart-button";
+import { ModeToggle } from "@/components/header/menu/mode-toggle";
 
 export const MobileMenu = () => {
   return (

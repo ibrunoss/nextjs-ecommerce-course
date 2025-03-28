@@ -1,6 +1,6 @@
 import { ProductEntity } from "@/domain/product.entity";
 import { Render } from "@/components/common/render";
-import { FeaturedProductCard } from "./featured-product-card";
+import { FeaturedProductCard } from "./card/featured-product-card";
 
 export type FeaturedProductListProps = {
   data: ProductEntity[];

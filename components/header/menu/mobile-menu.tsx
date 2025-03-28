@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { AuthButtonOrMenuButton } from "./auth-button-or-menu-button";
+import { AuthButtonOrMenuButton } from "@/components/header/menu/auth-button-or-menu-button";
 import { CartButton } from "@/components/header/menu/cart-button";
 import { ModeToggle } from "@/components/header/menu/mode-toggle";
 

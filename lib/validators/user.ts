@@ -14,7 +14,10 @@ export const signUpFormSchema = signInFormSchema
     name: z.string().min(3, "O nome deve conter ao menos três (3) caracteres"),
     confirmPassword: z
       .string()
-      .min(6, "A senha deve conter ao menos seis (6) caracteres"),
+      .min(
+        6,
+        "A senha de confirmação deve conter ao menos seis (6) caracteres"
+      ),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {

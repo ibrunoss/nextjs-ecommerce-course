@@ -11,12 +11,13 @@ import { PasswordField } from "@/components/auth/password-field";
 import { NameField } from "@/components/auth/name-field";
 import { ConfirmPasswordField } from "@/components/auth/confirm-password-field";
 import { signUpDefaultValues } from "@/lib/constants/auth";
+import { initialActionState } from "@/lib/actions/utils.actions";
 
 export const CredentialsSignUpForm = () => {
-  const [data, action] = useActionState(signUpWithCredentials, {
-    success: false,
-    message: "",
-  });
+  const [data, action] = useActionState(
+    signUpWithCredentials,
+    initialActionState
+  );
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";

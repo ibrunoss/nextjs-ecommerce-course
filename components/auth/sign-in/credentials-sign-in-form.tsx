@@ -9,12 +9,13 @@ import { SubmitFeedback } from "@/components/auth/submit-feedback";
 import { EmailField } from "@/components/auth/email-field";
 import { PasswordField } from "@/components/auth/password-field";
 import { signInDefaultValues } from "@/lib/constants/auth";
+import { initialActionState } from "@/lib/actions/utils.actions";
 
 export const CredentialsSignInForm = () => {
-  const [data, action] = useActionState(signInWithCredentials, {
-    success: false,
-    message: "",
-  });
+  const [data, action] = useActionState(
+    signInWithCredentials,
+    initialActionState
+  );
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";

@@ -1,5 +1,5 @@
 import { productDatabaseAdapter } from "@/adapters/product/database/product-database.adapter";
-import { FeaturedProductList } from "@/components/product/featured-product-list";
+import { FeaturedProductList } from "@/components/product/featured/featured-product-list";
 
 export const metadata = {
   title: "Página Inicial",

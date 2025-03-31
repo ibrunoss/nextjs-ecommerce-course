@@ -5,6 +5,6 @@ export type RenderIfProps = {
   children: ReactNode;
   fallback?: ReactNode;
 };
-export const RenderIf = (props: RenderIfProps) => {
+export const Render = (props: RenderIfProps) => {
   return props.when ? <>{props.children}</> : <>{props.fallback}</>;
 };

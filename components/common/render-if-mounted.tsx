@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
 
-import { RenderIf } from "@/components/common/render-if";
+import { Render } from "@/components/common/render";
 
 export type RenderIfMountedProps = {
   children: ReactNode;
@@ -14,5 +14,5 @@ export const RenderIfMounted = ({ children }: RenderIfMountedProps) => {
     setMounted(true);
   }, []);
 
-  return <RenderIf when={mounted}>{children}</RenderIf>;
+  return <Render when={mounted}>{children}</Render>;
 };

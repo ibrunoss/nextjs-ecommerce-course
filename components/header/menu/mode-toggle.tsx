@@ -2,7 +2,7 @@
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon, SunMoon } from "lucide-react";
 
-import { RenderIf } from "@/components/common/render-if";
+import { Render } from "@/components/common/render";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -35,15 +35,15 @@ export const ModeToggle = () => {
             variant="ghost"
             className="focus-visible:ring-0 focus-visible:ring-offset-0"
           >
-            <RenderIf when={isSystemTheme}>
+            <Render when={isSystemTheme}>
               <SunMoon />
-            </RenderIf>
-            <RenderIf when={isDarkTheme}>
+            </Render>
+            <Render when={isDarkTheme}>
               <MoonIcon />
-            </RenderIf>
-            <RenderIf when={isLightTheme}>
+            </Render>
+            <Render when={isLightTheme}>
               <SunIcon />
-            </RenderIf>
+            </Render>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

@@ -1,5 +1,5 @@
 import { MainFooter } from "@/components/footer/main-footer";
-import { ShopHeader } from "@/components/header/shop-header";
+import { MinimalHeader } from "@/components/header/minimal-header";
 
 export default function RootLayout({
   children,
@@ -8,8 +8,8 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex h-screen flex-col">
-      <ShopHeader />
-      <main className="flex-1 wrapper">{children}</main>
+      <MinimalHeader />
+      <div className="flex-1 flex-center">{children}</div>
       <MainFooter />
     </div>
   );

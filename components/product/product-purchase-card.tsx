@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 
 import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
-import { RenderIf } from "@/components/common/render-if";
+import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +15,8 @@ export type ProductPurchaseCardProps = {
 
 export const ProductPurchaseCard = ({
   isAvailable,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  idProduct,
   price,
   ...props
 }: ProductPurchaseCardProps) => {
@@ -31,21 +33,21 @@ export const ProductPurchaseCard = ({
           <div className="mb-2 flex justify-between">
             <div>Situação</div>
             <div>
-              <RenderIf when={isAvailable}>
+              <Render
+                when={isAvailable}
+                fallback={<Badge variant="destructive">Fora de estoque</Badge>}
+              >
                 <Badge variant="outline">Em estoque</Badge>
-              </RenderIf>
-              <RenderIf when={!isAvailable}>
-                <Badge variant="destructive">Fora de estoque</Badge>
-              </RenderIf>
+              </Render>
             </div>
           </div>
-          <RenderIf when={isAvailable}>
+          <Render when={isAvailable}>
             <div className="flex-center">
               <Button className="w-full">
                 <Plus /> Adicionar ao carrinho
               </Button>
             </div>
-          </RenderIf>
+          </Render>
         </CardContent>
       </Card>
     </div>

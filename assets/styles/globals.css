@@ -132,8 +132,13 @@
 @utility flex-start {
   @apply flex justify-start items-center;
 }
+
 @utility flex-center {
   @apply flex justify-center items-center;
+}
+
+@utility flex-end {
+  @apply flex justify-end items-center;
 }
 
 @utility flex-between {

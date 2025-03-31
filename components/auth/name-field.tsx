@@ -1,22 +1,17 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/common/label";
+import { InputField, InputFieldProps } from "@/components/common/input-field";
 
-export type NameFieldProps = {
-  defaultValue?: string;
-};
+export type NameFieldProps = InputFieldProps;
 
-export const NameField = ({ defaultValue }: NameFieldProps) => {
+export const NameField = (props: NameFieldProps) => {
   return (
-    <div>
-      <Label htmlFor="name">Nome</Label>
-      <Input
-        id="name"
-        name="name"
-        type="text"
-        autoComplete="name"
-        defaultValue={defaultValue}
-        required
-      />
-    </div>
+    <InputField
+      {...props}
+      label="Nome"
+      id="name"
+      name="name"
+      type="text"
+      autoComplete="name"
+      required
+    />
   );
 };

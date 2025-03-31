@@ -1,29 +1,19 @@
-import { Label } from "@/components/common/label";
-import { PasswordInput } from "@/components/common/password-input";
+import {
+  PasswordInputField,
+  PasswordInputFieldProps,
+} from "@/components/common/password-input-field";
 
-export type PasswordFieldProps = {
-  defaultValue?: string;
-  controlled?: {
-    state: boolean;
-    onClick: () => void;
-  };
-};
+export type PasswordFieldProps = PasswordInputFieldProps;
 
-export const PasswordField = ({
-  controlled,
-  defaultValue,
-}: PasswordFieldProps) => {
+export const PasswordField = (props: PasswordFieldProps) => {
   return (
-    <div>
-      <Label htmlFor="password">Senha</Label>
-      <PasswordInput
-        id="password"
-        name="password"
-        autoComplete="password"
-        defaultValue={defaultValue}
-        controlled={controlled}
-        required
-      />
-    </div>
+    <PasswordInputField
+      label="Senha"
+      id="password"
+      name="password"
+      autoComplete="password"
+      required
+      {...props}
+    />
   );
 };

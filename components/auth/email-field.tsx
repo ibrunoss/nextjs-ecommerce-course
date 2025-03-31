@@ -1,22 +1,17 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { InputField, InputFieldProps } from "@/components/common/input-field";
 
-export type EmailFieldProps = {
-  defaultValue?: string;
-};
+export type EmailFieldProps = InputFieldProps;
 
-export const EmailField = ({ defaultValue }: EmailFieldProps) => {
+export const EmailField = (props: EmailFieldProps) => {
   return (
-    <div>
-      <Label htmlFor="email">Email</Label>
-      <Input
-        id="email"
-        name="email"
-        type="email"
-        autoComplete="email"
-        defaultValue={defaultValue}
-        required
-      />
-    </div>
+    <InputField
+      {...props}
+      label="E-mail"
+      id="email"
+      name="email"
+      type="email"
+      autoComplete="email"
+      required
+    />
   );
 };

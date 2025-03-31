@@ -1,29 +1,19 @@
-import { Label } from "@/components/common/label";
-import { PasswordInput } from "@/components/common/password-input";
+import {
+  PasswordInputField,
+  PasswordInputFieldProps,
+} from "@/components/common/password-input-field";
 
-export type ConfirmPasswordFieldProps = {
-  defaultValue?: string;
-  controlled?: {
-    state: boolean;
-    onClick: () => void;
-  };
-};
+export type ConfirmPasswordFieldProps = PasswordInputFieldProps;
 
-export const ConfirmPasswordField = ({
-  controlled,
-  defaultValue,
-}: ConfirmPasswordFieldProps) => {
+export const ConfirmPasswordField = (props: ConfirmPasswordFieldProps) => {
   return (
-    <div>
-      <Label htmlFor="confirmPassword">Confirme a senha</Label>
-      <PasswordInput
-        id="confirmPassword"
-        name="confirmPassword"
-        autoComplete="password"
-        controlled={controlled}
-        defaultValue={defaultValue}
-        required
-      />
-    </div>
+    <PasswordInputField
+      label="Confirme a senha"
+      id="confirmPassword"
+      name="confirmPassword"
+      autoComplete="password"
+      required
+      {...props}
+    />
   );
 };

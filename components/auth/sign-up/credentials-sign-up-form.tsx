@@ -19,6 +19,12 @@ export const CredentialsSignUpForm = () => {
     initialActionState
   );
 
+  let errorMessage = "";
+
+  if (!data.success) {
+    errorMessage = data.errors.map((erro) => erro.message).join(". ");
+  }
+
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
@@ -33,7 +39,7 @@ export const CredentialsSignUpForm = () => {
           defaultValue={signUpDefaultValues.confirmPassword}
         />
         <SignUpButton />
-        <SubmitFeedback error={!data.success} message={data.message} />
+        <SubmitFeedback error={!data.success} message={errorMessage} />
         <SignUpPrompt />
       </div>
     </form>

@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { signUpWithCredentials } from "@/lib/actions/user.actions";
 import { SignUpButton } from "@/components/auth/sign-up/sign-up-button";
 import { SignUpPrompt } from "@/components/auth/sign-up/sign-up-prompt";
-import { SubmitFeedback } from "@/components/auth/submit-feedback";
+import { DisplayErrorMessage } from "@/components/common/display-error-message";
 import { EmailField } from "@/components/auth/email-field";
 import { PasswordField } from "@/components/auth/password-field";
 import { NameField } from "@/components/auth/name-field";
@@ -39,7 +39,7 @@ export const CredentialsSignUpForm = () => {
           defaultValue={signUpDefaultValues.confirmPassword}
         />
         <SignUpButton />
-        <SubmitFeedback error={!data.success} message={errorMessage} />
+        <DisplayErrorMessage error={!data.success} message={errorMessage} />
         <SignUpPrompt />
       </div>
     </form>

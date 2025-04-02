@@ -1,7 +1,10 @@
+import { DateEntity } from "@/domain/date.entities";
+import { CurrencyEntity } from "@/domain/currency.entities";
+
 export interface ProductEntity {
   id: string;
   name: string;
-  price: number;
+  price: CurrencyEntity;
   description: string;
   banner: string;
   images: string[];
@@ -20,7 +23,7 @@ export interface ProductEntity {
   topRated: boolean;
   isFeatured: boolean;
   trending: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: DateEntity;
+  updatedAt: DateEntity;
   slug: string;
 }

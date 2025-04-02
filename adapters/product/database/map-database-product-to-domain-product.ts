@@ -1,8 +1,12 @@
-import { ProductEntity } from "@/domain/product.entity";
+import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
+import { DateAdapter } from "@/adapters/date/date.adapter";
+import { ProductEntity } from "@/domain/product.entities";
 import { ProductDatabase } from "@/infra/db/types/product";
 
 export function mapDatabaseProductToDomainProduct(
-  dbProduct: ProductDatabase
+  dbProduct: ProductDatabase,
+  dateAdapter: DateAdapter,
+  currencyAdapter: CurrencyAdapter
 ): ProductEntity {
   return {
     id: dbProduct.id,
@@ -11,7 +15,7 @@ export function mapDatabaseProductToDomainProduct(
     category: dbProduct.category,
     description: dbProduct.description,
     images: dbProduct.images,
-    price: Number(dbProduct.price),
+    price: currencyAdapter.safeCreateEntity(dbProduct.price),
     brand: dbProduct.brand,
     rating: Number(dbProduct.rating),
     reviews: Number(dbProduct.numReviews),
@@ -27,7 +31,7 @@ export function mapDatabaseProductToDomainProduct(
     newArrival: false, // Valor padrão
     topRated: Number(dbProduct.rating) >= 4.5, // Produto é "top-rated" se tiver alta avaliação
     trending: false, // Valor padrão
-    createdAt: new Date(dbProduct.createdAt), // Definindo a data atual como criação
-    updatedAt: new Date(dbProduct.updatedAt), // Definindo a data atual como última atualização
+    createdAt: dateAdapter.safeCreateEntity(dbProduct.createdAt), // Definindo a data atual como criação
+    updatedAt: dateAdapter.safeCreateEntity(dbProduct.updatedAt), // Definindo a data atual como última atualização
   };
 }

@@ -1,4 +1,4 @@
-import { ProductEntity } from "@/domain/product.entity";
+import { ProductEntity } from "@/domain/product.entities";
 import { Render } from "@/components/common/render";
 import { FeaturedProductCard } from "./card/featured-product-card";
 
@@ -19,19 +19,22 @@ export const FeaturedProductList = ({
       <h2 className="h2-bold mb-4">{title}</h2>
       <Render when={hasProducts} fallback={<p>Nenhum produto encontrado.</p>}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {limitedData.map((product) => (
-            <FeaturedProductCard
-              key={product.slug}
-              brand={product.brand}
-              isAvailable={product.stock > 0}
-              link={`/produto/${product.slug}`}
-              name={product.name}
-              price={product.price}
-              rating={product.rating}
-              imageAlt={product.name}
-              imageSrc={product.images[0]}
-            />
-          ))}
+          {limitedData.map((product) => {
+            console.log(product.price);
+            return (
+              <FeaturedProductCard
+                key={product.slug}
+                brand={product.brand}
+                isAvailable={product.stock > 0}
+                link={`/produto/${product.slug}`}
+                name={product.name}
+                price={product.price.numericValue}
+                rating={product.rating}
+                imageAlt={product.name}
+                imageSrc={product.images[0]}
+              />
+            );
+          })}
         </div>
       </Render>
     </div>

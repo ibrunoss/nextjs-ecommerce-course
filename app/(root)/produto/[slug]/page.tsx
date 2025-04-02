@@ -35,7 +35,7 @@ export default async function ProductDetailsPage({
           category={product.category}
           description={product.description}
           name={product.name}
-          price={product.price}
+          price={product.price.numericValue}
           rating={product.rating}
           reviews={product.reviews}
         />
@@ -43,7 +43,7 @@ export default async function ProductDetailsPage({
         <ProductPurchaseCard
           idProduct={product.id}
           isAvailable={product.stock > 0}
-          price={product.price}
+          price={product.price.numericValue}
         />
       </div>
     </section>

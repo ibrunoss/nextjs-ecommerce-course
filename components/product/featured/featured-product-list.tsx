@@ -20,7 +20,6 @@ export const FeaturedProductList = ({
       <Render when={hasProducts} fallback={<p>Nenhum produto encontrado.</p>}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {limitedData.map((product) => {
-            console.log(product.price);
             return (
               <FeaturedProductCard
                 key={product.slug}

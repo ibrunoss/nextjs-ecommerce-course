@@ -6,11 +6,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CurrencyEntity } from "@/domain/currency.entities";
 
 export type ProductPurchaseCardProps = {
   idProduct: string;
   isAvailable: boolean;
-  price: number;
+  price: CurrencyEntity;
 } & Omit<HTMLAttributes<HTMLDivElement>, "children">;
 
 export const ProductPurchaseCard = ({
@@ -27,7 +28,12 @@ export const ProductPurchaseCard = ({
           <div className="mb-2 flex justify-between">
             <div>Preço</div>
             <div>
-              <ProductPrice value={price} />
+              <ProductPrice
+                currencySymbol={price.currencySymbol}
+                fractionalPart={price.fractionalPart.stringValue}
+                fractionalSymbol={price.fractionalSymbol}
+                integerPart={price.integerPart.stringValue}
+              />
             </div>
           </div>
           <div className="mb-2 flex justify-between">

@@ -3,10 +3,11 @@ import Link from "next/link";
 import { Render } from "@/components/common/render";
 import { ProductPrice } from "@/components/product/product-price";
 import { CardContent } from "@/components/ui/card";
+import { CurrencyEntity } from "@/domain/currency.entities";
 
 export type FeaturedProductCardContentProps = {
   link: string;
-  price: number;
+  price: CurrencyEntity;
   rating: number;
   isAvailable: boolean;
   brand: string;
@@ -33,7 +34,12 @@ export const FeaturedProductCardContent = ({
           when={isAvailable}
           fallback={<p className="text-destructive">Indisponível</p>}
         >
-          <ProductPrice value={price} />
+          <ProductPrice
+            currencySymbol={price.currencySymbol}
+            fractionalPart={price.fractionalPart.stringValue}
+            fractionalSymbol={price.fractionalSymbol}
+            integerPart={price.integerPart.stringValue}
+          />
         </Render>
       </div>
     </CardContent>

@@ -2,7 +2,10 @@ import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
 
 export type ProductPriceProps = {
-  value: number;
+  currencySymbol: string;
+  integerPart: string;
+  fractionalPart: string;
+  fractionalSymbol: string;
 } & Omit<HTMLAttributes<HTMLParagraphElement>, "children">;
 
 type AlignSuperProps = {
@@ -15,16 +18,17 @@ const AlignSuper = ({ text }: AlignSuperProps) => {
 
 export const ProductPrice = ({
   className,
-  value,
+  currencySymbol,
+  integerPart,
+  fractionalPart,
+  fractionalSymbol,
   ...props
 }: ProductPriceProps) => {
-  const stringValue = value.toFixed(2);
-  const [integer, decimal] = stringValue.split(".");
   return (
     <p {...props} className={cn("text-2xl", className)}>
-      <AlignSuper text="R$ " />
-      {integer}
-      <AlignSuper text={`,${decimal}`} />
+      <AlignSuper text={`${currencySymbol} `} />
+      {integerPart}
+      <AlignSuper text={`${fractionalSymbol}${fractionalPart}`} />
     </p>
   );
 };

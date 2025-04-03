@@ -1,7 +1,12 @@
 "use server";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { cookies } from "next/headers";
 
-import { ActionState } from "@/lib/actions/utils.actions";
+import {
+  ActionState,
+  CathActionError,
+  getActionErrors,
+} from "@/lib/actions/utils.actions";
 import { CartItemEntity } from "@/domain/cart.entities";
 
 export async function addItemToCart(
@@ -9,25 +14,18 @@ export async function addItemToCart(
   data: CartItemEntity
 ): Promise<ActionState> {
   try {
+    const sessionCartId = (await cookies()).get("sessionCartId")?.value;
+    console.log({ sessionCartId });
     return {
       success: true,
       message: `${data.name} adicionado ao carrinho`,
     };
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
+  } catch (e) {
+    if (isRedirectError(e)) {
+      throw e;
     }
+    const error = e as CathActionError;
 
-    return {
-      errors: [
-        {
-          code: "",
-          message: data.name,
-          path: "",
-        },
-      ],
-      success: false,
-      message: "Falha ao adicionar item",
-    };
+    return getActionErrors({ error });
   }
 }

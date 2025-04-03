@@ -1,23 +1,14 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-
-import { prisma } from "./infra/db/prisma";
 import { compareSync } from "bcrypt-ts-edge";
 
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/infra/db/prisma";
+import { authConfig } from "@/auth.config";
+
 export const config: NextAuthConfig = {
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
-  pages: {
-    signIn: "/acesso/entrar",
-    signOut: "/acesso/sair",
-    error: "/acesso/erro", // Error code passed in query string as ?error=
-    verifyRequest: "/acesso/verificacao", // (used for check email message)
-    newUser: "/acesso/cadastrar", // New users will be directed here on first sign in (leave the property out if not of interest)
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
   providers: [
     CredentialsProvider({
       credentials: {

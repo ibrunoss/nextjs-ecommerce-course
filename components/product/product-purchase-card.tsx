@@ -1,26 +1,37 @@
 import { HTMLAttributes } from "react";
-import { Plus } from "lucide-react";
 
+import { AddProductToCart } from "@/components/product/add-product-to-cart";
 import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { CurrencyEntity } from "@/domain/currency.entities";
+import { CartItemEntity } from "@/domain/cart.entities";
 
-export type ProductPurchaseCardProps = {
-  idProduct: string;
-  isAvailable: boolean;
-  price: CurrencyEntity;
-} & Omit<HTMLAttributes<HTMLDivElement>, "children">;
+export type ProductPurchaseCardProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children"
+> &
+  Pick<CartItemEntity, "image" | "name" | "price" | "productId" | "slug"> & {
+    isAvailable: boolean;
+  };
 
 export const ProductPurchaseCard = ({
+  image,
   isAvailable,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  idProduct,
+  name,
   price,
+  productId,
+  slug,
   ...props
 }: ProductPurchaseCardProps) => {
+  const cartItem: CartItemEntity = {
+    image,
+    name,
+    price,
+    productId,
+    quantity: 1,
+    slug,
+  };
   return (
     <div {...props}>
       <Card>
@@ -49,9 +60,7 @@ export const ProductPurchaseCard = ({
           </div>
           <Render when={isAvailable}>
             <div className="flex-center">
-              <Button className="w-full">
-                <Plus /> Adicionar ao carrinho
-              </Button>
+              <AddProductToCart cartItem={cartItem} />
             </div>
           </Render>
         </CardContent>

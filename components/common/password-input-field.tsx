@@ -44,8 +44,10 @@ export const PasswordInputField = ({
   const type = isHidden ? "password" : "text";
   const buttonVariant = buttonProps?.variant ?? "link";
   const buttonClassName = cn(
-    `absolute top-${label ? "[18px]" : 0} right-0`,
+    "absolute right-0",
     buttonProps?.className,
+    { "top-[18px]": label },
+    { "top-0": !label },
     { "text-destructive": isError }
   );
   return (

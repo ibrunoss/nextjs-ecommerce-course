@@ -2,14 +2,12 @@ import { z } from "zod";
 
 import {
   cartDatabaseSchema,
-  cartItemDatabaseInsertSchema,
-  cartItemSchema,
+  cartDatabaseInsertSchema,
+  cartItemDatabaseSchema,
 } from "@/lib/validators/cart";
 
 export type CartDatabase = z.infer<typeof cartDatabaseSchema>;
 
-export type CartItemDatabaseInsert = z.infer<
-  typeof cartItemDatabaseInsertSchema
->;
+export type CartItemDatabaseInsert = z.infer<typeof cartDatabaseInsertSchema>;
 
-export type CartItem = z.infer<typeof cartItemSchema>;
+export type CartItemDatabase = z.infer<typeof cartItemDatabaseSchema>;

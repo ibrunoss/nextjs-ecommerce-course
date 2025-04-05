@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { currencySchema } from "@/lib/validators/shared";
 
-export const cartItemSchema = z.object({
+export const cartItemDatabaseSchema = z.object({
   productId: z.string().min(1, "Produto é obrigatório"),
   name: z.string().min(1, "Nome é obrigatório"),
   slug: z.string().min(1, "Slug é obrigatório"),
@@ -11,11 +11,11 @@ export const cartItemSchema = z.object({
   price: currencySchema,
 });
 
-export const cartItemDatabaseInsertSchema = z.object({
+export const cartDatabaseInsertSchema = z.object({
   sessionCartId: z
     .string()
     .min(1, "Identificador do carrinho da sessão é obrigatório"),
-  items: z.array(cartItemSchema),
+  items: z.array(cartItemDatabaseSchema),
   itemsPrice: currencySchema,
   shippingPrice: currencySchema,
   taxPrice: currencySchema,
@@ -23,7 +23,7 @@ export const cartItemDatabaseInsertSchema = z.object({
   userId: z.string().optional().nullable(),
 });
 
-export const cartDatabaseSchema = cartItemDatabaseInsertSchema.extend({
+export const cartDatabaseSchema = cartDatabaseInsertSchema.extend({
   id: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),

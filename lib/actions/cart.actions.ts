@@ -1,6 +1,7 @@
 "use server";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 import {
   ActionState,
@@ -10,21 +11,45 @@ import {
 import { CartEntity, CartItemEntity } from "@/domain/cart.entities";
 import { auth } from "@/auth";
 import { cartDatabaseAdapter } from "@/adapters/cart/database/cart-database.adapter";
-import { cartItemDatabaseSchema } from "@/lib/validators/cart";
-import { mapDomainCartItemToDatabaseCartItem } from "@/adapters/cart/database/map-domain-cart-item-to-database-cart-item";
 import { productDatabaseAdapter } from "@/adapters/product/database/product-database.adapter";
+import { round2 } from "@/lib/utils";
+import { CurrencyEntity } from "@/domain/currency.entities";
+import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
+import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 
 export async function addItemToCart(
   prevState: ActionState,
-  data: CartItemEntity
+  item: CartItemEntity
 ): Promise<ActionState> {
   try {
+    const { sessionCartId, userId = "" } = await getSessionCartIdAndUserId();
+
     const cart = await getMyCart();
 
-    const item = cartItemDatabaseSchema.parse(
-      mapDomainCartItemToDatabaseCartItem(data)
-    );
     const product = await productDatabaseAdapter.getProductById(item.productId);
+
+    if (!product) {
+      throw new Error("Produto não localizado");
+    }
+
+    if (!cart) {
+      const newCart: CartEntity = {
+        id: crypto.randomUUID(),
+        userId,
+        sessionCartId,
+        items: [item],
+        ...calcPrice([item]),
+        createdAt: dateGenericAdapter.safeCreateEntity(new Date()),
+        updatedAt: dateGenericAdapter.safeCreateEntity(new Date()),
+      };
+      await cartDatabaseAdapter.postCart(newCart);
+      // Revalidate product page
+      revalidatePath(`/produto/${product.slug}`);
+
+      console.log({
+        "New Cart": newCart,
+      });
+    }
     // TESTING
     console.log({
       "Session Cart ID": cart?.id,
@@ -35,7 +60,7 @@ export async function addItemToCart(
 
     return {
       success: true,
-      message: `${data.name} adicionado ao carrinho`,
+      message: `${item.name} adicionado ao carrinho`,
     };
   } catch (e) {
     if (isRedirectError(e)) {
@@ -47,7 +72,47 @@ export async function addItemToCart(
   }
 }
 
-export async function getMyCart(): Promise<CartEntity | undefined> {
+// Calculate cart prices
+function calcPrice(items: CartItemEntity[]): {
+  itemsPrice: CurrencyEntity;
+  shippingPrice: CurrencyEntity;
+  taxPrice: CurrencyEntity;
+  totalPrice: CurrencyEntity;
+} {
+  const itemsPrice = currencyGenericAdapter.safeCreateEntity(
+    round2(
+      items.reduce(
+        (acc, item) => acc + item.price.numericValue * item.quantity,
+        0
+      )
+    )
+  );
+  const shippingPrice = currencyGenericAdapter.safeCreateEntity(
+    round2(itemsPrice.numericValue > 100 ? 0 : 10)
+  );
+  const taxPrice = currencyGenericAdapter.safeCreateEntity(
+    round2(0.0138 * itemsPrice.numericValue)
+  );
+  const totalPrice = currencyGenericAdapter.safeCreateEntity(
+    round2(
+      itemsPrice.numericValue +
+        taxPrice.numericValue +
+        shippingPrice.numericValue
+    )
+  );
+
+  return {
+    itemsPrice,
+    shippingPrice,
+    taxPrice,
+    totalPrice,
+  };
+}
+
+async function getSessionCartIdAndUserId(): Promise<{
+  sessionCartId: string;
+  userId?: string;
+}> {
   // Check for cart cookie
   const sessionCartId = (await cookies()).get("sessionCartId")?.value;
   if (!sessionCartId) {
@@ -57,6 +122,15 @@ export async function getMyCart(): Promise<CartEntity | undefined> {
   // Get session and user ID
   const session = await auth();
   const userId = session?.user?.id;
+
+  return {
+    sessionCartId,
+    userId,
+  };
+}
+
+export async function getMyCart(): Promise<CartEntity | undefined> {
+  const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
   const cart = userId
     ? await cartDatabaseAdapter.getCartByUserId(userId)

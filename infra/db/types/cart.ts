@@ -8,6 +8,6 @@ import {
 
 export type CartDatabase = z.infer<typeof cartDatabaseSchema>;
 
-export type CartItemDatabaseInsert = z.infer<typeof cartDatabaseInsertSchema>;
+export type CartDatabaseInsert = z.infer<typeof cartDatabaseInsertSchema>;
 
 export type CartItemDatabase = z.infer<typeof cartItemDatabaseSchema>;

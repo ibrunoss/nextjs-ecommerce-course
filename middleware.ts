@@ -1,13 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
-import auth from "next-auth";
-
-import { authConfig } from "@/auth.config";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  const session = await auth(authConfig).auth();
-
-  console.log(session);
   // Check for session cart cookie
   if (!request.cookies.get("sessionCartId")) {
     // Generate new session cart id cookie

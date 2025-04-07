@@ -1,5 +1,5 @@
 import { CartEntity } from "@/domain/cart.entities";
 
 export interface CartAdapter {
-  getCartBySessionCartId(): Promise<CartEntity | null>;
+  getCartBySessionCartId(sessionCartId: string): Promise<CartEntity | null>;
 }

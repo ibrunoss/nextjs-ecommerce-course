@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 
 import { cn } from "@/lib/utils";
-import { ProductPrice } from "./product-price";
+import { ProductPrice } from "@/components/product/product-price";
 import { ProductEntity } from "@/domain/product.entities";
 
 export type ProductDetailsProps = Pick<

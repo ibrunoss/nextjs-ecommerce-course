@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import sampleData from "./sample-data";
+import sampleData from "@/infra/db/sample-data";
 
 async function seed() {
   const prisma = new PrismaClient();

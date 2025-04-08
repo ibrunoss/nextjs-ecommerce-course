@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CartItemEntity } from "@/domain/cart.entities";
 import { addItemToCart } from "@/lib/actions/cart.actions";
 import { initialActionState } from "@/lib/actions/utils.actions";
-import { toastSuccess } from "../common/toast-success";
+import { toastSuccess } from "@/components/common/toast-success";
 
 export type AddProductToCartProps = { cartItem: CartItemEntity };
 

@@ -2,8 +2,9 @@
 
 import React from "react";
 import { toast as sonnerToast } from "sonner";
-import { Render } from "./render";
-import { Button } from "../ui/button";
+
+import { Render } from "@/components/common/render";
+import { Button } from "@/components/ui/button";
 
 export function toastSuccess(toast: Omit<ToastProps, "id">) {
   let button: ToastProps["button"];

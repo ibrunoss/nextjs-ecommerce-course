@@ -1,6 +1,7 @@
 import { ProductEntity } from "@/domain/product.entities";
 import { Render } from "@/components/common/render";
 import { FeaturedProductCard } from "./card/featured-product-card";
+import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 
 export type FeaturedProductListProps = {
   data: ProductEntity[];
@@ -25,7 +26,7 @@ export const FeaturedProductList = ({
                 key={product.slug}
                 brand={product.brand}
                 isAvailable={product.stock > 0}
-                link={`/produto/${product.slug}`}
+                link={PRODUCT_DETAIL_PATH(product.slug)}
                 name={product.name}
                 price={product.price}
                 rating={product.rating}

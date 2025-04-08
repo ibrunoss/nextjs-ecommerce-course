@@ -3,10 +3,11 @@ import Image from "next/image";
 
 import { APP_BRAND } from "@/lib/constants/app";
 import { Button } from "@/components/ui/button";
+import { HOME_PATH } from "@/lib/constants/routes";
 
 export default function NotFound() {
   function goHome() {
-    window.location.href = "/";
+    window.location.href = HOME_PATH;
   }
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">

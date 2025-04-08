@@ -16,6 +16,7 @@ import { round2 } from "@/lib/utils";
 import { CurrencyEntity } from "@/domain/currency.entities";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
+import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -44,7 +45,7 @@ export async function addItemToCart(
       };
       await cartDatabaseAdapter.postCart(newCart);
       // Revalidate product page
-      revalidatePath(`/produto/${product.slug}`);
+      revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
 
       console.log({
         "New Cart": newCart,

@@ -17,6 +17,8 @@ import { CurrencyEntity } from "@/domain/currency.entities";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
+import { productEntitySchema } from "@/lib/validators/product";
+import { cartEntitySchema } from "@/lib/validators/cart";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -27,14 +29,12 @@ export async function addItemToCart(
 
     const cart = await getMyCart();
 
-    const product = await productDatabaseAdapter.getProductById(item.productId);
-
-    if (!product) {
-      throw new Error("Produto não localizado");
-    }
+    const product = productEntitySchema.parse(
+      await productDatabaseAdapter.getProductById(item.productId)
+    );
 
     if (!cart) {
-      const newCart: CartEntity = {
+      const newCart: CartEntity = cartEntitySchema.parse({
         id: crypto.randomUUID(),
         userId,
         sessionCartId,
@@ -42,7 +42,7 @@ export async function addItemToCart(
         ...calcPrice([item]),
         createdAt: dateGenericAdapter.safeCreateEntity(new Date()),
         updatedAt: dateGenericAdapter.safeCreateEntity(new Date()),
-      };
+      });
       await cartDatabaseAdapter.postCart(newCart);
       // Revalidate product page
       revalidatePath(PRODUCT_DETAIL_PATH(product.slug));

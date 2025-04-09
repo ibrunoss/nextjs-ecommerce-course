@@ -1,6 +1,6 @@
 import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { DateAdapter } from "@/adapters/date/date.adapter";
-import { CartEntity } from "@/domain/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entities";
 import { CartDatabase } from "@/infra/db/types/cart";
 import { mapDatabaseCartItemToDomainCartItem } from "@/adapters/cart/database/map-database-cart-item-to-domain-cart-item";
 

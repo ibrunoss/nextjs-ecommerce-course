@@ -1,4 +1,4 @@
-import { ProductEntity } from "@/domain/product.entities";
+import { ProductEntity } from "@/domain/entities/product.entities";
 import { getDatabaseProductById } from "@/infra/services/product/get-database-product-by-id";
 import { mapDatabaseProductToDomainProduct } from "@/adapters/product/database/map-database-product-to-domain-product";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";

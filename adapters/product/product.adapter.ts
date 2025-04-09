@@ -1,4 +1,4 @@
-import { ProductEntity } from "@/domain/product.entities";
+import { ProductEntity } from "@/domain/entities/product.entities";
 
 export interface ProductAdapter {
   getLatestProducts(): Promise<ProductEntity[]>;

@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entities";
 
 export interface CartAdapter {
   getCartBySessionCartId(sessionCartId: string): Promise<CartEntity | null>;

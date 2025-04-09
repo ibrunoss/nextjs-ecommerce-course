@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entities";
 import { postDatabaseCart } from "@/infra/services/cart/post-database-cart";
 import { mapDomainCartToDatabaseCart } from "@/adapters/cart/database/map-domain-cart-to-database-cart";
 import { mapDatabaseCartToDomainCart } from "@/adapters/cart/database/map-database-cart-to-domain-cart";

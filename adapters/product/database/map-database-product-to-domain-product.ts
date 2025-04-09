@@ -1,6 +1,6 @@
 import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { DateAdapter } from "@/adapters/date/date.adapter";
-import { ProductEntity } from "@/domain/product.entities";
+import { ProductEntity } from "@/domain/entities/product.entities";
 import { ProductDatabase } from "@/infra/db/types/product";
 
 export function mapDatabaseProductToDomainProduct(

@@ -1,4 +1,4 @@
-import { CurrencyEntity } from "@/domain/currency.entities";
+import { CurrencyEntity } from "@/domain/entities/currency.entities";
 import { createCurrencyEntity } from "@/adapters/currency/generic/create-currency-entity";
 
 export function createCurrencyEntityOrFallback<F>(

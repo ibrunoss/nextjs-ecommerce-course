@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Render } from "@/components/common/render";
 import { ProductPrice } from "@/components/product/product-price";
 import { CardContent } from "@/components/ui/card";
-import { CurrencyEntity } from "@/domain/currency.entities";
+import { CurrencyEntity } from "@/domain/entities/currency.entities";
 
 export type FeaturedProductCardContentProps = {
   link: string;

@@ -8,12 +8,12 @@ import {
   CathActionError,
   getActionErrors,
 } from "@/lib/actions/utils.actions";
-import { CartEntity, CartItemEntity } from "@/domain/cart.entities";
+import { CartEntity, CartItemEntity } from "@/domain/entities/cart.entities";
 import { auth } from "@/auth";
 import { cartDatabaseAdapter } from "@/adapters/cart/database/cart-database.adapter";
 import { productDatabaseAdapter } from "@/adapters/product/database/product-database.adapter";
 import { round2 } from "@/lib/utils";
-import { CurrencyEntity } from "@/domain/currency.entities";
+import { CurrencyEntity } from "@/domain/entities/currency.entities";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";

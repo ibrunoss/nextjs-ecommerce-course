@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entities";
 import { getDatabaseCartBySessionCartId } from "@/infra/services/cart/get-database-cart-by-session-cart-id";
 import { handleGetCartDatabase } from "@/adapters/cart/database/handle-get-cart-database";
 

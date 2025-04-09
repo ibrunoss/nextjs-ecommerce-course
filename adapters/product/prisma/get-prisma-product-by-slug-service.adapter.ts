@@ -1,13 +1,13 @@
 import { ProductEntity } from "@/domain/entities/product.entities";
-import { getDatabaseProductById } from "@/infra/services/product/get-database-product-by-id";
-import { mapDatabaseProductToDomainProduct } from "@/adapters/product/database/map-database-product-to-domain-product";
+import { getPrismaProductBySlugService } from "@/infra/services/product/get-prisma-product-by-slug.service";
+import { mapPrismaProductToDomainProduct } from "@/adapters/product/prisma/map-prisma-product-to-domain-product";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 
-export async function getProductById(
-  id: string
+export async function getPrismaProductBySlugServiceAdapter(
+  slug: string
 ): Promise<ProductEntity | null> {
-  const response = await getDatabaseProductById(id);
+  const response = await getPrismaProductBySlugService(slug);
   let product: ProductEntity | null;
 
   if (!response) {
@@ -15,7 +15,7 @@ export async function getProductById(
   }
 
   try {
-    product = mapDatabaseProductToDomainProduct(
+    product = mapPrismaProductToDomainProduct(
       response,
       dateGenericAdapter,
       currencyGenericAdapter

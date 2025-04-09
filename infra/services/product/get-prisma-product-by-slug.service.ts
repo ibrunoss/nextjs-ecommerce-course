@@ -4,11 +4,11 @@ import { prismaToJS } from "@/lib/utils";
 import { prisma } from "@/infra/db/prisma";
 import { ProductDatabase } from "@/infra/db/types/product";
 
-export async function getDatabaseProductById(
-  id: string
+export async function getPrismaProductBySlugService(
+  slug: string
 ): Promise<ProductDatabase | null> {
   const data = await prisma.product.findFirst({
-    where: { id },
+    where: { slug },
   });
   return prismaToJS(data);
 }

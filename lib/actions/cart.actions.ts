@@ -11,7 +11,7 @@ import {
 import { CartEntity, CartItemEntity } from "@/domain/entities/cart.entities";
 import { auth } from "@/auth";
 import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-ropository.adapter";
-import { productDatabaseAdapter } from "@/adapters/product/database/product-database.adapter";
+import { prismaProductRepositoryAdapter } from "@/adapters/product/prisma-product-repository.adapter";
 import { round2 } from "@/lib/utils";
 import { CurrencyEntity } from "@/domain/entities/currency.entities";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
@@ -31,7 +31,7 @@ export async function addItemToCart(
     const cart = await getMyCart();
 
     const product = productEntitySchema.parse(
-      await productDatabaseAdapter.getProductById(item.productId)
+      await prismaProductRepositoryAdapter.findById(item.productId)
     );
 
     const replyItemAdded: ActionState = {

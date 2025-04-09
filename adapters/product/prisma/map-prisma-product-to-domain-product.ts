@@ -3,7 +3,7 @@ import { DateAdapter } from "@/adapters/date/date.adapter";
 import { ProductEntity } from "@/domain/entities/product.entities";
 import { ProductDatabase } from "@/infra/db/types/product";
 
-export function mapDatabaseProductToDomainProduct(
+export function mapPrismaProductToDomainProduct(
   dbProduct: ProductDatabase,
   dateAdapter: DateAdapter,
   currencyAdapter: CurrencyAdapter

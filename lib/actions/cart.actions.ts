@@ -33,6 +33,11 @@ export async function addItemToCart(
       await productDatabaseAdapter.getProductById(item.productId)
     );
 
+    const replyItemAdded: ActionState = {
+      success: true,
+      message: `${item.name} adicionado ao carrinho`,
+    };
+
     if (!cart) {
       const newCart: CartEntity = cartEntitySchema.parse({
         id: crypto.randomUUID(),
@@ -47,10 +52,47 @@ export async function addItemToCart(
       // Revalidate product page
       revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
 
-      console.log({
-        "New Cart": newCart,
-      });
+      return replyItemAdded;
     }
+
+    const itemFound = cart.items.find((x) => x.productId === product.id);
+
+    if (itemFound) {
+      // Check stock
+      if (product.stock < itemFound.quantity + item.quantity) {
+        throw new Error(`Quantidade de ${item.name} não disponível`);
+      }
+
+      // Increase the quantity
+      itemFound.quantity += item.quantity;
+
+      const updatedCart: CartEntity = cartEntitySchema.parse({
+        ...cart,
+        ...calcPrice(cart.items),
+      });
+      await cartDatabaseAdapter.postCart(updatedCart);
+
+      // Revalidate product page
+      revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
+
+      return replyItemAdded;
+    }
+
+    // Check stock
+    if (product.stock < item.quantity) {
+      throw new Error(`Quantidade de ${item.name} não disponível`);
+    }
+    cart.items.push(item);
+    const updatedCart: CartEntity = cartEntitySchema.parse({
+      ...cart,
+      ...calcPrice(cart.items),
+    });
+
+    await cartDatabaseAdapter.postCart(updatedCart);
+
+    // Revalidate product page
+    revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
+
     // TESTING
     console.log({
       "Session Cart ID": cart?.id,
@@ -59,10 +101,7 @@ export async function addItemToCart(
       "Item Found": product,
     });
 
-    return {
-      success: true,
-      message: `${item.name} adicionado ao carrinho`,
-    };
+    return replyItemAdded;
   } catch (e) {
     if (isRedirectError(e)) {
       throw e;

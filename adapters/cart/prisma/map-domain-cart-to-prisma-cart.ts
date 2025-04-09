@@ -1,12 +1,12 @@
 import { CartEntity } from "@/domain/entities/cart.entities";
 import { CartDatabaseInsert } from "@/infra/db/types/cart";
-import { mapDomainCartItemToDatabaseCartItem } from "@/adapters/cart/database/map-domain-cart-item-to-database-cart-item";
+import { mapDomainCartItemToPrismaCartItem } from "@/adapters/cart/prisma/map-domain-cart-item-to-prisma-cart-item";
 
-export function mapDomainCartToDatabaseCart(
+export function mapDomainCartToPrismaCart(
   cart: CartEntity
 ): CartDatabaseInsert {
   return {
-    items: cart.items.map((item) => mapDomainCartItemToDatabaseCartItem(item)),
+    items: cart.items.map((item) => mapDomainCartItemToPrismaCartItem(item)),
     itemsPrice: cart.itemsPrice.originalValue,
     sessionCartId: cart.sessionCartId,
     shippingPrice: cart.shippingPrice.originalValue,

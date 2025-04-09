@@ -1,7 +1,7 @@
 import { CartItemEntity } from "@/domain/entities/cart.entities";
 import { CartItemDatabase } from "@/infra/db/types/cart";
 
-export function mapDomainCartItemToDatabaseCartItem(
+export function mapDomainCartItemToPrismaCartItem(
   cartItem: CartItemEntity
 ): CartItemDatabase {
   return {

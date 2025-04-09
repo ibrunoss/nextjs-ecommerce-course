@@ -2,9 +2,9 @@ import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { DateAdapter } from "@/adapters/date/date.adapter";
 import { CartEntity } from "@/domain/entities/cart.entities";
 import { CartDatabase } from "@/infra/db/types/cart";
-import { mapDatabaseCartItemToDomainCartItem } from "@/adapters/cart/database/map-database-cart-item-to-domain-cart-item";
+import { mapPrismaCartItemToDomainCartItem } from "@/adapters/cart/prisma/map-prisma-cart-item-to-domain-cart-item";
 
-export function mapDatabaseCartToDomainCart(
+export function mapPrismaCartToDomainCart(
   dbCart: CartDatabase,
   dateAdapter: DateAdapter,
   currencyAdapter: CurrencyAdapter
@@ -12,7 +12,7 @@ export function mapDatabaseCartToDomainCart(
   return {
     id: dbCart.id,
     items: dbCart.items.map((dbCartItem) =>
-      mapDatabaseCartItemToDomainCartItem(dbCartItem, currencyAdapter)
+      mapPrismaCartItemToDomainCartItem(dbCartItem, currencyAdapter)
     ),
     createdAt: dateAdapter.safeCreateEntity(dbCart.createdAt),
     itemsPrice: currencyAdapter.safeCreateEntity(dbCart.itemsPrice),

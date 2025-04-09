@@ -4,12 +4,12 @@ import { prisma } from "@/infra/db/prisma";
 import { prismaToJS } from "@/lib/utils";
 import { CartDatabase, CartItemDatabase } from "@/infra/db/types/cart";
 
-export async function getDatabaseCartBySessionCartId(
-  sessionCartId: string
+export async function getPrismaCartByUserIdService(
+  userId: string
 ): Promise<CartDatabase | null> {
   const data = await prisma.cart.findFirst({
     where: {
-      sessionCartId,
+      userId,
     },
   });
 

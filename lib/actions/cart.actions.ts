@@ -10,7 +10,7 @@ import {
 } from "@/lib/actions/utils.actions";
 import { CartEntity, CartItemEntity } from "@/domain/entities/cart.entities";
 import { auth } from "@/auth";
-import { cartDatabaseAdapter } from "@/adapters/cart/database/cart-database.adapter";
+import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-ropository.adapter";
 import { productDatabaseAdapter } from "@/adapters/product/database/product-database.adapter";
 import { round2 } from "@/lib/utils";
 import { CurrencyEntity } from "@/domain/entities/currency.entities";
@@ -19,6 +19,7 @@ import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { productEntitySchema } from "@/lib/validators/product";
 import { cartEntitySchema } from "@/lib/validators/cart";
+import { findCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -48,7 +49,7 @@ export async function addItemToCart(
         createdAt: dateGenericAdapter.safeCreateEntity(new Date()),
         updatedAt: dateGenericAdapter.safeCreateEntity(new Date()),
       });
-      await cartDatabaseAdapter.postCart(newCart);
+      await prismaCartRepositoryAdapter.create(newCart);
       // Revalidate product page
       revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
 
@@ -70,7 +71,7 @@ export async function addItemToCart(
         ...cart,
         ...calcPrice(cart.items),
       });
-      await cartDatabaseAdapter.postCart(updatedCart);
+      await prismaCartRepositoryAdapter.create(updatedCart);
 
       // Revalidate product page
       revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
@@ -88,7 +89,7 @@ export async function addItemToCart(
       ...calcPrice(cart.items),
     });
 
-    await cartDatabaseAdapter.postCart(updatedCart);
+    await prismaCartRepositoryAdapter.create(updatedCart);
 
     // Revalidate product page
     revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
@@ -172,9 +173,11 @@ async function getSessionCartIdAndUserId(): Promise<{
 export async function getMyCart(): Promise<CartEntity | undefined> {
   const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
-  const cart = userId
-    ? await cartDatabaseAdapter.getCartByUserId(userId)
-    : await cartDatabaseAdapter.getCartBySessionCartId(sessionCartId);
+  const cart = await findCartByUserOrSessionCartUseCase({
+    userId,
+    sessionCartId,
+    cartRepository: prismaCartRepositoryAdapter,
+  });
 
   if (!cart) {
     return undefined;

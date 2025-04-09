@@ -1,10 +1,10 @@
 import { CartEntity } from "@/domain/entities/cart.entities";
 import { CartDatabase } from "@/infra/db/types/cart";
-import { mapDatabaseCartToDomainCart } from "@/adapters/cart/database/map-database-cart-to-domain-cart";
+import { mapPrismaCartToDomainCart } from "@/adapters/cart/prisma/map-prisma-cart-to-domain-cart";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 
-export function handleGetCartDatabase(
+export function handleGetPrismaCart(
   dbCart: CartDatabase | null
 ): CartEntity | null {
   if (!dbCart) {
@@ -14,7 +14,7 @@ export function handleGetCartDatabase(
   let cart: CartEntity | null;
 
   try {
-    cart = mapDatabaseCartToDomainCart(
+    cart = mapPrismaCartToDomainCart(
       dbCart,
       dateGenericAdapter,
       currencyGenericAdapter

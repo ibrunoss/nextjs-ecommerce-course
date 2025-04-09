@@ -2,7 +2,7 @@ import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { CartItemEntity } from "@/domain/entities/cart.entities";
 import { CartItemDatabase } from "@/infra/db/types/cart";
 
-export function mapDatabaseCartItemToDomainCartItem(
+export function mapPrismaCartItemToDomainCartItem(
   dbCartItem: CartItemDatabase,
   currencyAdapter: CurrencyAdapter
 ): CartItemEntity {

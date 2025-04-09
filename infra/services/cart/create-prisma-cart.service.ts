@@ -6,7 +6,7 @@ import {
 } from "@/infra/db/types/cart";
 import { prismaToJS } from "@/lib/utils";
 
-export async function postDatabaseCart(
+export async function createPrismaCartService(
   cart: CartDatabaseInsert
 ): Promise<CartDatabase> {
   const resp = await prisma.cart.create({ data: cart });

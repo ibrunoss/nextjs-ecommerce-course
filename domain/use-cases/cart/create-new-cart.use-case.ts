@@ -1,12 +1,11 @@
-import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { DateAdapter } from "@/adapters/date/date.adapter";
 import { CartEntity } from "@/domain/entities/cart.entity";
+import { createCurrencyEntity } from "@/domain/entities/currency.entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 import { cartEntitySchema } from "@/lib/validators/cart";
 
 export type FindCartByUserOrSessionCartUseCaseParams = {
   cartRepository: CartRepository;
-  currencyAdapter: CurrencyAdapter;
   dateAdapter: DateAdapter;
   sessionCartId: string;
   userId?: string;
@@ -14,7 +13,6 @@ export type FindCartByUserOrSessionCartUseCaseParams = {
 
 export async function createNewCartUseCase({
   cartRepository,
-  currencyAdapter,
   sessionCartId,
   dateAdapter,
   userId,
@@ -24,10 +22,10 @@ export async function createNewCartUseCase({
     userId,
     sessionCartId,
     items: [],
-    itemsPrice: currencyAdapter.safeCreateEntity(0),
-    shippingPrice: currencyAdapter.safeCreateEntity(0),
-    taxPrice: currencyAdapter.safeCreateEntity(0),
-    totalPrice: currencyAdapter.safeCreateEntity(0),
+    itemsPrice: createCurrencyEntity(0),
+    shippingPrice: createCurrencyEntity(0),
+    taxPrice: createCurrencyEntity(0),
+    totalPrice: createCurrencyEntity(0),
     createdAt: dateAdapter.safeCreateEntity(new Date()),
     updatedAt: dateAdapter.safeCreateEntity(new Date()),
   });

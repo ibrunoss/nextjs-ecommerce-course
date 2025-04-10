@@ -1,4 +1,4 @@
-import { CurrencyEntity } from "@/domain/entities/currency.entities";
+import { CurrencyEntity } from "@/domain/entities/currency.entity";
 
 export interface CurrencyAdapter {
   createEntity(input: string | number): CurrencyEntity | Error;

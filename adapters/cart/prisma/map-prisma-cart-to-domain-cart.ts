@@ -1,6 +1,6 @@
 import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { DateAdapter } from "@/adapters/date/date.adapter";
-import { CartEntity } from "@/domain/entities/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entity";
 import { CartDatabase } from "@/infra/db/types/cart";
 import { mapPrismaCartItemToDomainCartItem } from "@/adapters/cart/prisma/map-prisma-cart-item-to-domain-cart-item";
 

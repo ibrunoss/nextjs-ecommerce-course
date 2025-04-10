@@ -1,7 +1,4 @@
-export interface CurrencyValueEntity {
-  stringValue: string;
-  numericValue: number;
-}
+import { CurrencyValueEntity } from "@/domain/entities/currency-value.entity";
 
 export interface CurrencyEntity {
   originalValue: string;

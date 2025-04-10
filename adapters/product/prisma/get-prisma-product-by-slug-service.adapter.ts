@@ -1,4 +1,4 @@
-import { ProductEntity } from "@/domain/entities/product.entities";
+import { ProductEntity } from "@/domain/entities/product.entity";
 import { getPrismaProductBySlugService } from "@/infra/services/product/get-prisma-product-by-slug.service";
 import { mapPrismaProductToDomainProduct } from "@/adapters/product/prisma/map-prisma-product-to-domain-product";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";

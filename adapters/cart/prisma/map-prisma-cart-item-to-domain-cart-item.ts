@@ -1,5 +1,5 @@
 import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
-import { CartItemEntity } from "@/domain/entities/cart.entities";
+import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartItemDatabase } from "@/infra/db/types/cart";
 
 export function mapPrismaCartItemToDomainCartItem(

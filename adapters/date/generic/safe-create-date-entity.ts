@@ -1,4 +1,4 @@
-import { DateEntity } from "@/domain/entities/date.entities";
+import { DateEntity } from "@/domain/entities/date.entity";
 import { createDateEntity } from "@/adapters/date/generic/create-date-entity";
 
 export function safeCreateDateEntity(date: string | Date): DateEntity {

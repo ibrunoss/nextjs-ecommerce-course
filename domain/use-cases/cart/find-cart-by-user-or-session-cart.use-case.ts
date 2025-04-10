@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 
 export type FindCartByUserOrSessionCartUseCaseParams = {

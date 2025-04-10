@@ -5,7 +5,7 @@ import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
-import { CartItemEntity } from "@/domain/entities/cart.entities";
+import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 
 export type ProductPurchaseCardProps = Omit<
   HTMLAttributes<HTMLDivElement>,

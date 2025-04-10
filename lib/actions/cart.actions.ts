@@ -8,12 +8,12 @@ import {
   CathActionError,
   getActionErrors,
 } from "@/lib/actions/utils.actions";
-import { CartEntity, CartItemEntity } from "@/domain/entities/cart.entities";
+import { CartEntity, CartItemEntity } from "@/domain/entities/cart.entity";
 import { auth } from "@/auth";
 import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-repository.adapter";
 import { prismaProductRepositoryAdapter } from "@/adapters/product/prisma-product-repository.adapter";
 import { round2 } from "@/lib/utils";
-import { CurrencyEntity } from "@/domain/entities/currency.entities";
+import { CurrencyEntity } from "@/domain/entities/currency.entity";
 import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";

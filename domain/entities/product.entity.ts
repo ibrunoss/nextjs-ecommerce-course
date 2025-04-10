@@ -1,5 +1,5 @@
-import { DateEntity } from "@/domain/entities/date.entities";
-import { CurrencyEntity } from "@/domain/entities/currency.entities";
+import { DateEntity } from "@/domain/entities/date.entity";
+import { CurrencyEntity } from "@/domain/entities/currency.entity";
 
 export interface ProductEntity {
   id: string;

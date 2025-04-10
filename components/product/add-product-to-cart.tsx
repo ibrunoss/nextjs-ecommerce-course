@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { CartItemEntity } from "@/domain/entities/cart.entities";
+import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { addItemToCart } from "@/lib/actions/cart.actions";
 import { initialActionState } from "@/lib/actions/utils.actions";
 import { toastSuccess } from "@/components/common/toast-success";

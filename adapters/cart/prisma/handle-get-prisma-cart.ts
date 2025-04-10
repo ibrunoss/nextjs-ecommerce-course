@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entity";
 import { CartDatabase } from "@/infra/db/types/cart";
 import { mapPrismaCartToDomainCart } from "@/adapters/cart/prisma/map-prisma-cart-to-domain-cart";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";

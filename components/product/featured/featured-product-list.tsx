@@ -1,4 +1,4 @@
-import { ProductEntity } from "@/domain/entities/product.entities";
+import { ProductEntity } from "@/domain/entities/product.entity";
 import { Render } from "@/components/common/render";
 import { FeaturedProductCard } from "@/components/product/featured/card/featured-product-card";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";

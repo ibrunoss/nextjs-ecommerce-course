@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entities";
+import { CartEntity } from "@/domain/entities/cart.entity";
 import { getPrismaCartByUserIdService } from "@/infra/services/cart/get-prisma-cart-by-user-id.service";
 import { handleGetPrismaCart } from "@/adapters/cart/prisma/handle-get-prisma-cart";
 

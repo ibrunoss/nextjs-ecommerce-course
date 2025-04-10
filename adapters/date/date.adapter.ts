@@ -1,4 +1,4 @@
-import { DateEntity } from "@/domain/entities/date.entities";
+import { DateEntity } from "@/domain/entities/date.entity";
 
 export interface DateAdapter {
   createEntity(date: string | Date | number): DateEntity | Error;

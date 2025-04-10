@@ -8,7 +8,8 @@ import {
   CathActionError,
   getActionErrors,
 } from "@/lib/actions/utils.actions";
-import { CartEntity, CartItemEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { auth } from "@/auth";
 import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-repository.adapter";
 import { prismaProductRepositoryAdapter } from "@/adapters/product/prisma-product-repository.adapter";
@@ -20,6 +21,7 @@ import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { productEntitySchema } from "@/lib/validators/product";
 import { cartEntitySchema } from "@/lib/validators/cart";
 import { findCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
+import { getOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -28,7 +30,13 @@ export async function addItemToCart(
   try {
     const { sessionCartId, userId = "" } = await getSessionCartIdAndUserId();
 
-    const cart = await getMyCart();
+    const cart = await getOrCreateCartUseCase({
+      sessionCartId,
+      userId,
+      cartRepository: prismaCartRepositoryAdapter,
+      currencyAdapter: currencyGenericAdapter,
+      dateAdapter: dateGenericAdapter,
+    });
 
     const product = productEntitySchema.parse(
       await prismaProductRepositoryAdapter.findById(item.productId)
@@ -96,8 +104,9 @@ export async function addItemToCart(
 
     // TESTING
     console.log({
-      "Session Cart ID": cart?.id,
-      "User ID": cart?.userId,
+      "Session Cart ID": cart.id,
+      "User ID": cart.userId,
+      Items: cart.items,
       "Item Requested": item,
       "Item Found": product,
     });

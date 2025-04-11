@@ -1,12 +1,11 @@
-import { CurrencyAdapter } from "@/adapters/currency/currency.adapter";
 import { DateAdapter } from "@/adapters/date/date.adapter";
+import { createCurrencyEntity } from "@/domain/entities/currency.entity";
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { ProductDatabase } from "@/infra/db/types/product";
 
 export function mapPrismaProductToDomainProduct(
   dbProduct: ProductDatabase,
-  dateAdapter: DateAdapter,
-  currencyAdapter: CurrencyAdapter
+  dateAdapter: DateAdapter
 ): ProductEntity {
   return {
     id: dbProduct.id,
@@ -15,7 +14,7 @@ export function mapPrismaProductToDomainProduct(
     category: dbProduct.category,
     description: dbProduct.description,
     images: dbProduct.images,
-    price: currencyAdapter.safeCreateEntity(dbProduct.price),
+    price: createCurrencyEntity(dbProduct.price),
     brand: dbProduct.brand,
     rating: Number(dbProduct.rating),
     reviews: Number(dbProduct.numReviews),

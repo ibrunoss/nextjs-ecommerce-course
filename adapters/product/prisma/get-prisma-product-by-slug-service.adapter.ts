@@ -2,7 +2,6 @@ import { ProductEntity } from "@/domain/entities/product.entity";
 import { getPrismaProductBySlugService } from "@/infra/services/product/get-prisma-product-by-slug.service";
 import { mapPrismaProductToDomainProduct } from "@/adapters/product/prisma/map-prisma-product-to-domain-product";
 import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
-import { currencyGenericAdapter } from "@/adapters/currency/generic/currency.generic.adapter";
 
 export async function getPrismaProductBySlugServiceAdapter(
   slug: string
@@ -15,11 +14,7 @@ export async function getPrismaProductBySlugServiceAdapter(
   }
 
   try {
-    product = mapPrismaProductToDomainProduct(
-      response,
-      dateGenericAdapter,
-      currencyGenericAdapter
-    );
+    product = mapPrismaProductToDomainProduct(response, dateGenericAdapter);
   } catch (error) {
     console.error("Error while mapping API product to domain product: ", error);
     product = null;

@@ -1,7 +1,6 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { getPrismaProductByIdService } from "@/infra/services/product/get-prisma-product-by-id.service";
 import { mapPrismaProductToDomainProduct } from "@/adapters/product/prisma/map-prisma-product-to-domain-product";
-import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 
 export async function getPrismaProductByIdServiceAdapter(
   id: string
@@ -14,7 +13,7 @@ export async function getPrismaProductByIdServiceAdapter(
   }
 
   try {
-    product = mapPrismaProductToDomainProduct(response, dateGenericAdapter);
+    product = mapPrismaProductToDomainProduct(response);
   } catch (error) {
     console.error("Error while mapping API product to domain product: ", error);
     product = null;

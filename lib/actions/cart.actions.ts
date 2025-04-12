@@ -18,12 +18,12 @@ import {
   createCurrencyEntity,
   CurrencyEntity,
 } from "@/domain/entities/currency.entity";
-import { dateGenericAdapter } from "@/adapters/date/generic/date-generic.adapter";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { productEntitySchema } from "@/lib/validators/product";
 import { cartEntitySchema } from "@/lib/validators/cart";
 import { findCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
 import { getOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
+import { createDateEntity } from "@/domain/entities/date.entity";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -36,7 +36,6 @@ export async function addItemToCart(
       sessionCartId,
       userId,
       cartRepository: prismaCartRepositoryAdapter,
-      dateAdapter: dateGenericAdapter,
     });
 
     const product = productEntitySchema.parse(
@@ -55,8 +54,8 @@ export async function addItemToCart(
         sessionCartId,
         items: [item],
         ...calcPrice([item]),
-        createdAt: dateGenericAdapter.safeCreateEntity(new Date()),
-        updatedAt: dateGenericAdapter.safeCreateEntity(new Date()),
+        createdAt: createDateEntity(new Date()),
+        updatedAt: createDateEntity(new Date()),
       });
       await prismaCartRepositoryAdapter.create(newCart);
       // Revalidate product page

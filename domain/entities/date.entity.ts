@@ -6,7 +6,7 @@ export interface DateEntity {
   date: Date;
 }
 
-export function createDateEntity(date: string | Date): DateEntity {
+export function newDateEntity(date: string | Date): DateEntity {
   try {
     // Ensuring the `date` is a valid Date object
     const $date = new Date(date);

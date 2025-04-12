@@ -1,5 +1,5 @@
 import { createCurrencyEntity } from "@/domain/entities/currency.entity";
-import { createDateEntity } from "@/domain/entities/date.entity";
+import { newDateEntity } from "@/domain/entities/date.entity";
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { ProductDatabase } from "@/infra/db/types/product";
 
@@ -29,7 +29,7 @@ export function mapPrismaProductToDomainProduct(
     newArrival: false, // Valor padrão
     topRated: Number(dbProduct.rating) >= 4.5, // Produto é "top-rated" se tiver alta avaliação
     trending: false, // Valor padrão
-    createdAt: createDateEntity(dbProduct.createdAt), // Definindo a data atual como criação
-    updatedAt: createDateEntity(dbProduct.updatedAt), // Definindo a data atual como última atualização
+    createdAt: newDateEntity(dbProduct.createdAt), // Definindo a data atual como criação
+    updatedAt: newDateEntity(dbProduct.updatedAt), // Definindo a data atual como última atualização
   };
 }

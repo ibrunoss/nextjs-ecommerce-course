@@ -22,7 +22,7 @@ import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { productEntitySchema } from "@/lib/validators/product";
 import { findCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
 import { getOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
-import { createDateEntity } from "@/domain/entities/date.entity";
+import { newDateEntity } from "@/domain/entities/date.entity";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -53,8 +53,8 @@ export async function addItemToCart(
         sessionCartId,
         items: [item],
         ...calcPrice([item]),
-        createdAt: createDateEntity(new Date()),
-        updatedAt: createDateEntity(new Date()),
+        createdAt: newDateEntity(new Date()),
+        updatedAt: newDateEntity(new Date()),
       });
       await prismaCartRepositoryAdapter.create(newCart);
       // Revalidate product page

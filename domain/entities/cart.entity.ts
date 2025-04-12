@@ -2,7 +2,7 @@ import {
   createCurrencyEntity,
   CurrencyEntity,
 } from "@/domain/entities/currency.entity";
-import { createDateEntity, DateEntity } from "@/domain/entities/date.entity";
+import { newDateEntity, DateEntity } from "@/domain/entities/date.entity";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { round2 } from "@/lib/utils";
 
@@ -33,8 +33,8 @@ export const newCartEntity = (
     shippingPrice: createCurrencyEntity(0),
     taxPrice: createCurrencyEntity(0),
     totalPrice: createCurrencyEntity(0),
-    createdAt: createDateEntity(new Date()),
-    updatedAt: createDateEntity(new Date()),
+    createdAt: newDateEntity(new Date()),
+    updatedAt: newDateEntity(new Date()),
     ...params,
   };
 
@@ -48,7 +48,7 @@ export const newCartEntity = (
     shippingPrice = updatedPrices.shippingPrice;
     taxPrice = updatedPrices.taxPrice;
     totalPrice = updatedPrices.totalPrice;
-    updatedAt = createDateEntity(new Date());
+    updatedAt = newDateEntity(new Date());
   };
 
   const addItem = (cartItem: CartItemEntity) => {

@@ -10,7 +10,7 @@ export interface CurrencyEntity {
   fractionalSymbol: string;
 }
 
-export function createCurrencyEntity(
+export function newCurrencyEntity(
   value: string | number,
   currencySymbol: string = "R$",
   fractionalSymbol: string = ","

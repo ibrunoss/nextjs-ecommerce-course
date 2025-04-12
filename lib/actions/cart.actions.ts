@@ -15,7 +15,7 @@ import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-reposit
 import { prismaProductRepositoryAdapter } from "@/adapters/product/prisma-product-repository.adapter";
 import { round2 } from "@/lib/utils";
 import {
-  createCurrencyEntity,
+  newCurrencyEntity,
   CurrencyEntity,
 } from "@/domain/entities/currency.entity";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
@@ -128,7 +128,7 @@ function calcPrice(items: CartItemEntity[]): {
   taxPrice: CurrencyEntity;
   totalPrice: CurrencyEntity;
 } {
-  const itemsPrice = createCurrencyEntity(
+  const itemsPrice = newCurrencyEntity(
     round2(
       items.reduce(
         (acc, item) => acc + item.price.numericValue * item.quantity,
@@ -136,13 +136,11 @@ function calcPrice(items: CartItemEntity[]): {
       )
     )
   );
-  const shippingPrice = createCurrencyEntity(
+  const shippingPrice = newCurrencyEntity(
     round2(itemsPrice.numericValue > 100 ? 0 : 10)
   );
-  const taxPrice = createCurrencyEntity(
-    round2(0.0138 * itemsPrice.numericValue)
-  );
-  const totalPrice = createCurrencyEntity(
+  const taxPrice = newCurrencyEntity(round2(0.0138 * itemsPrice.numericValue));
+  const totalPrice = newCurrencyEntity(
     round2(
       itemsPrice.numericValue +
         taxPrice.numericValue +

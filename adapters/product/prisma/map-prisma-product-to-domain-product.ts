@@ -1,4 +1,4 @@
-import { createCurrencyEntity } from "@/domain/entities/currency.entity";
+import { newCurrencyEntity } from "@/domain/entities/currency.entity";
 import { newDateEntity } from "@/domain/entities/date.entity";
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { ProductDatabase } from "@/infra/db/types/product";
@@ -13,7 +13,7 @@ export function mapPrismaProductToDomainProduct(
     category: dbProduct.category,
     description: dbProduct.description,
     images: dbProduct.images,
-    price: createCurrencyEntity(dbProduct.price),
+    price: newCurrencyEntity(dbProduct.price),
     brand: dbProduct.brand,
     rating: Number(dbProduct.rating),
     reviews: Number(dbProduct.numReviews),

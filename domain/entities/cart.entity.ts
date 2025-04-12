@@ -1,5 +1,5 @@
 import {
-  createCurrencyEntity,
+  newCurrencyEntity,
   CurrencyEntity,
 } from "@/domain/entities/currency.entity";
 import { newDateEntity, DateEntity } from "@/domain/entities/date.entity";
@@ -29,10 +29,10 @@ export const newCartEntity = (
     userId: "",
     sessionCartId: "",
     items: [],
-    itemsPrice: createCurrencyEntity(0),
-    shippingPrice: createCurrencyEntity(0),
-    taxPrice: createCurrencyEntity(0),
-    totalPrice: createCurrencyEntity(0),
+    itemsPrice: newCurrencyEntity(0),
+    shippingPrice: newCurrencyEntity(0),
+    taxPrice: newCurrencyEntity(0),
+    totalPrice: newCurrencyEntity(0),
     createdAt: newDateEntity(new Date()),
     updatedAt: newDateEntity(new Date()),
     ...params,
@@ -119,7 +119,7 @@ function calcPrice(items: CartItemEntity[]): {
   taxPrice: CurrencyEntity;
   totalPrice: CurrencyEntity;
 } {
-  const itemsPrice = createCurrencyEntity(
+  const itemsPrice = newCurrencyEntity(
     round2(
       items.reduce(
         (acc, item) => acc + item.price.numericValue * item.quantity,
@@ -127,13 +127,11 @@ function calcPrice(items: CartItemEntity[]): {
       )
     )
   );
-  const shippingPrice = createCurrencyEntity(
+  const shippingPrice = newCurrencyEntity(
     round2(itemsPrice.numericValue > 100 ? 0 : 10)
   );
-  const taxPrice = createCurrencyEntity(
-    round2(0.0138 * itemsPrice.numericValue)
-  );
-  const totalPrice = createCurrencyEntity(
+  const taxPrice = newCurrencyEntity(round2(0.0138 * itemsPrice.numericValue));
+  const totalPrice = newCurrencyEntity(
     round2(
       itemsPrice.numericValue +
         taxPrice.numericValue +

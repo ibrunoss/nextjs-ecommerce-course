@@ -20,8 +20,8 @@ import {
 } from "@/domain/entities/currency.entity";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { productEntitySchema } from "@/lib/validators/product";
-import { findCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
-import { getOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
+import { FindCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
+import { GetOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
 import { newDateEntity } from "@/domain/entities/date.entity";
 
 export async function addItemToCart(
@@ -30,11 +30,10 @@ export async function addItemToCart(
 ): Promise<ActionState> {
   try {
     const { sessionCartId, userId = "" } = await getSessionCartIdAndUserId();
-
-    const cart = await getOrCreateCartUseCase({
+    const getCartUseCase = GetOrCreateCartUseCase(prismaCartRepositoryAdapter);
+    const { cart } = await getCartUseCase.execute({
       sessionCartId,
       userId,
-      cartRepository: prismaCartRepositoryAdapter,
     });
 
     const product = productEntitySchema.parse(
@@ -179,10 +178,13 @@ async function getSessionCartIdAndUserId(): Promise<{
 export async function getMyCart(): Promise<CartEntity | undefined> {
   const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
-  const cart = await findCartByUserOrSessionCartUseCase({
+  const findCartUseCase = FindCartByUserOrSessionCartUseCase(
+    prismaCartRepositoryAdapter
+  );
+
+  const { cart } = await findCartUseCase.execute({
     userId,
     sessionCartId,
-    cartRepository: prismaCartRepositoryAdapter,
   });
 
   if (!cart) {

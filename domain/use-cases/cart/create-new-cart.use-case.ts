@@ -1,23 +1,34 @@
 import { CartEntity, newCartEntity } from "@/domain/entities/cart.entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 
-export type FindCartByUserOrSessionCartUseCaseParams = {
-  cartRepository: CartRepository;
-  sessionCartId: string;
-  userId?: string;
+type Input =
+  | {
+      sessionCartId?: string;
+      userId: string;
+    }
+  | {
+      sessionCartId: string;
+      userId?: string;
+    };
+
+type Output = {
+  cart: CartEntity;
 };
 
-export async function createNewCartUseCase({
-  cartRepository,
-  sessionCartId,
-  userId,
-}: FindCartByUserOrSessionCartUseCaseParams): Promise<CartEntity> {
-  const cart: CartEntity = newCartEntity({
+export function CreateNewCartUseCase(cartRepository: CartRepository) {
+  const execute = async ({
+    sessionCartId = "",
     userId,
-    sessionCartId,
-  });
+  }: Input): Promise<Output> => {
+    const cart = newCartEntity({
+      sessionCartId,
+      userId,
+    });
 
-  await cartRepository.create(cart);
+    await cartRepository.create(cart);
 
-  return cart;
+    return { cart };
+  };
+
+  return { execute };
 }

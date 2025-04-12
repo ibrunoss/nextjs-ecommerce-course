@@ -8,7 +8,7 @@ import {
   CathActionError,
   getActionErrors,
 } from "@/lib/actions/utils.actions";
-import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity, newCartEntity } from "@/domain/entities/cart.entity";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { auth } from "@/auth";
 import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-repository.adapter";
@@ -20,7 +20,6 @@ import {
 } from "@/domain/entities/currency.entity";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { productEntitySchema } from "@/lib/validators/product";
-import { cartEntitySchema } from "@/lib/validators/cart";
 import { findCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
 import { getOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
 import { createDateEntity } from "@/domain/entities/date.entity";
@@ -48,7 +47,7 @@ export async function addItemToCart(
     };
 
     if (!cart) {
-      const newCart: CartEntity = cartEntitySchema.parse({
+      const newCart: CartEntity = newCartEntity({
         id: crypto.randomUUID(),
         userId,
         sessionCartId,
@@ -75,7 +74,7 @@ export async function addItemToCart(
       // Increase the quantity
       itemFound.quantity += item.quantity;
 
-      const updatedCart: CartEntity = cartEntitySchema.parse({
+      const updatedCart: CartEntity = newCartEntity({
         ...cart,
         ...calcPrice(cart.items),
       });
@@ -92,7 +91,7 @@ export async function addItemToCart(
       throw new Error(`Quantidade de ${item.name} não disponível`);
     }
     cart.items.push(item);
-    const updatedCart: CartEntity = cartEntitySchema.parse({
+    const updatedCart: CartEntity = newCartEntity({
       ...cart,
       ...calcPrice(cart.items),
     });

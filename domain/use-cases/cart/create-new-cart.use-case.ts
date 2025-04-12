@@ -1,8 +1,5 @@
-import { CartEntity } from "@/domain/entities/cart.entity";
-import { createCurrencyEntity } from "@/domain/entities/currency.entity";
-import { createDateEntity } from "@/domain/entities/date.entity";
+import { CartEntity, newCartEntity } from "@/domain/entities/cart.entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
-import { cartEntitySchema } from "@/lib/validators/cart";
 
 export type FindCartByUserOrSessionCartUseCaseParams = {
   cartRepository: CartRepository;
@@ -15,17 +12,9 @@ export async function createNewCartUseCase({
   sessionCartId,
   userId,
 }: FindCartByUserOrSessionCartUseCaseParams): Promise<CartEntity> {
-  const cart: CartEntity = cartEntitySchema.parse({
-    id: crypto.randomUUID(),
+  const cart: CartEntity = newCartEntity({
     userId,
     sessionCartId,
-    items: [],
-    itemsPrice: createCurrencyEntity(0),
-    shippingPrice: createCurrencyEntity(0),
-    taxPrice: createCurrencyEntity(0),
-    totalPrice: createCurrencyEntity(0),
-    createdAt: createDateEntity(new Date()),
-    updatedAt: createDateEntity(new Date()),
   });
 
   await cartRepository.create(cart);

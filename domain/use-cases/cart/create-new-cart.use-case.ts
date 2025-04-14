@@ -15,12 +15,12 @@ export function CreateNewCartUseCase(cartRepository: CartRepository) {
     sessionCartId = "",
     userId,
   }: Input): Promise<Output> => {
-    const cart = newCartEntity({
+    let cart = newCartEntity({
       sessionCartId,
       userId,
     });
 
-    await cartRepository.create(cart);
+    cart = await cartRepository.create(cart);
 
     return { cart };
   };

@@ -9,7 +9,7 @@ import {
 } from "@/lib/actions/utils.actions";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { auth } from "@/auth";
-import { GetCartAndAddItemToCartUseCase } from "@/domain/use-cases/cart/get-cart-and-add-item-to-cart.use-case";
+import { getCartAndAddItemToCartHandler } from "@/lib/use-cases-handlers/cart/get-cart-and-add-item-to-cart.handler";
 import { prismaCartRepositoryAdapter } from "@/adapters/cart/prisma-cart-repository.adapter";
 import { prismaProductRepositoryAdapter } from "@/adapters/product/prisma-product-repository.adapter";
 
@@ -19,12 +19,12 @@ export async function addItemToCart(
 ): Promise<ActionState> {
   try {
     const { sessionCartId, userId = "" } = await getSessionCartIdAndUserId();
-    const getCartAndAddItemUseCase = GetCartAndAddItemToCartUseCase(
-      prismaCartRepositoryAdapter,
-      prismaProductRepositoryAdapter
-    );
 
-    await getCartAndAddItemUseCase.execute({ cartItem, sessionCartId, userId });
+    await getCartAndAddItemToCartHandler(
+      prismaCartRepositoryAdapter,
+      prismaProductRepositoryAdapter,
+      { sessionCartId, userId, cartItem }
+    );
 
     return {
       success: true,

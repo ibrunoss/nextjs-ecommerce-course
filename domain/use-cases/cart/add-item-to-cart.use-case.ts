@@ -1,14 +1,11 @@
-import { revalidatePath } from "next/cache";
-
 import { CartEntity } from "@/domain/entities/cart.entity";
-import { CartRepository } from "@/domain/repositories/cart.repository";
-import { ProductRepository } from "@/domain/repositories/product.repository";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
-import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
+import { CartRepository } from "@/domain/repositories/cart.repository";
 
 type Input = {
   cart: CartEntity;
   cartItem: CartItemEntity;
+  productStock: number;
 };
 
 type Output = {
@@ -31,34 +28,25 @@ const checkIsAvailable = ({
   }
 };
 
-export function AddItemToCartUseCase(
-  cartRepository: CartRepository,
-  productRepository: ProductRepository
-) {
-  const execute = async ({ cart, cartItem }: Input): Promise<Output> => {
-    const product = await productRepository.findById(cartItem.productId);
-
-    if (!product) {
-      throw new Error(`Não foi possível localizar o ${cartItem.name}!`);
-    }
-
+export function AddItemToCartUseCase(cartRepository: CartRepository) {
+  const execute = async ({
+    cart,
+    cartItem,
+    productStock,
+  }: Input): Promise<Output> => {
     const itemFound = cart.getItemByProductId(cartItem.productId);
-
-    const { stock } = product;
     const itemName = cartItem.name;
-    let quantityToAdd = cartItem.quantity;
 
+    let quantityToAdd = cartItem.quantity;
     if (itemFound) {
       quantityToAdd += itemFound.quantity;
     }
 
-    checkIsAvailable({ itemName, quantityToAdd, stock });
+    checkIsAvailable({ itemName, quantityToAdd, stock: productStock });
 
     cart.addItem(cartItem);
 
-    cartRepository.save(cart);
-    // Revalidate product page
-    revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
+    await cartRepository.save(cart);
 
     return { cart };
   };

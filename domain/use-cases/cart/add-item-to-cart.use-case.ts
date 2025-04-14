@@ -36,7 +36,6 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
   }: Input): Promise<Output> => {
     const itemFound = cart.getItemByProductId(cartItem.productId);
     const itemName = cartItem.name;
-
     let quantityToAdd = cartItem.quantity;
     if (itemFound) {
       quantityToAdd += itemFound.quantity;
@@ -44,11 +43,11 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
 
     checkIsAvailable({ itemName, quantityToAdd, stock: productStock });
 
-    cart.addItem(cartItem);
+    const cartUpdated = cart.addItem(cartItem);
 
-    await cartRepository.save(cart);
+    await cartRepository.save(cartUpdated);
 
-    return { cart };
+    return { cart: cartUpdated };
   };
 
   return { execute };

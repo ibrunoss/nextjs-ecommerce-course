@@ -17,8 +17,8 @@ export interface CartEntity {
   userId: string;
   createdAt: DateEntity;
   updatedAt: DateEntity;
-  addItem(cartItem: CartItemEntity): void;
-  removeItem(cartItem: CartItemEntity): void;
+  addItem(cartItem: CartItemEntity): CartEntity;
+  removeItem(cartItem: CartItemEntity): CartEntity;
   getItemByProductId(productId: string): CartItemEntity | undefined;
 }
 
@@ -43,22 +43,18 @@ export const newCartEntity = (
   };
 
   const { createdAt, id, items, sessionCartId, userId } = defaultValue;
-  let { itemsPrice, shippingPrice, taxPrice, totalPrice, updatedAt } =
-    defaultValue;
 
-  const updatePrices = () => {
-    const updatedPrices = calcPrice(items);
-    itemsPrice = updatedPrices.itemsPrice;
-    shippingPrice = updatedPrices.shippingPrice;
-    taxPrice = updatedPrices.taxPrice;
-    totalPrice = updatedPrices.totalPrice;
-    updatedAt = newDateEntity(new Date());
+  const updatePrices = (): CartPricesWithUpdatedAt => {
+    return {
+      ...calcPrice(items),
+      updatedAt: newDateEntity(new Date()),
+    };
   };
 
   const getItemByProductId = (productId: string) =>
     items.find((x) => x.productId === productId);
 
-  const addItem = (cartItem: CartItemEntity) => {
+  const addItem = (cartItem: CartItemEntity): CartEntity => {
     const itemFound = getItemByProductId(cartItem.productId);
 
     const addNewItem = () => {
@@ -79,54 +75,88 @@ export const newCartEntity = (
     };
 
     addOrUpdate[action]();
-    updatePrices();
+
+    return {
+      addItem,
+      removeItem,
+      getItemByProductId,
+      createdAt,
+      id,
+      items,
+      sessionCartId,
+      userId,
+      ...updatePrices(),
+    };
   };
 
-  const removeItem = (cartItem: CartItemEntity) => {
+  const removeItem = (cartItem: CartItemEntity): CartEntity => {
     const itemIndex = items.findIndex(
       (x) => x.productId === cartItem.productId
     );
 
     if (itemIndex < 0) {
-      return;
+      return {
+        addItem,
+        removeItem,
+        getItemByProductId,
+        ...defaultValue,
+      };
     }
 
     const itemFound = items[itemIndex];
 
     if (itemFound.quantity - cartItem.quantity <= 0) {
       items.splice(itemIndex, 1);
-      updatePrices();
-      return;
+
+      return {
+        addItem,
+        removeItem,
+        getItemByProductId,
+        createdAt,
+        id,
+        items,
+        sessionCartId,
+        userId,
+        ...updatePrices(),
+      };
     }
 
     itemFound.quantity += cartItem.quantity;
-    updatePrices();
+
+    return {
+      addItem,
+      removeItem,
+      getItemByProductId,
+      createdAt,
+      id,
+      items,
+      sessionCartId,
+      userId,
+      ...updatePrices(),
+    };
   };
 
   return {
     addItem,
     removeItem,
     getItemByProductId,
-    createdAt,
-    id,
-    items,
-    itemsPrice,
-    sessionCartId,
-    shippingPrice,
-    taxPrice,
-    totalPrice,
-    updatedAt,
-    userId,
+    ...defaultValue,
   };
 };
 
-// Calculate cart prices
-function calcPrice(items: CartItemEntity[]): {
+type CartPrices = {
   itemsPrice: CurrencyEntity;
   shippingPrice: CurrencyEntity;
   taxPrice: CurrencyEntity;
   totalPrice: CurrencyEntity;
-} {
+};
+
+type CartPricesWithUpdatedAt = CartPrices & {
+  updatedAt: DateEntity;
+};
+
+// Calculate cart prices
+function calcPrice(items: CartItemEntity[]): CartPrices {
   const itemsPrice = newCurrencyEntity(
     round2(
       items.reduce(

@@ -25,11 +25,7 @@ export function FindCartByUserOrSessionCartUseCase(
       cart = await cartRepository.findByUserId(userId);
     }
 
-    if (cart) {
-      return { cart };
-    }
-
-    if (sessionCartId) {
+    if (!cart && sessionCartId) {
       cart = await cartRepository.findBySessionCartId(sessionCartId);
     }
 

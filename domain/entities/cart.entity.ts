@@ -19,10 +19,14 @@ export interface CartEntity {
   updatedAt: DateEntity;
   addItem(cartItem: CartItemEntity): void;
   removeItem(cartItem: CartItemEntity): void;
+  getItemByProductId(productId: string): CartItemEntity | undefined;
 }
 
 export const newCartEntity = (
-  params?: Omit<Partial<CartEntity>, "addItem" | "removeItem">
+  params?: Omit<
+    Partial<CartEntity>,
+    "addItem" | "removeItem" | "getItemByProductId"
+  >
 ): CartEntity => {
   const defaultValue: Required<typeof params> = {
     id: crypto.randomUUID(),
@@ -51,8 +55,11 @@ export const newCartEntity = (
     updatedAt = newDateEntity(new Date());
   };
 
+  const getItemByProductId = (productId: string) =>
+    items.find((x) => x.productId === productId);
+
   const addItem = (cartItem: CartItemEntity) => {
-    const itemFound = items.find((x) => x.productId === cartItem.productId);
+    const itemFound = getItemByProductId(cartItem.productId);
 
     const addNewItem = () => {
       items.push(cartItem);
@@ -99,6 +106,7 @@ export const newCartEntity = (
   return {
     addItem,
     removeItem,
+    getItemByProductId,
     createdAt,
     id,
     items,

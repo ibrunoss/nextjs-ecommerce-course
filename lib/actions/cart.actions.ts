@@ -18,17 +18,21 @@ export async function addItemToCart(
   cartItem: CartItemEntity
 ): Promise<ActionState> {
   try {
-    const { sessionCartId, userId = "" } = await getSessionCartIdAndUserId();
+    const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
-    await getCartAndAddItemToCartHandler(
+    const { itemAlreadyInCart } = await getCartAndAddItemToCartHandler(
       cartRepositoryAdapter,
       productRepositoryAdapter,
       { sessionCartId, userId, cartItem }
     );
 
+    const message = `${cartItem.name} ${
+      itemAlreadyInCart ? "atualizado" : "adicionado"
+    } ao carrinho`;
+
     return {
       success: true,
-      message: `${cartItem.name} adicionado ao carrinho`,
+      message,
     };
   } catch (e) {
     if (isRedirectError(e)) {

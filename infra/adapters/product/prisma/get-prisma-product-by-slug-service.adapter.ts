@@ -1,11 +1,11 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
-import { getPrismaProductByIdService } from "@/infra/services/product/get-prisma-product-by-id.service";
-import { mapPrismaProductToDomainProduct } from "@/adapters/product/prisma/map-prisma-product-to-domain-product";
+import { getPrismaProductBySlugService } from "@/infra/services/product/get-prisma-product-by-slug.service";
+import { mapPrismaProductToDomainProduct } from "@/infra/adapters/product/prisma/map-prisma-product-to-domain-product";
 
-export async function getPrismaProductByIdServiceAdapter(
-  id: string
+export async function getPrismaProductBySlugServiceAdapter(
+  slug: string
 ): Promise<ProductEntity | null> {
-  const response = await getPrismaProductByIdService(id);
+  const response = await getPrismaProductBySlugService(slug);
   let product: ProductEntity | null;
 
   if (!response) {

@@ -1,6 +1,6 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { getPrismaLatestProductsService } from "@/infra/services/product/get-prisma-latest-products.service";
-import { mapPrismaProductToDomainProduct } from "@/adapters/product/prisma/map-prisma-product-to-domain-product";
+import { mapPrismaProductToDomainProduct } from "@/infra/adapters/product/prisma/map-prisma-product-to-domain-product";
 
 export async function getPrismaLatestProductsServiceAdapter(): Promise<
   ProductEntity[]

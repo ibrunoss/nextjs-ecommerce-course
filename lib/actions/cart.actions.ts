@@ -10,8 +10,8 @@ import {
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { auth } from "@/auth";
 import { getCartAndAddItemToCartHandler } from "@/lib/use-cases-handlers/cart/get-cart-and-add-item-to-cart.handler";
-import { cartRepositoryAdapter } from "@/adapters/cart/cart-repository.adapter";
-import { productRepositoryAdapter } from "@/adapters/product/product-repository.adapter";
+import { cartRepositoryAdapter } from "@/infra/adapters/cart/cart-repository.adapter";
+import { productRepositoryAdapter } from "@/infra/adapters/product/product-repository.adapter";
 
 export async function addItemToCart(
   prevState: ActionState,

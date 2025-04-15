@@ -1,4 +1,4 @@
-import { productRepositoryAdapter } from "@/adapters/product/product-repository.adapter";
+import { productRepositoryAdapter } from "@/infra/adapters/product/product-repository.adapter";
 import { FeaturedProductList } from "@/components/product/featured/featured-product-list";
 
 export const metadata = {

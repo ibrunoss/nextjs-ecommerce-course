@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { productRepositoryAdapter } from "@/adapters/product/product-repository.adapter";
+import { productRepositoryAdapter } from "@/infra/adapters/product/product-repository.adapter";
 import { ProductDetails } from "@/components/product/product-details";
 import { ProductPurchaseCard } from "@/components/product/product-purchase-card";
 import { ProductImages } from "@/components/product/product-images";

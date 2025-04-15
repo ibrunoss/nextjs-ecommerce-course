@@ -1,6 +1,6 @@
 import { CartEntity } from "@/domain/entities/cart.entity";
 import { CartDatabase } from "@/infra/types/cart";
-import { mapPrismaCartToDomainCart } from "@/adapters/cart/prisma/map-prisma-cart-to-domain-cart";
+import { mapPrismaCartToDomainCart } from "@/infra/mappers/cart/cart-database-to-cart-entity";
 
 export function handleGetPrismaCart(
   dbCart: CartDatabase | null

@@ -1,9 +1,5 @@
 import { prismaToJS } from "@/lib/utils";
-import {
-  CartDatabase,
-  CartItemDatabase,
-  CartPrisma,
-} from "@/infra/db/types/cart";
+import { CartDatabase, CartItemDatabase, CartPrisma } from "@/infra/types/cart";
 
 export function cartPrismaToCartDatabaseMapper(cart: CartPrisma): CartDatabase {
   return prismaToJS({

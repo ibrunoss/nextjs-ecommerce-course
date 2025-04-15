@@ -1,8 +1,8 @@
 "use server";
 
 import { prisma } from "@/infra/db/prisma";
-import { cartPrismaToCartDatabaseMapper } from "@/infra/db/mappers/cart/cart-prisma-to-cart-database.mapper.ts";
-import { CartDatabase } from "@/infra/db/types/cart";
+import { cartPrismaToCartDatabaseMapper } from "@/infra/mappers/cart/cart-prisma-to-cart-database.mapper.ts";
+import { CartDatabase } from "@/infra/types/cart";
 
 export async function getPrismaCartByUserIdService(
   userId: string

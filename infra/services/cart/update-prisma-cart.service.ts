@@ -1,6 +1,6 @@
-import { cartPrismaToCartDatabaseMapper } from "@/infra/db/mappers/cart/cart-prisma-to-cart-database.mapper.ts";
+import { cartPrismaToCartDatabaseMapper } from "@/infra/mappers/cart/cart-prisma-to-cart-database.mapper.ts";
 import { prisma } from "@/infra/db/prisma";
-import { CartDatabase } from "@/infra/db/types/cart";
+import { CartDatabase } from "@/infra/types/cart";
 
 export async function updatePrismaCartService(
   cart: CartDatabase

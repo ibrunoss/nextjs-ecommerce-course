@@ -1,6 +1,6 @@
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { newCurrencyEntity } from "@/domain/entities/currency.entity";
-import { CartItemDatabase } from "@/infra/db/types/cart";
+import { CartItemDatabase } from "@/infra/types/cart";
 
 export function mapPrismaCartItemToDomainCartItem(
   dbCartItem: CartItemDatabase

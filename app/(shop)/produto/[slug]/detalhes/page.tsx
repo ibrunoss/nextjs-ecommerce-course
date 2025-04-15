@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { prismaProductRepositoryAdapter } from "@/adapters/product/prisma-product-repository.adapter";
+import { productRepositoryAdapter } from "@/adapters/product/product-repository.adapter";
 import { ProductDetails } from "@/components/product/product-details";
 import { ProductPurchaseCard } from "@/components/product/product-purchase-card";
 import { ProductImages } from "@/components/product/product-images";
@@ -13,7 +13,7 @@ export default async function ProductDetailsPage({
   params,
 }: ProductDetailsPageProps) {
   const { slug } = await params;
-  const product = await prismaProductRepositoryAdapter.findBySlug(slug);
+  const product = await productRepositoryAdapter.findBySlug(slug);
 
   if (!product) {
     notFound();

@@ -10,6 +10,7 @@ type Input = {
 
 type Output = {
   cart: CartEntity;
+  itemAlreadyInCart: boolean;
 };
 
 type CheckIsAvailableParams = {
@@ -37,7 +38,9 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
     const itemFound = cart.getItemByProductId(cartItem.productId);
     const itemName = cartItem.name;
     let quantityToAdd = cartItem.quantity;
-    if (itemFound) {
+    const itemAlreadyInCart = itemFound !== undefined;
+
+    if (itemAlreadyInCart) {
       quantityToAdd += itemFound.quantity;
     }
 
@@ -47,7 +50,7 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
 
     await cartRepository.save(cartUpdated);
 
-    return { cart: cartUpdated };
+    return { cart: cartUpdated, itemAlreadyInCart };
   };
 
   return { execute };

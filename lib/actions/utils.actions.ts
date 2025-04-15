@@ -1,20 +1,26 @@
 import { ZodError } from "zod";
 import { Prisma } from "@prisma/client";
 
+export type ActionStateMessage = {
+  description: string;
+  title?: string;
+  type: "success" | "error" | "info" | "warning";
+};
+
 export type ActionError = {
   code: string;
   path: string;
-  message: string;
+  message: ActionStateMessage;
 };
 
 export type ActionStateError = {
   errors: ActionError[];
-  message: string;
+  message: ActionStateMessage;
   success: false;
 };
 
 export type ActionStateSuccess = {
-  message: string;
+  message: ActionStateMessage;
   success: true;
 };
 
@@ -32,7 +38,7 @@ export type ActionState = ActionStateSuccess | ActionStateError;
 export type ReplaceMessageByCodeAndName = {
   name: string;
   code: string;
-  message: string;
+  message: ActionStateMessage;
 };
 
 type GetActionErrorsParams = {
@@ -44,13 +50,13 @@ type GetActionErrorsParams = {
 
 export const initialActionStateError: ActionStateError = {
   success: false,
-  message: "",
+  message: { type: "error", description: "" },
   errors: [],
 };
 
 export const initialActionStateSuccess: ActionStateSuccess = {
   success: true,
-  message: "",
+  message: { type: "success", description: "" },
 };
 
 export const initialActionState: ActionState = { ...initialActionStateError };
@@ -59,9 +65,9 @@ function replaceMessageByCodeAndName({
   error,
   replacement,
 }: {
-  error: { name: string; code: string; message: string };
+  error: { name: string; code: string; message: ActionStateMessage };
   replacement: ReplaceMessageByCodeAndName[];
-}): string {
+}): ActionStateMessage {
   return (
     replacement.find((e) => e.code === error.code && e.name === error.name)
       ?.message ?? error.message
@@ -78,7 +84,11 @@ export function getActionErrors({
     const zodErrors: ActionError[] = error.errors.map((err) => ({
       code: err.code,
       message: replaceMessageByCodeAndName({
-        error: { code: err.code, message: err.message, name: error.name },
+        error: {
+          code: err.code,
+          message: { type: "error", description: err.message },
+          name: error.name,
+        },
         replacement: replacementMessageByCodeAndName,
       }),
       path: err.path.join("."),
@@ -87,7 +97,10 @@ export function getActionErrors({
     return {
       success: false,
       errors: zodErrors,
-      message: zodErrors.map((err) => err.message).join(", "),
+      message: {
+        type: "error",
+        description: zodErrors.map((err) => err.message.description).join(", "),
+      },
     };
   }
 
@@ -95,10 +108,13 @@ export function getActionErrors({
     const formattedError = {
       name: "PrismaClientKnownRequestError",
       code: error.code,
-      message:
-        typeof error.message === "string"
-          ? error.message
-          : JSON.stringify(error.message),
+      message: {
+        type: "error" as const,
+        description:
+          typeof error.message === "string"
+            ? error.message
+            : JSON.stringify(error.message),
+      },
     };
 
     const replacedMessage = replaceMessageByCodeAndName({
@@ -121,14 +137,19 @@ export function getActionErrors({
     };
   }
 
+  const message = {
+    type: "error" as const,
+    description: error.message || messageWhenErrorIsUnknown,
+  };
+
   if (error instanceof Error) {
     return {
       success: false,
-      message: error.message || messageWhenErrorIsUnknown,
+      message,
       errors: [
         {
           code: "",
-          message: error.message || messageWhenErrorIsUnknown,
+          message,
           path,
         },
       ],
@@ -137,8 +158,8 @@ export function getActionErrors({
 
   return {
     success: false,
-    message: messageWhenErrorIsUnknown,
-    errors: [{ code: "", message: messageWhenErrorIsUnknown, path }],
+    message,
+    errors: [{ code: "", message, path }],
   };
 }
 
@@ -151,7 +172,7 @@ export function getErroByPath({
 }): [string, boolean] {
   const errorMessage = errors
     .filter((error) => error.path === path)
-    .map((e) => e.message);
+    .map((e) => e.message.description);
 
   const errorLocated = errorMessage.length > 0;
   return [errorMessage.join(", ") ?? "", errorLocated];
@@ -161,7 +182,9 @@ export function mapErrorsToObject(
   errors: ActionError[]
 ): Record<string, string> {
   return errors.reduce<Record<string, string>>((acc, { message, path }) => {
-    acc[path] = acc[path] ? `${acc[path]}, ${message}` : message;
+    acc[path] = acc[path]
+      ? `${acc[path]}, ${message.description}`
+      : message.description;
 
     return acc;
   }, {});

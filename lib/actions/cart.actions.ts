@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 import {
   ActionState,
+  ActionStateMessage,
   CathActionError,
   getActionErrors,
 } from "@/lib/actions/utils.actions";
@@ -20,15 +21,21 @@ export async function addItemToCart(
   try {
     const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
-    const { itemAlreadyInCart } = await getCartAndAddItemToCartHandler(
+    const { itemAlreadyInCart, cart } = await getCartAndAddItemToCartHandler(
       cartRepositoryAdapter,
       productRepositoryAdapter,
       { sessionCartId, userId, cartItem }
     );
 
-    const message = `${cartItem.name} ${
-      itemAlreadyInCart ? "atualizado" : "adicionado"
-    } ao carrinho`;
+    const itemFound = cart.getItemByProductId(cartItem.productId) || cartItem;
+
+    const message: ActionStateMessage = {
+      type: "success",
+      title: `${
+        itemAlreadyInCart ? "Atualizado no" : "Adicionado ao"
+      } carrinho`,
+      description: `${itemFound.quantity}x ${itemFound.name}`,
+    };
 
     return {
       success: true,

@@ -22,7 +22,9 @@ export const CredentialsSignUpForm = () => {
   let errorMessage = "";
 
   if (!data.success) {
-    errorMessage = data.errors.map((erro) => erro.message).join(". ");
+    errorMessage = data.errors
+      .map((erro) => erro.message.description)
+      .join(". ");
   }
 
   const searchParams = useSearchParams();

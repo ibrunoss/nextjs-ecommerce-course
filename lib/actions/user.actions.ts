@@ -27,7 +27,7 @@ export async function signInWithCredentials(
 
     return {
       success: true,
-      message: "Login realizado com sucesso",
+      message: { description: "Login realizado com sucesso", type: "success" },
     };
   } catch (error) {
     if (isRedirectError(error)) {
@@ -37,7 +37,7 @@ export async function signInWithCredentials(
     return {
       errors: [],
       success: false,
-      message: "E-mail ou senha inválido",
+      message: { description: "E-mail ou senha inválido", type: "error" },
     };
   }
 }
@@ -70,7 +70,10 @@ export async function signUpWithCredentials(
 
     return {
       success: true,
-      message: "Usuário cadastrado com sucesso",
+      message: {
+        description: "Usuário cadastrado com sucesso",
+        type: "success",
+      },
     };
   } catch (e) {
     if (isRedirectError(e)) {
@@ -81,7 +84,7 @@ export async function signUpWithCredentials(
     const replacementMessageByCodeAndName: ReplaceMessageByCodeAndName[] = [
       {
         code: "P2002",
-        message: "Usuário ja cadastrado!",
+        message: { description: "Usuário ja cadastrado!", type: "error" },
         name: "PrismaClientKnownRequestError",
       },
     ];

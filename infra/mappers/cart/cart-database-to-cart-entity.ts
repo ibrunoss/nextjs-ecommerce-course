@@ -4,7 +4,7 @@ import { cartItemDatabaseToCartItemEntity } from "@/infra/mappers/cart/cart-item
 import { newCurrencyEntity } from "@/domain/entities/currency.entity";
 import { newDateEntity } from "@/domain/entities/date.entity";
 
-export function mapPrismaCartToDomainCart(dbCart: CartDatabase): CartEntity {
+export function cartDatabaseToCartEntity(dbCart: CartDatabase): CartEntity {
   return newCartEntity({
     id: dbCart.id,
     items: dbCart.items.map((dbCartItem) =>

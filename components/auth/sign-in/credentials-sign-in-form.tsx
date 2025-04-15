@@ -27,7 +27,10 @@ export const CredentialsSignInForm = () => {
         <EmailField defaultValue={signInDefaultValues.email} />
         <PasswordField defaultValue={signInDefaultValues.password} />
         <SignInButton />
-        <DisplayErrorMessage error={!data.success} message={data.message} />
+        <DisplayErrorMessage
+          error={!data.success}
+          message={data.message.description}
+        />
         <SignInPrompt />
       </div>
     </form>

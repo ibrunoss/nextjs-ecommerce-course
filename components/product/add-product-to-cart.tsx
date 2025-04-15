@@ -16,16 +16,16 @@ export const AddProductToCart = ({ cartItem }: AddProductToCartProps) => {
   const handleClick = async () => {
     const resp = await addItemToCart(initialActionState, cartItem);
     if (!resp.success) {
-      toast.error(resp.message, {
+      toast.error(resp.message.title, {
         richColors: true,
-        description: resp.errors.map((e) => e.message).join(", "),
+        description: resp.errors.map((e) => e.message.description).join(", "),
       });
       return;
     }
 
     toastSuccess({
-      title: "Adicionado ao carrinho",
-      description: `${cartItem.quantity}x ${cartItem.name}`,
+      title: resp.message.title ?? "",
+      description: resp.message.description,
       button: {
         label: "Ver carrinho",
         onClick: () => router.push("/carrinho"),

@@ -1,7 +1,7 @@
 import { CartEntity } from "@/domain/entities/cart.entity";
 import { createPrismaCartService } from "@/infra/services/cart/create-prisma-cart.service";
 import { cartEntityToCartDatabaseInsertMapper } from "@/infra/mappers/cart/cart-entity-to-cart-database-insert.mapper";
-import { mapPrismaCartToDomainCart } from "@/infra/mappers/cart/cart-database-to-cart-entity";
+import { cartDatabaseToCartEntity } from "@/infra/mappers/cart/cart-database-to-cart-entity";
 
 export async function createPrismaCartServiceAdapter(
   cart: CartEntity
@@ -10,5 +10,5 @@ export async function createPrismaCartServiceAdapter(
     cartEntityToCartDatabaseInsertMapper(cart)
   );
 
-  return mapPrismaCartToDomainCart(response);
+  return cartDatabaseToCartEntity(response);
 }

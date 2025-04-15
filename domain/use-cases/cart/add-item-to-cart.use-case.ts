@@ -46,9 +46,9 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
 
     checkIsAvailable({ itemName, quantityToAdd, stock: productStock });
 
-    const cartUpdated = cart.addItem(cartItem);
+    const cartToUpdate = cart.addItem(cartItem);
 
-    await cartRepository.save(cartUpdated);
+    const cartUpdated = await cartRepository.save(cartToUpdate);
 
     return { cart: cartUpdated, itemAlreadyInCart };
   };

@@ -1,11 +1,13 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
-import { productsInMemory } from "@/infra/adapters/product/memory/db";
+import { memorySampleData } from "@/infra/db/memory-sample-data";
 import { mapMemoryProductToDomainProduct } from "@/infra/adapters/product/memory/map-memory-product-to-domain-product";
 
 export async function getMemoryProductBySlugServiceAdapter(
   slug: string
 ): Promise<ProductEntity | null> {
-  const response = productsInMemory.find((product) => product.id === slug);
+  const response = memorySampleData.products.find(
+    (product) => product.id === slug
+  );
   let product: ProductEntity | null;
 
   if (!response) {

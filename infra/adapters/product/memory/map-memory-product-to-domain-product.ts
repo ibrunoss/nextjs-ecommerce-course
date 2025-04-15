@@ -1,7 +1,7 @@
 import { newCurrencyEntity } from "@/domain/entities/currency.entity";
 import { newDateEntity } from "@/domain/entities/date.entity";
 import { ProductEntity } from "@/domain/entities/product.entity";
-import { ProductMemory } from "@/infra/adapters/product/memory/db";
+import { ProductMemory } from "@/infra/types/product";
 
 export function mapMemoryProductToDomainProduct(
   product: ProductMemory

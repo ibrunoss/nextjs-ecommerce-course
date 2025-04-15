@@ -8,3 +8,13 @@ import {
 export type ProductDatabaseInsert = z.infer<typeof productDatabaseInsertSchema>;
 
 export type ProductDatabase = z.infer<typeof productDatabaseSchema>;
+
+export type ProductMemory = {
+  id: string;
+  nome: string;
+  descricao: string;
+  imagem: string;
+  preco: number;
+  estoque: number;
+  marca: string;
+};

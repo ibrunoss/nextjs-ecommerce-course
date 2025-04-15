@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import sampleData from "@/infra/db/sample-data";
+import prismaSampleData from "@/infra/db/prisma-sample-data";
 
 async function seed() {
   const prisma = new PrismaClient();
@@ -13,10 +13,10 @@ async function seed() {
     await prisma.user.deleteMany();
 
     await prisma.product.createMany({
-      data: sampleData.products,
+      data: prismaSampleData.products,
     });
     await prisma.user.createMany({
-      data: sampleData.users,
+      data: prismaSampleData.users,
     });
 
     console.log("Database seeded successfully");

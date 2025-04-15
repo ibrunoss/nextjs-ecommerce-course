@@ -2,7 +2,7 @@ import { hashSync } from "bcrypt-ts-edge";
 
 import { PASSWORD_SALT } from "@/lib/constants/auth";
 
-const sampleData = {
+const prismaSampleData = {
   users: [
     {
       name: "Maria",
@@ -123,4 +123,4 @@ const sampleData = {
   ],
 };
 
-export default sampleData;
+export default prismaSampleData;

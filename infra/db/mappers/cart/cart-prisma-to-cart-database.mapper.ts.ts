@@ -1,11 +1,11 @@
-import { Prisma } from "@prisma/client";
-
 import { prismaToJS } from "@/lib/utils";
-import { CartDatabase, CartItemDatabase } from "@/infra/db/types/cart";
+import {
+  CartDatabase,
+  CartItemDatabase,
+  CartPrisma,
+} from "@/infra/db/types/cart";
 
-type PrismaCart = Prisma.CartGetPayload<Prisma.CartDefaultArgs>;
-
-export function transformCart(cart: PrismaCart): CartDatabase {
+export function cartPrismaToCartDatabaseMapper(cart: CartPrisma): CartDatabase {
   return prismaToJS({
     ...cart,
     items: cart.items as CartItemDatabase[],

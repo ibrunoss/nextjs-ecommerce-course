@@ -2,7 +2,7 @@
 
 import { prisma } from "@/infra/db/prisma";
 import { CartDatabase } from "@/infra/db/types/cart";
-import { transformCart } from "@/infra/db/mappers/cart/transform-cart.mapper.ts";
+import { cartPrismaToCartDatabaseMapper } from "@/infra/db/mappers/cart/cart-prisma-to-cart-database.mapper.ts";
 
 export async function getPrismaCartBySessionCartIdService(
   sessionCartId: string
@@ -17,5 +17,5 @@ export async function getPrismaCartBySessionCartIdService(
     return null;
   }
 
-  return transformCart(data);
+  return cartPrismaToCartDatabaseMapper(data);
 }

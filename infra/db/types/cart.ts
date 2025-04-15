@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Prisma } from "@prisma/client";
 
 import {
   cartDatabaseSchema,
@@ -11,3 +12,5 @@ export type CartDatabase = z.infer<typeof cartDatabaseSchema>;
 export type CartDatabaseInsert = z.infer<typeof cartDatabaseInsertSchema>;
 
 export type CartItemDatabase = z.infer<typeof cartItemDatabaseSchema>;
+
+export type CartPrisma = Prisma.CartGetPayload<Prisma.CartDefaultArgs>;

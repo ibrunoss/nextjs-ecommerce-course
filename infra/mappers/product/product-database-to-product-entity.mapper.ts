@@ -3,7 +3,7 @@ import { newDateEntity } from "@/domain/entities/date.entity";
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { ProductDatabase } from "@/infra/types/product";
 
-export function mapPrismaProductToDomainProduct(
+export function productDatabaseToProductEntityMapper(
   dbProduct: ProductDatabase
 ): ProductEntity {
   return {

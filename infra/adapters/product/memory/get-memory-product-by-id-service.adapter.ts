@@ -1,6 +1,6 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { memorySampleData } from "@/infra/db/memory-sample-data";
-import { mapMemoryProductToDomainProduct } from "@/infra/adapters/product/memory/map-memory-product-to-domain-product";
+import { memoryProductToProductEntityMapper } from "@/infra/mappers/product/memory-product-to-product-entity.mapper";
 
 export async function getMemoryProductByIdServiceAdapter(
   id: string
@@ -14,7 +14,7 @@ export async function getMemoryProductByIdServiceAdapter(
   }
 
   const product: ProductEntity | null =
-    mapMemoryProductToDomainProduct(response);
+    memoryProductToProductEntityMapper(response);
 
   return product;
 }

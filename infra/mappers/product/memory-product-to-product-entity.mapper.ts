@@ -3,7 +3,7 @@ import { newDateEntity } from "@/domain/entities/date.entity";
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { ProductMemory } from "@/infra/types/product";
 
-export function mapMemoryProductToDomainProduct(
+export function memoryProductToProductEntityMapper(
   product: ProductMemory
 ): ProductEntity {
   return {

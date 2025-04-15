@@ -1,6 +1,6 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { memorySampleData } from "@/infra/db/memory-sample-data";
-import { mapMemoryProductToDomainProduct } from "@/infra/adapters/product/memory/map-memory-product-to-domain-product";
+import { memoryProductToProductEntityMapper } from "@/infra/mappers/product/memory-product-to-product-entity.mapper";
 
 export async function getMemoryProductBySlugServiceAdapter(
   slug: string
@@ -15,7 +15,7 @@ export async function getMemoryProductBySlugServiceAdapter(
   }
 
   try {
-    product = mapMemoryProductToDomainProduct(response);
+    product = memoryProductToProductEntityMapper(response);
   } catch (error) {
     console.error("Error while mapping API product to domain product: ", error);
     product = null;

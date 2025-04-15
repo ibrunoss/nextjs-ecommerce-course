@@ -1,6 +1,6 @@
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { getPrismaLatestProductsService } from "@/infra/services/product/get-prisma-latest-products.service";
-import { mapPrismaProductToDomainProduct } from "@/infra/adapters/product/prisma/map-prisma-product-to-domain-product";
+import { productDatabaseToProductEntityMapper } from "@/infra/mappers/product/product-database-to-product-entity.mapper";
 
 export async function getPrismaLatestProductsServiceAdapter(): Promise<
   ProductEntity[]
@@ -10,7 +10,7 @@ export async function getPrismaLatestProductsServiceAdapter(): Promise<
 
   try {
     products = response.map((dbProduct) =>
-      mapPrismaProductToDomainProduct(dbProduct)
+      productDatabaseToProductEntityMapper(dbProduct)
     );
   } catch (error) {
     console.error(

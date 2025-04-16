@@ -1,29 +1,24 @@
 "use client";
-import { useActionState } from "react";
-import { useSearchParams } from "next/navigation";
-
 import { signInWithCredentials } from "@/lib/actions/user.actions";
 import { initialActionState } from "@/lib/actions/utils.actions";
 import { signInDefaultValues } from "@/lib/constants/auth";
-
+import { useCredentialsForm } from "@/hooks/use-credentials-form";
 import { SignInForm } from "@/components/auth/sign-in/sign-in-form";
 
 export const CredentialsSignInForm = () => {
-  const [data, action] = useActionState(
+  const { action, callbackUrl, errorMessage, showError } = useCredentialsForm(
     signInWithCredentials,
-    initialActionState
+    initialActionState,
+    (res) => (!res.success ? res.message.description : "")
   );
-
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
   return (
     <SignInForm
       action={action}
       defaultValues={signInDefaultValues}
       callbackUrl={callbackUrl}
-      showError={!data.success}
-      errorMessage={data.message.description}
+      showError={showError}
+      errorMessage={errorMessage}
     />
   );
 };

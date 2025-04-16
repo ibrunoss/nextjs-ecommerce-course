@@ -1,13 +1,11 @@
 "use server";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { cookies } from "next/headers";
 
 import {
   ActionDataState,
   ActionState,
   ActionStateMessage,
-  CathActionError,
-  getActionErrors,
+  withErrorHandling,
 } from "@/lib/actions/utils.actions";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { auth } from "@/auth";
@@ -22,7 +20,7 @@ export async function addItemToCart(
   prevState: ActionState,
   cartItem: CartItemEntity
 ): Promise<ActionState> {
-  try {
+  return withErrorHandling(async () => {
     const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
     const { itemAlreadyInCart, itemUpdated } =
@@ -44,50 +42,41 @@ export async function addItemToCart(
       success: true,
       message,
     };
-  } catch (e) {
-    if (isRedirectError(e)) {
-      throw e;
-    }
-    const error = e as CathActionError;
-
-    return getActionErrors({ error });
-  }
+  });
 }
+
 export async function removeItemFromCart(
   prevState: ActionState,
   cartItem: CartItemEntity
 ): Promise<ActionState> {
-  try {
+  return withErrorHandling(async () => {
     const { sessionCartId, userId } = await getSessionCartIdAndUserId();
 
     const { isRemoved, itemUpdated } =
-      await getCartAndRemoveItemFromCartHandler(cartRepositoryAdapter, {
-        sessionCartId,
-        userId,
-        productId: cartItem.productId,
-        quantity: cartItem.quantity,
-      });
+      await getCartAndRemoveItemFromCartHandler(
+        cartRepositoryAdapter,
+        productRepositoryAdapter,
+        {
+          sessionCartId,
+          userId,
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+        }
+      );
 
     const message: ActionStateMessage = {
       type: "success",
       title: `${isRemoved ? "Removido do" : "Atualizado no"} carrinho`,
       description: isRemoved
-        ? itemUpdated.name
-        : `${itemUpdated.quantity}x ${itemUpdated.name}`,
+        ? cartItem.name
+        : `${itemUpdated?.quantity}x ${itemUpdated?.name}`,
     };
 
     return {
       success: true,
       message,
     };
-  } catch (e) {
-    if (isRedirectError(e)) {
-      throw e;
-    }
-    const error = e as CathActionError;
-
-    return getActionErrors({ error });
-  }
+  });
 }
 
 async function getSessionCartIdAndUserId(): Promise<{
@@ -110,37 +99,24 @@ async function getSessionCartIdAndUserId(): Promise<{
   };
 }
 
-export async function getCart(
-  prevState: ActionDataState<CartEntity>
-): Promise<ActionDataState<CartEntity>> {
-  try {
-    const { sessionCartId, userId } = await getSessionCartIdAndUserId();
-    const getCartUseCase = GetOrCreateCartUseCase(cartRepositoryAdapter);
-    const { cart } = await getCartUseCase.execute({
-      sessionCartId,
-      userId,
-    });
+export async function getCart(prevState: ActionDataState<CartEntity>) {
+  return withErrorHandling(
+    async () => {
+      const { sessionCartId, userId } = await getSessionCartIdAndUserId();
+      const getCartUseCase = GetOrCreateCartUseCase(cartRepositoryAdapter);
+      const { cart } = await getCartUseCase.execute({ sessionCartId, userId });
 
-    if (!cart) {
-      throw new Error("Carrinho não encontrado");
-    }
+      if (!cart) throw new Error("Carrinho não encontrado");
 
-    const message: ActionStateMessage = {
-      type: "success",
-      description: "Carrinho carregado com sucesso",
-    };
-
-    return {
-      success: true,
-      message,
-      data: cart,
-    };
-  } catch (e) {
-    if (isRedirectError(e)) {
-      throw e;
-    }
-    const error = e as CathActionError;
-
-    return { ...getActionErrors({ error }), data: prevState.data };
-  }
+      return {
+        success: true,
+        message: {
+          type: "success",
+          description: "Carrinho carregado com sucesso",
+        },
+        data: cart,
+      };
+    },
+    { data: prevState.data }
+  );
 }

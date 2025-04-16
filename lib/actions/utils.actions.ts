@@ -1,5 +1,6 @@
 import { ZodError } from "zod";
 import { Prisma } from "@prisma/client";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export type ActionStateMessage = {
   description: string;
@@ -204,4 +205,15 @@ export function mapErrorsToObject(
 
     return acc;
   }, {});
+}
+
+export async function withErrorHandling<T>(
+  fn: () => Promise<T>,
+  fallback?: Partial<T>
+): Promise<T> {
+  return fn().catch((e) => {
+    if (isRedirectError(e)) throw e;
+    const error = e as CathActionError;
+    return { ...getActionErrors({ error }), ...fallback } as T;
+  });
 }

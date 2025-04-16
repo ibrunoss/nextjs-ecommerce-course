@@ -18,7 +18,7 @@ export interface CartEntity {
   createdAt: DateEntity;
   updatedAt: DateEntity;
   addItem(cartItem: CartItemEntity): CartEntity;
-  removeItem(cartItem: CartItemEntity): CartEntity;
+  removeItem(productId: string, quantityToRemove?: number): CartEntity;
   getItemByProductId(productId: string): CartItemEntity | undefined;
 }
 
@@ -89,10 +89,8 @@ export const newCartEntity = (
     };
   };
 
-  const removeItem = (cartItem: CartItemEntity): CartEntity => {
-    const itemIndex = items.findIndex(
-      (x) => x.productId === cartItem.productId
-    );
+  const removeItem = (productId: string, quantity?: number): CartEntity => {
+    const itemIndex = items.findIndex((x) => x.productId === productId);
 
     if (itemIndex < 0) {
       return {
@@ -105,7 +103,9 @@ export const newCartEntity = (
 
     const itemFound = items[itemIndex];
 
-    if (itemFound.quantity - cartItem.quantity <= 0) {
+    const quantityToRemove = quantity ?? itemFound.quantity;
+
+    if (itemFound.quantity - quantityToRemove <= 0) {
       items.splice(itemIndex, 1);
 
       return {
@@ -121,7 +121,7 @@ export const newCartEntity = (
       };
     }
 
-    itemFound.quantity += cartItem.quantity;
+    itemFound.quantity -= quantityToRemove;
 
     return {
       addItem,

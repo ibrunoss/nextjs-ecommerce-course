@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
-import { addItemToCart } from "@/lib/actions/cart.actions";
+import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 import { initialActionState } from "@/lib/actions/utils.actions";
 import { toastSuccess } from "@/components/common/toast-success";
 import { CART_VIEW_PATH } from "@/lib/constants/routes";
@@ -40,7 +40,23 @@ export const CartItemActionContainer = ({
   };
 
   const onRemoveFromCart = async () => {
-    /* TODO */
+    const resp = await removeItemFromCart(initialActionState, cartItem);
+    if (!resp.success) {
+      toast.error(resp.message.title, {
+        richColors: true,
+        description: resp.errors.map((e) => e.message.description).join(", "),
+      });
+      return;
+    }
+
+    toastSuccess({
+      title: resp.message.title ?? "",
+      description: resp.message.description,
+      button: {
+        label: "Ver carrinho",
+        onClick: () => router.push(CART_VIEW_PATH),
+      },
+    });
   };
 
   return (

@@ -27,7 +27,6 @@ export default async function ProductDetailsPage({
   const itemFound = cart.getItemByProductId(product.id);
   const quantityInCart = itemFound?.quantity || 0;
 
-  console.log("itemFound", itemFound);
   return (
     <section>
       <div className="grid grid-cols-1 md:grid-cols-5">

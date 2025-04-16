@@ -11,7 +11,7 @@ type Input = {
 type Output = {
   cart: CartEntity;
   isRemoved: boolean;
-  itemUpdated: CartItemEntity;
+  itemUpdated?: CartItemEntity;
 };
 
 export function RemoveItemFromCartUseCase(cartRepository: CartRepository) {
@@ -20,24 +20,11 @@ export function RemoveItemFromCartUseCase(cartRepository: CartRepository) {
     productId,
     quantity,
   }: Input): Promise<Output> => {
-    const itemFound = cart.getItemByProductId(productId);
-
-    if (!itemFound) {
-      throw new Error("Item não encontrado no carrinho");
-    }
-    const isRemoved = !quantity || itemFound.quantity <= quantity;
-
-    const quantityToRemove = quantity ?? itemFound.quantity;
-
-    itemFound.quantity -= quantityToRemove;
-
-    if (itemFound.quantity < 0) {
-      itemFound.quantity = 0;
-    }
-
-    const cartToUpdate = cart.removeItem(itemFound);
+    const cartToUpdate = cart.removeItem(productId, quantity);
 
     const cartUpdated = await cartRepository.save(cartToUpdate);
+    const itemFound = cartToUpdate.getItemByProductId(productId);
+    const isRemoved = !itemFound;
 
     return { cart: cartUpdated, isRemoved, itemUpdated: itemFound };
   };

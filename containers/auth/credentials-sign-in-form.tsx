@@ -1,5 +1,5 @@
 "use client";
-import { signInWithCredentials } from "@/lib/actions/user.actions";
+import { signInWithCredentials } from "@/lib/actions/auth.actions/sign-in-with-credentials.action";
 import { initialActionState } from "@/lib/actions/utils.actions";
 import { signInDefaultValues } from "@/lib/constants/auth";
 import { useCredentialsForm } from "@/hooks/use-credentials-form";

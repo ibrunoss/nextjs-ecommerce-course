@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { signOutUser } from "@/lib/actions/user.actions";
+import { signOutUser } from "@/lib/actions/auth.actions/sign-out-user.action";
 
 export const UserMenuItemSignOut = () => {
   return (

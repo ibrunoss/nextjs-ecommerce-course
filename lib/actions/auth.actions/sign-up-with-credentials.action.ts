@@ -2,8 +2,8 @@
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 
-import { signIn, signOut } from "@/auth";
-import { signInFormSchema, signUpFormSchema } from "@/lib/validators/user";
+import { signIn } from "@/auth";
+import { signUpFormSchema } from "@/lib/validators/user";
 import { PASSWORD_SALT } from "@/lib/constants/auth";
 import { prisma } from "@/infra/db/prisma";
 import {
@@ -12,39 +12,6 @@ import {
   getActionErrors,
   ReplaceMessageByCodeAndName,
 } from "@/lib/actions/utils.actions";
-
-export async function signInWithCredentials(
-  prevState: ActionState,
-  formData: FormData
-): Promise<ActionState> {
-  try {
-    const user = signInFormSchema.parse({
-      email: formData.get("email"),
-      password: formData.get("password"),
-    });
-
-    await signIn("credentials", user);
-
-    return {
-      success: true,
-      message: { description: "Login realizado com sucesso", type: "success" },
-    };
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
-    }
-
-    return {
-      errors: [],
-      success: false,
-      message: { description: "E-mail ou senha inválido", type: "error" },
-    };
-  }
-}
-
-export async function signOutUser() {
-  await signOut();
-}
 
 export async function signUpWithCredentials(
   prevState: ActionState,

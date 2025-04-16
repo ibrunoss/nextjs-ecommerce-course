@@ -1,5 +1,5 @@
 "use client";
-import { signUpWithCredentials } from "@/lib/actions/user.actions";
+import { signUpWithCredentials } from "@/lib/actions/auth.actions/sign-up-with-credentials.action";
 import { signUpDefaultValues } from "@/lib/constants/auth";
 import { initialActionState } from "@/lib/actions/utils.actions";
 import { SignUpForm } from "@/components/auth/sign-up/sign-up-form";

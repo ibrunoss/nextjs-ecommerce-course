@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CredentialsSignUpForm } from "@/components/auth/sign-up/credentials-sign-up-form";
+import { CredentialsSignUpForm } from "@/containers/auth/credentials-sign-up-form";
 
 export const metadata: Metadata = {
   title: "Cadastrar",

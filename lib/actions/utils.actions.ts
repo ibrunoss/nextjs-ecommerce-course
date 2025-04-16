@@ -24,6 +24,14 @@ export type ActionStateSuccess = {
   success: true;
 };
 
+export type ActionDataStateError<D> = ActionStateError & {
+  data: D;
+};
+
+export type ActionDataStateSuccess<D> = ActionStateSuccess & {
+  data: D;
+};
+
 export type CathActionError =
   | ZodError
   | Prisma.PrismaClientKnownRequestError
@@ -34,6 +42,10 @@ export type CathActionError =
   | Error;
 
 export type ActionState = ActionStateSuccess | ActionStateError;
+
+export type ActionDataState<D> =
+  | ActionDataStateSuccess<D>
+  | ActionDataStateError<D>;
 
 export type ReplaceMessageByCodeAndName = {
   name: string;
@@ -60,6 +72,10 @@ export const initialActionStateSuccess: ActionStateSuccess = {
 };
 
 export const initialActionState: ActionState = { ...initialActionStateError };
+
+export const initialActionDataState: <D>(data: D) => ActionDataState<D> = (
+  data
+) => ({ ...initialActionStateError, data });
 
 function replaceMessageByCodeAndName({
   error,

@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
-import { AddProductToCart } from "@/components/product/add-product-to-cart";
+import { CartItemActionContainer } from "@/containers/cart/cart-item-action-container";
 import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
@@ -13,6 +13,7 @@ export type ProductPurchaseCardProps = Omit<
 > &
   Pick<CartItemEntity, "image" | "name" | "price" | "productId" | "slug"> & {
     isAvailable: boolean;
+    quantityInCart: number;
   };
 
 export const ProductPurchaseCard = ({
@@ -22,6 +23,7 @@ export const ProductPurchaseCard = ({
   price,
   productId,
   slug,
+  quantityInCart,
   ...props
 }: ProductPurchaseCardProps) => {
   const cartItem: CartItemEntity = {
@@ -60,7 +62,10 @@ export const ProductPurchaseCard = ({
           </div>
           <Render when={isAvailable}>
             <div className="flex-center">
-              <AddProductToCart cartItem={cartItem} />
+              <CartItemActionContainer
+                quantityInCart={quantityInCart}
+                cartItem={cartItem}
+              />
             </div>
           </Render>
         </CardContent>

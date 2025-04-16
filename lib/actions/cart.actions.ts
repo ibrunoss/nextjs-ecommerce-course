@@ -3,6 +3,7 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { cookies } from "next/headers";
 
 import {
+  ActionDataState,
   ActionState,
   ActionStateMessage,
   CathActionError,
@@ -14,6 +15,8 @@ import { getCartAndAddItemToCartHandler } from "@/lib/use-cases-handlers/cart/ge
 import { getCartAndRemoveItemFromCartHandler } from "@/lib/use-cases-handlers/cart/get-cart-and-remove-item-from-cart.handler";
 import { cartRepositoryAdapter } from "@/infra/adapters/cart/cart-repository.adapter";
 import { productRepositoryAdapter } from "@/infra/adapters/product/product-repository.adapter";
+import { CartEntity } from "@/domain/entities/cart.entity";
+import { GetOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
 
 export async function addItemToCart(
   prevState: ActionState,
@@ -105,4 +108,39 @@ async function getSessionCartIdAndUserId(): Promise<{
     sessionCartId,
     userId,
   };
+}
+
+export async function getCart(
+  prevState: ActionDataState<CartEntity>
+): Promise<ActionDataState<CartEntity>> {
+  try {
+    const { sessionCartId, userId } = await getSessionCartIdAndUserId();
+    const getCartUseCase = GetOrCreateCartUseCase(cartRepositoryAdapter);
+    const { cart } = await getCartUseCase.execute({
+      sessionCartId,
+      userId,
+    });
+
+    if (!cart) {
+      throw new Error("Carrinho não encontrado");
+    }
+
+    const message: ActionStateMessage = {
+      type: "success",
+      description: "Carrinho carregado com sucesso",
+    };
+
+    return {
+      success: true,
+      message,
+      data: cart,
+    };
+  } catch (e) {
+    if (isRedirectError(e)) {
+      throw e;
+    }
+    const error = e as CathActionError;
+
+    return { ...getActionErrors({ error }), data: prevState.data };
+  }
 }

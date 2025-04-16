@@ -1,11 +1,11 @@
 import { SignUpButton } from "@/components/auth/sign-up/sign-up-button";
 import { SignUpPrompt } from "@/components/auth/sign-up/sign-up-prompt";
-import { DisplayErrorMessage } from "@/components/common/display-error-message";
 import { EmailField } from "@/components/auth/email-field";
 import { PasswordField } from "@/components/auth/password-field";
 import { NameField } from "@/components/auth/name-field";
 import { ConfirmPasswordField } from "@/components/auth/confirm-password-field";
 import { signUpDefaultValues } from "@/lib/constants/auth";
+import { BaseAuthForm } from "@/components/auth/base-auth-form";
 
 type FormAction = (formData: FormData) => void | Promise<void>;
 
@@ -24,16 +24,21 @@ export const SignUpForm = ({
   errorMessage,
   showError,
 }: Props) => (
-  <form action={action}>
-    <input type="hidden" name="callbackUrl" value={callbackUrl} />
-    <div className="space-y-6">
-      <NameField defaultValue={defaultValues.name} />
-      <EmailField defaultValue={defaultValues.email} />
-      <PasswordField defaultValue={defaultValues.password} />
-      <ConfirmPasswordField defaultValue={defaultValues.confirmPassword} />
-      <SignUpButton />
-      <DisplayErrorMessage error={showError} message={errorMessage} />
-      <SignUpPrompt />
-    </div>
-  </form>
+  <BaseAuthForm
+    action={action}
+    callbackUrl={callbackUrl}
+    errorMessage={errorMessage}
+    showError={showError}
+    footer={
+      <>
+        <SignUpButton />
+        <SignUpPrompt />
+      </>
+    }
+  >
+    <NameField defaultValue={defaultValues.name} />
+    <EmailField defaultValue={defaultValues.email} />
+    <PasswordField defaultValue={defaultValues.password} />
+    <ConfirmPasswordField defaultValue={defaultValues.confirmPassword} />
+  </BaseAuthForm>
 );

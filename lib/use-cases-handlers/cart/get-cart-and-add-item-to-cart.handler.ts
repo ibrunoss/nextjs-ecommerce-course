@@ -14,6 +14,7 @@ type Input = {
 type Output = {
   cart: CartEntity;
   itemAlreadyInCart: boolean;
+  itemUpdated: CartItemEntity;
 };
 
 export async function getCartAndAddItemToCartHandler(
@@ -26,11 +27,14 @@ export async function getCartAndAddItemToCartHandler(
   const getCart = GetOrCreateCartUseCase(cartRepository);
   const { cart } = await getCart.execute({ sessionCartId, userId });
 
-  const { cart: updatedCart, itemAlreadyInCart } = await addItemToCartHandler(
-    cartRepository,
-    productRepository,
-    { cart, cartItem }
-  );
+  const {
+    cart: updatedCart,
+    itemAlreadyInCart,
+    itemUpdated,
+  } = await addItemToCartHandler(cartRepository, productRepository, {
+    cart,
+    cartItem,
+  });
 
-  return { cart: updatedCart, itemAlreadyInCart };
+  return { cart: updatedCart, itemAlreadyInCart, itemUpdated };
 }

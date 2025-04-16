@@ -11,6 +11,7 @@ type Input = {
 type Output = {
   cart: CartEntity;
   itemAlreadyInCart: boolean;
+  itemUpdated: CartItemEntity;
 };
 
 type CheckIsAvailableParams = {
@@ -47,10 +48,15 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
     checkIsAvailable({ itemName, quantityToAdd, stock: productStock });
 
     const cartToUpdate = cart.addItem(cartItem);
+    const itemUpdated = cartToUpdate.getItemByProductId(cartItem.productId);
+
+    if (!itemUpdated) {
+      throw new Error("Item não encontrado no carrinho");
+    }
 
     const cartUpdated = await cartRepository.save(cartToUpdate);
 
-    return { cart: cartUpdated, itemAlreadyInCart };
+    return { cart: cartUpdated, itemAlreadyInCart, itemUpdated };
   };
 
   return { execute };

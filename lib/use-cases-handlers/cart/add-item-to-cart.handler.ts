@@ -15,6 +15,7 @@ type Input = {
 type Output = {
   cart: CartEntity;
   itemAlreadyInCart: boolean;
+  itemUpdated: CartItemEntity;
 };
 
 export async function addItemToCartHandler(
@@ -31,7 +32,11 @@ export async function addItemToCartHandler(
   }
 
   const useCase = AddItemToCartUseCase(cartRepository);
-  const { cart: updatedCart, itemAlreadyInCart } = await useCase.execute({
+  const {
+    cart: updatedCart,
+    itemAlreadyInCart,
+    itemUpdated,
+  } = await useCase.execute({
     cart,
     cartItem,
     productStock: product.stock,
@@ -39,5 +44,5 @@ export async function addItemToCartHandler(
 
   revalidatePath(PRODUCT_DETAIL_PATH(product.slug));
 
-  return { cart: updatedCart, itemAlreadyInCart };
+  return { cart: updatedCart, itemAlreadyInCart, itemUpdated };
 }

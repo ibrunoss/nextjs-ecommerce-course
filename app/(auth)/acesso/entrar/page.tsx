@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CredentialsSignInForm } from "@/components/auth/sign-in/credentials-sign-in-form";
+import { CredentialsSignInForm } from "@/containers/auth/credentials-sign-in-form";
 
 export const metadata: Metadata = {
   title: "Entrar",

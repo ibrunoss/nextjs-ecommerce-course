@@ -1,25 +1,39 @@
 import { HTMLAttributes } from "react";
-import { Plus } from "lucide-react";
 
+import { CartItemActionContainer } from "@/containers/cart/cart-item-action-container";
 import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 
-export type ProductPurchaseCardProps = {
-  idProduct: string;
-  isAvailable: boolean;
-  price: number;
-} & Omit<HTMLAttributes<HTMLDivElement>, "children">;
+export type ProductPurchaseCardProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children"
+> &
+  Pick<CartItemEntity, "image" | "name" | "price" | "productId" | "slug"> & {
+    isAvailable: boolean;
+    quantityInCart: number;
+  };
 
 export const ProductPurchaseCard = ({
+  image,
   isAvailable,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  idProduct,
+  name,
   price,
+  productId,
+  slug,
+  quantityInCart,
   ...props
 }: ProductPurchaseCardProps) => {
+  const cartItem: CartItemEntity = {
+    image,
+    name,
+    price,
+    productId,
+    quantity: 1,
+    slug,
+  };
   return (
     <div {...props}>
       <Card>
@@ -27,7 +41,12 @@ export const ProductPurchaseCard = ({
           <div className="mb-2 flex justify-between">
             <div>Preço</div>
             <div>
-              <ProductPrice value={price} />
+              <ProductPrice
+                currencySymbol={price.currencySymbol}
+                fractionalPart={price.fractionalPart.stringValue}
+                fractionalSymbol={price.fractionalSymbol}
+                integerPart={price.integerPart.stringValue}
+              />
             </div>
           </div>
           <div className="mb-2 flex justify-between">
@@ -43,9 +62,10 @@ export const ProductPurchaseCard = ({
           </div>
           <Render when={isAvailable}>
             <div className="flex-center">
-              <Button className="w-full">
-                <Plus /> Adicionar ao carrinho
-              </Button>
+              <CartItemActionContainer
+                quantityInCart={quantityInCart}
+                cartItem={cartItem}
+              />
             </div>
           </Render>
         </CardContent>

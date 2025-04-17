@@ -1,14 +1,10 @@
 import { z } from "zod";
 
-import { formatCurrency } from "@/lib/utils";
-
-export const currencySchema = z
-  .string()
-  .min(0)
-  .refine(
-    (value) => /^\d+(\.\d{2})?$/.test(formatCurrency(Number(value))),
-    "O valor deve conter exatamente duas casas decimais"
-  );
+import {
+  currencyDatabaseSchema,
+  currencyEntitySchema,
+} from "@/lib/validators/currency";
+import { dateEntitySchema } from "@/lib/validators/date";
 
 // Schema for inserting a new product
 export const productDatabaseInsertSchema = z.object({
@@ -28,7 +24,7 @@ export const productDatabaseInsertSchema = z.object({
     .string()
     .min(3, "A categoria deve conter no mínimo (3) caracteres")
     .max(255, "A categoria deve conter no máximo (255) caracteres"),
-  price: currencySchema,
+  price: currencyDatabaseSchema,
   stock: z.coerce.number().min(0),
   brand: z.string().min(3).max(255),
   images: z
@@ -44,4 +40,31 @@ export const productDatabaseSchema = productDatabaseInsertSchema.extend({
   rating: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
+});
+
+export const productEntitySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  price: currencyEntitySchema,
+  description: z.string(),
+  banner: z.string(),
+  images: z.array(z.string()),
+  stock: z.number().int().nonnegative(),
+  discount: z.number().min(0).max(100), // percentual de desconto, presumivelmente de 0 a 100
+  category: z.string(),
+  rating: z.number().min(0).max(5), // geralmente para avaliação de produto
+  reviews: z.number().int().nonnegative(),
+  brand: z.string(),
+  colors: z.array(z.string()),
+  sizes: z.array(z.string()),
+  tags: z.array(z.string()),
+  features: z.array(z.string()),
+  bestSelling: z.boolean(),
+  newArrival: z.boolean(),
+  topRated: z.boolean(),
+  isFeatured: z.boolean(),
+  trending: z.boolean(),
+  createdAt: dateEntitySchema,
+  updatedAt: dateEntitySchema,
+  slug: z.string(),
 });

@@ -1,14 +1,17 @@
 "use client";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { addItemToCart } from "@/lib/actions/cart.actions/add-item-to-cart.action";
 import { removeItemFromCart } from "@/lib/actions/cart.actions/remove-item-from-cart.action";
-import { initialActionState } from "@/lib/actions/utils.actions";
-import { toastSuccess } from "@/components/common/toast-success";
+import { ActionState, initialActionState } from "@/lib/actions/utils.actions";
 import { CART_VIEW_PATH } from "@/lib/constants/routes";
-import { CartItemActionController } from "../../components/cart/cart-item-action-controller";
+import { toastSuccess } from "@/components/common/toast-success";
+import { Render } from "@/components/common/render";
+import { CartItemActionController } from "@/components/cart/cart-item-action-controller";
 
 type Props = {
   cartItem: CartItemEntity;
@@ -19,52 +22,45 @@ export const CartItemActionContainer = ({
   cartItem,
   quantityInCart,
 }: Props) => {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const onAddItem = async () => {
-    const resp = await addItemToCart(initialActionState, cartItem);
-    if (!resp.success) {
-      toast.error(resp.message.title, {
-        richColors: true,
-        description: resp.errors.map((e) => e.message.description).join(", "),
+
+  const handleCartAction = async (
+    action: (state: ActionState, item: CartItemEntity) => Promise<ActionState>
+  ) => {
+    startTransition(async () => {
+      const response = await action(initialActionState, cartItem);
+      if (!response.success) {
+        toast.error(response.message.title, {
+          richColors: true,
+          description: response.errors
+            .map((e) => e.message.description)
+            .join(", "),
+        });
+        return;
+      }
+
+      toastSuccess({
+        title: response.message.title ?? "",
+        description: response.message.description,
+        button: {
+          label: "Ver carrinho",
+          onClick: () => router.push(CART_VIEW_PATH),
+        },
       });
-      return;
-    }
-
-    toastSuccess({
-      title: resp.message.title ?? "",
-      description: resp.message.description,
-      button: {
-        label: "Ver carrinho",
-        onClick: () => router.push(CART_VIEW_PATH),
-      },
-    });
-  };
-
-  const onRemoveFromCart = async () => {
-    const resp = await removeItemFromCart(initialActionState, cartItem);
-    if (!resp.success) {
-      toast.error(resp.message.title, {
-        richColors: true,
-        description: resp.errors.map((e) => e.message.description).join(", "),
-      });
-      return;
-    }
-
-    toastSuccess({
-      title: resp.message.title ?? "",
-      description: resp.message.description,
-      button: {
-        label: "Ver carrinho",
-        onClick: () => router.push(CART_VIEW_PATH),
-      },
     });
   };
 
   return (
-    <CartItemActionController
-      quantity={quantityInCart}
-      onAddToCart={onAddItem}
-      onRemoveFromCart={onRemoveFromCart}
-    />
+    <Render
+      when={!isPending}
+      fallback={<Loader2 className="w-14 h-14 animate-spin" />}
+    >
+      <CartItemActionController
+        quantity={quantityInCart}
+        onAddToCart={() => handleCartAction(addItemToCart)}
+        onRemoveFromCart={() => handleCartAction(removeItemFromCart)}
+      />
+    </Render>
   );
 };

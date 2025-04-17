@@ -25,7 +25,7 @@ export const CartItemActionController = ({
         />
       }
     >
-      <AddToCartButtonFull onClick={onAddToCart} />
+      <AddToCartButtonFull className="mt-3 mb-2" onClick={onAddToCart} />
     </Render>
   );
 };

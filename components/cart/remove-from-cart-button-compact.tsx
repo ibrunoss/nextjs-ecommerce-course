@@ -1,8 +1,8 @@
 import { ComponentProps } from "react";
+import { Minus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Minus } from "lucide-react";
 
 type Props = Omit<ComponentProps<"button">, "children">;
 

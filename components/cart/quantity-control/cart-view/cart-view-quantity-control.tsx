@@ -18,7 +18,7 @@ export const CartViewQuantityControl = ({
   isPending,
 }: Props) => {
   return (
-    <div className="flex items-center justify-between border gap-2">
+    <div className="flex items-center justify-between border-2 rounded-xl">
       <RemoveButtonCompactCartView
         disabled={isPending}
         onClick={onRemoveFromCart}

@@ -6,7 +6,7 @@ type Props = {
 
 export const DisplayQuantityCartView = ({ quantity }: Props) => {
   return (
-    <div className="flex items-center justify-center text-sm font-semibold min-w-6">
+    <div className="flex items-center justify-center text-sm font-semibold min-w-12 ">
       {quantity}
     </div>
   );

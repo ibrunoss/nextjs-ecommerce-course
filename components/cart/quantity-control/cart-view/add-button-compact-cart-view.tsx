@@ -8,7 +8,7 @@ type Props = Omit<ComponentProps<"button">, "children">;
 export const AddButtonCompactCartView = ({ className, ...props }: Props) => (
   <AddToCartButtonCompact
     className={cn(
-      "text-green-600 bg-transparent hover:text-green-600 hover:bg-green-100",
+      "text-green-600 bg-transparent hover:text-green-600 border-l-2 hover:bg-green-100 rounded-xl rounded-bl-none rounded-tl-none",
       className
     )}
     {...props}

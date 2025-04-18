@@ -1,11 +1,11 @@
 import { HTMLAttributes } from "react";
 
-import { CartItemActionContainer } from "@/containers/cart/cart-item-action-container";
 import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemActionController } from "@/components/cart/cart-item-action-controller";
 
 export type ProductPurchaseCardProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -62,8 +62,8 @@ export const ProductPurchaseCard = ({
           </div>
           <Render when={isAvailable}>
             <div className="flex-center">
-              <CartItemActionContainer
-                quantityInCart={quantityInCart}
+              <CartItemActionController
+                quantity={quantityInCart}
                 cartItem={cartItem}
               />
             </div>

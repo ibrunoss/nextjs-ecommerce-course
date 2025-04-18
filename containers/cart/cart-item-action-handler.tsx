@@ -2,7 +2,6 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
 
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { addItemToCart } from "@/lib/actions/cart.actions/add-item-to-cart.action";
@@ -11,16 +10,20 @@ import { ActionState, initialActionState } from "@/lib/actions/utils.actions";
 import { CART_VIEW_PATH } from "@/lib/constants/routes";
 import { toastSuccess } from "@/components/common/toast-success";
 import { Render } from "@/components/common/render";
-import { CartItemActionController } from "@/components/cart/cart-item-action-controller";
 
 type Props = {
   cartItem: CartItemEntity;
-  quantityInCart: number;
+  fallback?: React.ReactNode;
+  children: (props: {
+    onAddToCart?: () => void | Promise<void>;
+    onRemoveFromCart?: () => void | Promise<void>;
+  }) => React.ReactNode;
 };
 
-export const CartItemActionContainer = ({
+export const CartItemActionHandler = ({
   cartItem,
-  quantityInCart,
+  fallback,
+  children,
 }: Props) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -52,15 +55,11 @@ export const CartItemActionContainer = ({
   };
 
   return (
-    <Render
-      when={!isPending}
-      fallback={<Loader2 className="w-14 h-14 animate-spin" />}
-    >
-      <CartItemActionController
-        quantity={quantityInCart}
-        onAddToCart={() => handleCartAction(addItemToCart)}
-        onRemoveFromCart={() => handleCartAction(removeItemFromCart)}
-      />
+    <Render when={!isPending} fallback={fallback}>
+      {children({
+        onAddToCart: () => handleCartAction(addItemToCart),
+        onRemoveFromCart: () => handleCartAction(removeItemFromCart),
+      })}
     </Render>
   );
 };

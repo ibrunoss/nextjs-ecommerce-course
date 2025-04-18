@@ -1,18 +1,21 @@
 "use client";
 import { Loader2 } from "lucide-react";
 
-import { AddToCartButtonFull } from "@/components/cart/add-to-cart-button-full";
 import { Render } from "@/components/common/render";
-import { CartItemQuantityControl } from "@/components/cart/cart-item-quantity-control";
+import { PurchaseCardQuantityControl } from "@/components/cart/quantity-control/purchase-card/purchase-card-quantity-control";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartItemActionHandler } from "@/containers/cart/cart-item-action-handler";
+import { AddToCartButtonFullPurchaseCard } from "@/components/cart/quantity-control/purchase-card/add-button-full-purchase-card";
 
 type Props = {
   quantity?: number;
   cartItem: CartItemEntity;
 };
 
-export const CartItemActionController = ({ cartItem, quantity = 0 }: Props) => {
+export const CartItemQuantityControlPurchaseCard = ({
+  cartItem,
+  quantity = 0,
+}: Props) => {
   const isAddOnly = quantity <= 0;
   return (
     <CartItemActionHandler
@@ -23,14 +26,14 @@ export const CartItemActionController = ({ cartItem, quantity = 0 }: Props) => {
         <Render
           when={isAddOnly}
           fallback={
-            <CartItemQuantityControl
+            <PurchaseCardQuantityControl
               onAddToCart={onAddToCart}
               onRemoveFromCart={onRemoveFromCart}
               quantity={quantity}
             />
           }
         >
-          <AddToCartButtonFull className="mt-3 mb-2" onClick={onAddToCart} />
+          <AddToCartButtonFullPurchaseCard onClick={onAddToCart} />
         </Render>
       )}
     </CartItemActionHandler>

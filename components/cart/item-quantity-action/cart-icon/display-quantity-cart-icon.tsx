@@ -5,7 +5,7 @@ type Props = {
   quantity: number;
 };
 
-export const DisplayQuantityPurchaseCard = ({ quantity }: Props) => {
+export const DisplayQuantityCartIcon = ({ quantity }: Props) => {
   return (
     <div className="rounded-lg text-sm font-semibold p-1 relative">
       <ShoppingCart className="w-12 h-12 text-muted-foreground" />

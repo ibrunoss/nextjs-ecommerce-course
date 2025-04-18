@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
-import { CartItemQuantityControlPurchaseCard } from "@/components/cart/quantity-control/purchase-card/cart-item-quantity-control-purchase-card";
+import { CartItemQuantityActionCartIcon } from "@/components/cart/item-quantity-action/cart-icon/cart-item-quantity-action-cart-icon";
 
 export type ProductPurchaseCardProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -62,7 +62,7 @@ export const ProductPurchaseCard = ({
           </div>
           <Render when={isAvailable}>
             <div className="flex-center">
-              <CartItemQuantityControlPurchaseCard
+              <CartItemQuantityActionCartIcon
                 quantity={quantityInCart}
                 cartItem={cartItem}
               />

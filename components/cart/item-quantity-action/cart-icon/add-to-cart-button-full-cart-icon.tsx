@@ -5,10 +5,7 @@ import { AddToCartButtonFull } from "@/components/cart/add-to-cart-button-full";
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
-export const AddToCartButtonFullPurchaseCard = ({
-  className,
-  ...props
-}: Props) => (
+export const AddToCartButtonFullCartIcon = ({ className, ...props }: Props) => (
   <AddToCartButtonFull
     className={cn(
       "border border-green-600 hover:text-green-50 hover:bg-green-700 text-green-600 bg-green-100 mt-3 mb-2",

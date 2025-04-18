@@ -5,7 +5,7 @@ import { AddToCartButtonCompact } from "@/components/cart/add-to-cart-button-com
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
-export const AddButtonCompactPurchaseCard = ({
+export const AddToCartButtonCompactCartIcon = ({
   className,
   ...props
 }: Props) => (

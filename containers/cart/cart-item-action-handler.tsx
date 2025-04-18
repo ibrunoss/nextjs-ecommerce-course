@@ -9,22 +9,17 @@ import { removeItemFromCart } from "@/lib/actions/cart.actions/remove-item-from-
 import { ActionState, initialActionState } from "@/lib/actions/utils.actions";
 import { CART_VIEW_PATH } from "@/lib/constants/routes";
 import { toastSuccess } from "@/components/common/toast-success";
-import { Render } from "@/components/common/render";
 
 type Props = {
   cartItem: CartItemEntity;
-  fallback?: React.ReactNode;
   children: (props: {
+    isPending: boolean;
     onAddToCart?: () => void | Promise<void>;
     onRemoveFromCart?: () => void | Promise<void>;
   }) => React.ReactNode;
 };
 
-export const CartItemActionHandler = ({
-  cartItem,
-  fallback,
-  children,
-}: Props) => {
+export const CartItemActionHandler = ({ cartItem, children }: Props) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -55,11 +50,12 @@ export const CartItemActionHandler = ({
   };
 
   return (
-    <Render when={!isPending} fallback={fallback}>
+    <>
       {children({
+        isPending,
         onAddToCart: () => handleCartAction(addItemToCart),
         onRemoveFromCart: () => handleCartAction(removeItemFromCart),
       })}
-    </Render>
+    </>
   );
 };

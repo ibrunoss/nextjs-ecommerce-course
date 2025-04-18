@@ -18,22 +18,24 @@ export const CartItemQuantityControlPurchaseCard = ({
 }: Props) => {
   const isAddOnly = quantity <= 0;
   return (
-    <CartItemActionHandler
-      cartItem={cartItem}
-      fallback={<Loader2 className="w-14 h-14 animate-spin" />}
-    >
-      {({ onAddToCart, onRemoveFromCart }) => (
+    <CartItemActionHandler cartItem={cartItem}>
+      {({ onAddToCart, onRemoveFromCart, isPending }) => (
         <Render
-          when={isAddOnly}
-          fallback={
-            <PurchaseCardQuantityControl
-              onAddToCart={onAddToCart}
-              onRemoveFromCart={onRemoveFromCart}
-              quantity={quantity}
-            />
-          }
+          when={!isPending}
+          fallback={<Loader2 className="w-14 h-14 animate-spin" />}
         >
-          <AddToCartButtonFullPurchaseCard onClick={onAddToCart} />
+          <Render
+            when={isAddOnly}
+            fallback={
+              <PurchaseCardQuantityControl
+                onAddToCart={onAddToCart}
+                onRemoveFromCart={onRemoveFromCart}
+                quantity={quantity}
+              />
+            }
+          >
+            <AddToCartButtonFullPurchaseCard onClick={onAddToCart} />
+          </Render>
         </Render>
       )}
     </CartItemActionHandler>

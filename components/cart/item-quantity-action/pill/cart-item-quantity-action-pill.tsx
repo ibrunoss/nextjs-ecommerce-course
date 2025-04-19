@@ -3,8 +3,8 @@ import { Loader } from "lucide-react";
 
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartItemActionHandler } from "@/containers/cart/cart-item-action-handler";
-import { AddToCartButtonPill } from "@/components/cart/item-quantity-action/pill/add-to-cart-button-pill";
-import { RemoveFromCartButtonPill } from "@/components/cart/item-quantity-action/pill/remove-from-cart-button-pill";
+import { IncrementCartItemButtonPill } from "@/components/cart/item-quantity-action/pill/increment-cart-item-button-pill";
+import { DecrementCartItemButtonPill } from "@/components/cart/item-quantity-action/pill/decrement-cart-item-button-pill";
 import { DisplayQuantityPill } from "@/components/cart/item-quantity-action/pill/display-quantity-pill";
 
 type Props = {
@@ -15,11 +15,11 @@ type Props = {
 export const CartItemQuantityActionPill = ({ quantity, cartItem }: Props) => {
   return (
     <CartItemActionHandler cartItem={cartItem}>
-      {({ onAddToCart, onRemoveFromCart, isPending }) => (
+      {({ onIncrementQuantity, onDecrementQuantity, isPending }) => (
         <div className="flex items-center justify-between border-2 rounded-xl">
-          <RemoveFromCartButtonPill
+          <DecrementCartItemButtonPill
             disabled={isPending}
-            onClick={onRemoveFromCart}
+            onClick={onDecrementQuantity(cartItem.quantity)}
           />
           <DisplayQuantityPill
             quantity={
@@ -27,7 +27,10 @@ export const CartItemQuantityActionPill = ({ quantity, cartItem }: Props) => {
             }
           />
 
-          <AddToCartButtonPill disabled={isPending} onClick={onAddToCart} />
+          <IncrementCartItemButtonPill
+            disabled={isPending}
+            onClick={onIncrementQuantity(cartItem.quantity)}
+          />
         </div>
       )}
     </CartItemActionHandler>

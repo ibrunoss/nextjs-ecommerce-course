@@ -5,7 +5,7 @@ import { AddToCartButtonCompact } from "@/components/cart/add-to-cart-button-com
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
-export const AddToCartButtonPill = ({ className, ...props }: Props) => (
+export const IncrementCartItemButtonPill = ({ className, ...props }: Props) => (
   <AddToCartButtonCompact
     className={cn(
       "text-green-600 bg-transparent hover:text-green-600 border-l-2 hover:bg-green-100 rounded-xl rounded-bl-none rounded-tl-none",

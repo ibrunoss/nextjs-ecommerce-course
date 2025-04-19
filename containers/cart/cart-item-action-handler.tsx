@@ -14,8 +14,10 @@ type Props = {
   cartItem: CartItemEntity;
   children: (props: {
     isPending: boolean;
-    onAddToCart?: () => void | Promise<void>;
-    onRemoveFromCart?: () => void | Promise<void>;
+    onAddToCart: () => void | Promise<void>;
+    onRemoveFromCart: () => void | Promise<void>;
+    onDecrementQuantity: (quantity: number) => () => void | Promise<void>;
+    onIncrementQuantity: (quantity: number) => () => void | Promise<void>;
   }) => React.ReactNode;
 };
 
@@ -24,10 +26,14 @@ export const CartItemActionHandler = ({ cartItem, children }: Props) => {
   const router = useRouter();
 
   const handleCartAction = async (
-    action: (state: ActionState, item: CartItemEntity) => Promise<ActionState>
+    action: (state: ActionState, item: CartItemEntity) => Promise<ActionState>,
+    quantity?: number
   ) => {
     startTransition(async () => {
-      const response = await action(initialActionState, cartItem);
+      const response = await action(initialActionState, {
+        ...cartItem,
+        quantity: quantity ?? cartItem.quantity,
+      });
       if (!response.success) {
         toast.error(response.message.title, {
           richColors: true,
@@ -54,7 +60,12 @@ export const CartItemActionHandler = ({ cartItem, children }: Props) => {
       {children({
         isPending,
         onAddToCart: () => handleCartAction(addItemToCart),
-        onRemoveFromCart: () => handleCartAction(removeItemFromCart),
+        onRemoveFromCart: () =>
+          handleCartAction(removeItemFromCart, Number.MAX_VALUE),
+        onDecrementQuantity: (quantity) => () =>
+          handleCartAction(removeItemFromCart, quantity),
+        onIncrementQuantity: (quantity) => () =>
+          handleCartAction(addItemToCart, quantity),
       })}
     </>
   );

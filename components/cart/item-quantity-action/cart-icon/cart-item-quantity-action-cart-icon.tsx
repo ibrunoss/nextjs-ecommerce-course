@@ -17,15 +17,15 @@ export const CartItemQuantityActionCartIcon = ({
 }: Props) => {
   return (
     <CartItemActionHandler cartItem={cartItem}>
-      {({ onAddToCart, onRemoveFromCart, isPending }) => (
+      {({ onIncrementQuantity, onDecrementQuantity, isPending }) => (
         <Render
           when={!isPending}
           fallback={<Loader2 className="w-14 h-14 animate-spin" />}
         >
           <CartItemQuantityControlCartIcon
             quantity={quantity}
-            onAddToCart={onAddToCart}
-            onRemoveFromCart={onRemoveFromCart}
+            onIncrementQuantity={onIncrementQuantity(1)}
+            onDecrementQuantity={onDecrementQuantity(1)}
           />
         </Render>
       )}

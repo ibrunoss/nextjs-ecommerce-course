@@ -5,13 +5,10 @@ import { RemoveFromCartButtonCompact } from "@/components/cart/remove-from-cart-
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
-export const RemoveFromCartButtonCartIcon = ({
-  className,
-  ...props
-}: Props) => (
+export const DecrementCartItemButtonPill = ({ className, ...props }: Props) => (
   <RemoveFromCartButtonCompact
     className={cn(
-      "border border-destructive text-destructive bg-transparent hover:text-destructive hover:bg-red-50",
+      "text-destructive bg-transparent hover:text-destructive hover:bg-red-50 border-r-2 rounded-xl rounded-br-none rounded-tr-none",
       className
     )}
     {...props}

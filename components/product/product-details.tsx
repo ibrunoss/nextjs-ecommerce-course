@@ -33,11 +33,11 @@ export const ProductDetails = ({
         </p>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <ProductPrice
-            className="w-28 rounded-full bg-green-100 text-green-700 px-5 py-2"
+            className="min-w-28 rounded-full bg-green-100 text-green-700 px-5 py-2"
             currencySymbol={price.currencySymbol}
-            fractionalPart={price.fractionalPart.stringValue}
+            fractionalPart={price.fractionalPart.numericValue}
             fractionalSymbol={price.fractionalSymbol}
-            integerPart={price.integerPart.stringValue}
+            integerPart={price.integerPart.numericValue}
           />
         </div>
       </div>

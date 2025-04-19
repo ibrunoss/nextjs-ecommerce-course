@@ -3,8 +3,8 @@ import { HTMLAttributes } from "react";
 
 export type ProductPriceProps = {
   currencySymbol: string;
-  integerPart: string;
-  fractionalPart: string;
+  integerPart: number;
+  fractionalPart: number;
   fractionalSymbol: string;
 } & Omit<HTMLAttributes<HTMLParagraphElement>, "children">;
 
@@ -27,7 +27,7 @@ export const ProductPrice = ({
   return (
     <p {...props} className={cn("text-2xl", className)}>
       <AlignSuper text={`${currencySymbol} `} />
-      {integerPart}
+      {integerPart.toLocaleString("pt-BR")}
       <AlignSuper text={`${fractionalSymbol}${fractionalPart}`} />
     </p>
   );

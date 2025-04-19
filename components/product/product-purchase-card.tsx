@@ -43,9 +43,9 @@ export const ProductPurchaseCard = ({
             <div>
               <ProductPrice
                 currencySymbol={price.currencySymbol}
-                fractionalPart={price.fractionalPart.stringValue}
+                fractionalPart={price.fractionalPart.numericValue}
                 fractionalSymbol={price.fractionalSymbol}
-                integerPart={price.integerPart.stringValue}
+                integerPart={price.integerPart.numericValue}
               />
             </div>
           </div>

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
-export const AddToCartButtonFull = ({ className, ...props }: Props) => (
+export const AddCartItemButton = ({ className, ...props }: Props) => (
   <ButtonBase className={cn("w-full", className)} type="button" {...props}>
     <Plus /> Adicionar ao carrinho
   </ButtonBase>

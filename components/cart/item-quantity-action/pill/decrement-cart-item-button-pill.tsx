@@ -1,12 +1,12 @@
 import { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
-import { RemoveFromCartButtonCompact } from "@/components/cart/remove-from-cart-button-compact";
+import { DecrementCartItemButton } from "@/components/cart/decrement-cart-item-button";
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
 export const DecrementCartItemButtonPill = ({ className, ...props }: Props) => (
-  <RemoveFromCartButtonCompact
+  <DecrementCartItemButton
     className={cn(
       "text-destructive bg-transparent hover:text-destructive hover:bg-red-50 border-r-2 rounded-xl rounded-br-none rounded-tr-none",
       className

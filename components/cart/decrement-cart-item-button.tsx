@@ -1,12 +1,12 @@
 import { ComponentProps } from "react";
-import { Plus } from "lucide-react";
+import { Minus } from "lucide-react";
 
 import { ButtonBase } from "@/components/cart/button-base";
 
 type Props = Omit<ComponentProps<"button">, "children">;
 
-export const AddToCartButtonCompact = ({ ...props }: Props) => (
+export const DecrementCartItemButton = ({ ...props }: Props) => (
   <ButtonBase type="button" {...props}>
-    <Plus className="h-4 w-4" />
+    <Minus className="h-4 w-4" />
   </ButtonBase>
 );

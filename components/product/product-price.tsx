@@ -28,7 +28,11 @@ export const ProductPrice = ({
     <p {...props} className={cn("text-2xl", className)}>
       <AlignSuper text={`${currencySymbol} `} />
       {integerPart.toLocaleString("pt-BR")}
-      <AlignSuper text={`${fractionalSymbol}${fractionalPart}`} />
+      <AlignSuper
+        text={`${fractionalSymbol}${fractionalPart
+          .toString()
+          .padStart(2, "0")}`}
+      />
     </p>
   );
 };

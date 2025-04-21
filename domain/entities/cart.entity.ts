@@ -168,7 +168,7 @@ function calcPrice(items: CartItemEntity[]): CartPrices {
   const shippingPrice = newCurrencyEntity(
     round2(itemsPrice.numericValue > 100 ? 0 : 10)
   );
-  const taxPrice = newCurrencyEntity(round2(0.0138 * itemsPrice.numericValue));
+  const taxPrice = newCurrencyEntity(round2(0 * itemsPrice.numericValue));
   const totalPrice = newCurrencyEntity(
     round2(
       itemsPrice.numericValue +

@@ -3,7 +3,7 @@ import { ComponentProps } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type Props = ComponentProps<"button">;
+type Props = ComponentProps<typeof Button>;
 
 export const ButtonBase = ({ className, ...props }: Props) => (
   <Button

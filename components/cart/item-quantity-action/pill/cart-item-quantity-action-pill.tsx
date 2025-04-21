@@ -35,7 +35,7 @@ export const CartItemQuantityActionPill = ({
       onSuccess={showSuccessToast}
     >
       {({ onIncrementQuantity, onDecrementQuantity, isPending }) => (
-        <div className="flex items-center justify-between border-2 rounded-xl">
+        <div className="flex items-center justify-between border-2 rounded-xl bg-background">
           <DecrementCartItemButtonPill
             disabled={isPending}
             onClick={onDecrementQuantity(cartItem.quantity)}

@@ -5,11 +5,16 @@ import { cn } from "@/lib/utils";
 
 type Props = ComponentProps<typeof TableCell>;
 
-export const FooterValueCell = ({ children, className, ...props }: Props) => {
+export const FooterValueCell = ({
+  children,
+  className,
+  colSpan,
+  ...props
+}: Props) => {
   return (
     <TableCell
       className={cn("text-right pl-0 ml-0", className)}
-      colSpan={3}
+      colSpan={colSpan ?? 2}
       {...props}
     >
       {children}

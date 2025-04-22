@@ -16,7 +16,7 @@ export const CartTable = ({ data }: Props) => {
   };
 
   return (
-    <Table>
+    <Table className="table-auto w-full border border-gray-300">
       <CartTableHeader />
       <CartTableBody cartItems={data.items} />
       <CartTableFooter price={footerPrice} />

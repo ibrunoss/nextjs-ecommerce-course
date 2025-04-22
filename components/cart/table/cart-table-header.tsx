@@ -8,10 +8,10 @@ export const CartTableHeader = (props: Props) => {
   return (
     <TableHeader {...props}>
       <TableRow>
-        <TableHead colSpan={2}>Produto</TableHead>
+        <TableHead>Produto</TableHead>
         <TableHead>Preço unitário</TableHead>
         <TableHead className="text-center">Quantidade</TableHead>
-        <TableHead colSpan={2}>Subtotal</TableHead>
+        <TableHead className="text-right">Subtotal</TableHead>
       </TableRow>
     </TableHeader>
   );

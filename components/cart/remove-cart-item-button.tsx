@@ -7,6 +7,6 @@ type Props = Omit<ComponentProps<typeof ButtonBase>, "children">;
 
 export const RemoveCartItemButton = ({ ...props }: Props) => (
   <ButtonBase type="button" {...props}>
-    <Trash2 className="h-4 w-4" />
+    <Trash2 className="h-4 w-4" /> Remover
   </ButtonBase>
 );

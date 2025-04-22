@@ -29,7 +29,11 @@ export default async function CartViewPage() {
           </div>
         }
       >
-        <CartTable data={cart} />
+        <div className="grid md:grid-cols-4 md:gap-5">
+          <div className="overflow-x-auto lg:col-span-3 col-span-4">
+            <CartTable data={cart} />
+          </div>
+        </div>
       </Render>
     </>
   );

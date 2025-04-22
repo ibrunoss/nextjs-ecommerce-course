@@ -11,14 +11,12 @@ type Props = ComponentProps<typeof TableCell> & {
 export const PriceCell = ({ value, ...props }: Props) => {
   return (
     <TableCell {...props}>
-      <div className="w-34">
-        <ProductPrice
-          currencySymbol={value.currencySymbol}
-          fractionalPart={value.fractionalPart.numericValue}
-          fractionalSymbol={value.fractionalSymbol}
-          integerPart={value.integerPart.numericValue}
-        />
-      </div>
+      <ProductPrice
+        currencySymbol={value.currencySymbol}
+        fractionalPart={value.fractionalPart.numericValue}
+        fractionalSymbol={value.fractionalSymbol}
+        integerPart={value.integerPart.numericValue}
+      />
     </TableCell>
   );
 };

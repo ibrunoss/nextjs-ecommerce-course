@@ -2,16 +2,15 @@
 import { ComponentProps } from "react";
 import { redirect } from "next/navigation";
 
-import { TableCell, TableRow } from "@/components/ui/table";
+import { TableRow } from "@/components/ui/table";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { newCurrencyEntity } from "@/domain/entities/currency.entity";
 import { cn } from "@/lib/utils";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { RenderIfMounted } from "@/components/common/render-if-mounted";
-import { ImageCell } from "@/components/cart/table/item-row/image-cell";
+import { ProductCell } from "@/components/cart/table/item-row/product-cell";
 import { PriceCell } from "@/components/cart/table/item-row/price-cell";
 import { QuantityActionCell } from "@/components/cart/table/item-row/quantity-action-cell";
-import { RemoveActionCell } from "@/components/cart/table/item-row/remove-action-cell";
 
 type Props = ComponentProps<typeof TableRow> &
   Pick<
@@ -53,12 +52,14 @@ export const CartTableItemRow = ({
         onClick={handleClick}
         {...props}
       >
-        <ImageCell imageAlt={`Imagem do produto ${name}`} imageSrc={image} />
-        <TableCell>{name}</TableCell>
+        <ProductCell
+          imageAlt={`Imagem do produto ${name}`}
+          imageSrc={image}
+          name={name}
+        />
         <PriceCell value={price} />
         <QuantityActionCell cartItem={cartItem} quantity={quantity} />
-        <PriceCell className="" value={totalPrice} />
-        <RemoveActionCell cartItem={cartItem} />
+        <PriceCell className="text-right" value={totalPrice} />
       </TableRow>
     </RenderIfMounted>
   );

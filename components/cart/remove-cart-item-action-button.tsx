@@ -1,10 +1,13 @@
 "use client";
+import { ComponentProps } from "react";
+
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartItemActionProvider } from "@/containers/cart/cart-item-action-provider";
 import { useCartItemToasts } from "@/hooks/use-cart-item-toasts";
-import { RemoveCartItemButton } from "./remove-cart-item-button";
+import { RemoveCartItemButton } from "@/components/cart/remove-cart-item-button";
+import { cn } from "@/lib/utils";
 
-type Props = {
+type Props = ComponentProps<typeof RemoveCartItemButton> & {
   cartItem: CartItemEntity;
   skipAllToast?: boolean;
   skipErrorToast?: boolean;
@@ -16,6 +19,8 @@ export const RemoveCartItemActionButton = ({
   skipAllToast,
   skipErrorToast,
   skipSuccessToast,
+  className,
+  ...props
 }: Props) => {
   const { showErrorToast, showSuccessToast } = useCartItemToasts({
     skipErrorToast: skipAllToast || skipErrorToast,
@@ -31,8 +36,12 @@ export const RemoveCartItemActionButton = ({
       {({ onRemoveFromCart }) => (
         <RemoveCartItemButton
           variant="ghost"
-          className="text-destructive hover:bg-destructive/80 focus-visible:ring-destructive"
+          className={cn(
+            "text-destructive hover:bg-destructive/80 focus-visible:ring-destructive",
+            className
+          )}
           onClick={onRemoveFromCart}
+          {...props}
         />
       )}
     </CartItemActionProvider>

@@ -1,4 +1,4 @@
-import { CartTable } from "@/components/cart/table/cart-table";
+import { CartList } from "@/components/cart/list/cart-list";
 import { Render } from "@/components/common/render";
 import { newCartEntity } from "@/domain/entities/cart.entity";
 import { getCart } from "@/lib/actions/cart.actions/get-cart.action.ts";
@@ -31,7 +31,7 @@ export default async function CartViewPage() {
       >
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto lg:col-span-3 col-span-4">
-            <CartTable data={cart} />
+            <CartList cart={cart} />
           </div>
         </div>
       </Render>

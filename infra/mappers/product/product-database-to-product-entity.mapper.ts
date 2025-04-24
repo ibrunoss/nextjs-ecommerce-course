@@ -19,6 +19,7 @@ export function productDatabaseToProductEntityMapper(
     reviews: Number(dbProduct.numReviews),
     stock: Number(dbProduct.stock),
     isFeatured: dbProduct.isFeatured,
+    isAvailable: Number(dbProduct.stock) > 0,
     banner: dbProduct.banner ?? "",
     discount: 0, // Valor padrão
     colors: [], // Valor padrão

@@ -29,7 +29,7 @@ export async function addItemToCart(
       title: `${
         itemAlreadyInCart ? "Atualizado no" : "Adicionado ao"
       } carrinho`,
-      description: `${itemUpdated.quantity}x ${itemUpdated.name}`,
+      description: `${itemUpdated.quantity}x ${itemUpdated.product.name}`,
     };
 
     return {

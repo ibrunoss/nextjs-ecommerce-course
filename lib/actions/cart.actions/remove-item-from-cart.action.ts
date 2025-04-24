@@ -33,8 +33,8 @@ export async function removeItemFromCart(
       type: "success",
       title: `${isRemoved ? "Removido do" : "Atualizado no"} carrinho`,
       description: isRemoved
-        ? cartItem.name
-        : `${itemUpdated?.quantity}x ${itemUpdated?.name}`,
+        ? cartItem.product.name
+        : `${itemUpdated?.quantity}x ${itemUpdated?.product?.name}`,
     };
 
     return {

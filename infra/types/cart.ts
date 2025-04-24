@@ -13,4 +13,18 @@ export type CartDatabaseInsert = z.infer<typeof cartDatabaseInsertSchema>;
 
 export type CartItemDatabase = z.infer<typeof cartItemDatabaseSchema>;
 
-export type CartPrisma = Prisma.CartGetPayload<Prisma.CartDefaultArgs>;
+export type CartPrisma = Prisma.CartGetPayload<{
+  include: {
+    cartItems: {
+      include: {
+        product: true;
+      };
+    };
+  };
+}>;
+
+export type CartItemPrisma = Prisma.CartItemGetPayload<{
+  include: {
+    product: true;
+  };
+}>;

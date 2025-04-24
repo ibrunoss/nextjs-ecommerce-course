@@ -13,6 +13,7 @@ export const metadata = {
 
 export default async function CartViewPage() {
   const { data: cart } = await getCart(initialActionDataState(newCartEntity()));
+
   return (
     <>
       <h1 className="py-4 h2-bold">Carrinho de compras</h1>

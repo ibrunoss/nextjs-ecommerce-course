@@ -49,12 +49,8 @@ export default async function ProductDetailsPage({
         />
         {/* Action Column */}
         <ProductPurchaseCard
-          image={product.images[0]}
-          isAvailable={product.stock > 0}
-          name={product.name}
-          price={product.price}
-          productId={product.id}
-          slug={product.slug}
+          cartId={cart.id}
+          product={product}
           quantityInCart={quantityInCart}
         />
       </div>

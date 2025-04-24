@@ -22,6 +22,7 @@ export interface ProductEntity {
   newArrival: boolean;
   topRated: boolean;
   isFeatured: boolean;
+  isAvailable: boolean;
   trending: boolean;
   createdAt: DateEntity;
   updatedAt: DateEntity;

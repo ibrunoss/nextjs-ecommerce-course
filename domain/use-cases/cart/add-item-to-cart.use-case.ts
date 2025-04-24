@@ -37,7 +37,7 @@ export function AddItemToCartUseCase(cartRepository: CartRepository) {
     productStock,
   }: Input): Promise<Output> => {
     const itemFound = cart.getItemByProductId(cartItem.productId);
-    const itemName = cartItem.name;
+    const itemName = cartItem.product.name;
     let quantityToAdd = cartItem.quantity;
     const itemAlreadyInCart = itemFound !== undefined;
 

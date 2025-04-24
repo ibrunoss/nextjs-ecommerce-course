@@ -1,3 +1,4 @@
+import { Product } from "@prisma/client";
 import { z } from "zod";
 
 import {
@@ -18,3 +19,5 @@ export type ProductMemory = {
   estoque: number;
   marca: string;
 };
+
+export type ProductPrisma = Product;

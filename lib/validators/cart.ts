@@ -5,14 +5,17 @@ import {
   currencyEntitySchema,
 } from "@/lib/validators/currency";
 import { dateEntitySchema } from "@/lib/validators/date";
+import { productDatabaseSchema } from "./product";
 
-export const cartItemDatabaseSchema = z.object({
+export const cartItemDatabaseInsertSchema = z.object({
+  cartId: z.string().min(1, "Necessário um carrinho"),
+  product: productDatabaseSchema,
   productId: z.string().min(1, "Produto é obrigatório"),
-  name: z.string().min(1, "Nome é obrigatório"),
-  slug: z.string().min(1, "Slug é obrigatório"),
   quantity: z.number().int().positive("Obrigatório ao menos um produto"),
-  image: z.string().min(1, "Imagem é obrigatória"),
   price: currencyDatabaseSchema,
+});
+export const cartItemDatabaseSchema = cartItemDatabaseInsertSchema.extend({
+  id: z.string(),
 });
 
 export const cartDatabaseInsertSchema = z.object({

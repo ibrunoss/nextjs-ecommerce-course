@@ -6,33 +6,31 @@ import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartItemQuantityActionCartIcon } from "@/components/cart/item-quantity-action/cart-icon/cart-item-quantity-action-cart-icon";
+import { ProductEntity } from "@/domain/entities/product.entity";
+import { newCurrencyEntity } from "@/domain/entities/currency.entity";
 
 export type ProductPurchaseCardProps = Omit<
   HTMLAttributes<HTMLDivElement>,
   "children"
-> &
-  Pick<CartItemEntity, "image" | "name" | "price" | "productId" | "slug"> & {
-    isAvailable: boolean;
-    quantityInCart: number;
-  };
+> & {
+  cartId: string;
+  product: ProductEntity;
+  quantityInCart: number;
+};
 
 export const ProductPurchaseCard = ({
-  image,
-  isAvailable,
-  name,
-  price,
-  productId,
-  slug,
+  cartId,
+  product,
   quantityInCart,
   ...props
 }: ProductPurchaseCardProps) => {
   const cartItem: CartItemEntity = {
-    image,
-    name,
-    price,
-    productId,
+    id: crypto.randomUUID(),
+    cartId,
+    product,
+    price: newCurrencyEntity(product.price.numericValue),
+    productId: product.id,
     quantity: 1,
-    slug,
   };
   return (
     <div {...props}>
@@ -42,10 +40,10 @@ export const ProductPurchaseCard = ({
             <div>Preço</div>
             <div>
               <ProductPrice
-                currencySymbol={price.currencySymbol}
-                fractionalPart={price.fractionalPart.numericValue}
-                fractionalSymbol={price.fractionalSymbol}
-                integerPart={price.integerPart.numericValue}
+                currencySymbol={product.price.currencySymbol}
+                fractionalPart={product.price.fractionalPart.numericValue}
+                fractionalSymbol={product.price.fractionalSymbol}
+                integerPart={product.price.integerPart.numericValue}
               />
             </div>
           </div>
@@ -53,14 +51,14 @@ export const ProductPurchaseCard = ({
             <div>Situação</div>
             <div>
               <Render
-                when={isAvailable}
+                when={product.isAvailable}
                 fallback={<Badge variant="destructive">Fora de estoque</Badge>}
               >
                 <Badge variant="outline">Em estoque</Badge>
               </Render>
             </div>
           </div>
-          <Render when={isAvailable}>
+          <Render when={product.isAvailable}>
             <div className="flex-center">
               <CartItemQuantityActionCartIcon
                 quantity={quantityInCart}

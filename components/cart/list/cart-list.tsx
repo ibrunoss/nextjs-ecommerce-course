@@ -11,14 +11,9 @@ export const CartList = ({ cart }: Props) => {
       {cart.items.map((cartItem) => (
         <CartListItemRow
           key={cartItem.productId}
-          brand="Marca"
-          category="Categoria"
-          image={cartItem.image}
-          name={cartItem.name}
-          price={cartItem.price}
-          productId={cartItem.productId}
+          cartId={cart.id}
+          product={cartItem.product}
           quantity={cartItem.quantity}
-          slug={cartItem.slug}
         />
       ))}
     </div>

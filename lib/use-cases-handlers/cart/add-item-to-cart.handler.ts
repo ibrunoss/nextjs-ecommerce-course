@@ -28,7 +28,7 @@ export async function addItemToCartHandler(
   const product = await productRepository.findById(cartItem.productId);
 
   if (!product) {
-    throw new Error(`Não foi possível localizar o ${cartItem.name}!`);
+    throw new Error(`Não foi possível localizar o ${cartItem.product.name}!`);
   }
 
   const useCase = AddItemToCartUseCase(cartRepository);

@@ -1,15 +1,16 @@
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartItemDatabase } from "@/infra/types/cart";
+import { productEntityToProductDatabaseMapper } from "@/infra/mappers/product/product-entity-to-product-database.mapper copy";
 
 export function cartItemEntityToCartItemDatabaseMapper(
   cartItem: CartItemEntity
 ): CartItemDatabase {
   return {
-    image: cartItem.image,
-    name: cartItem.name,
+    id: cartItem.id,
+    cartId: cartItem.cartId,
+    product: productEntityToProductDatabaseMapper(cartItem.product),
     price: cartItem.price.originalValue,
     productId: cartItem.productId,
     quantity: cartItem.quantity,
-    slug: cartItem.slug,
   };
 }

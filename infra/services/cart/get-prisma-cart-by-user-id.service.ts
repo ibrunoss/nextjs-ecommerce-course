@@ -8,7 +8,14 @@ export async function getPrismaCartByUserIdService(
 ): Promise<CartDatabase | null> {
   const data = await prisma.cart.findFirst({
     where: {
-      userId,
+      userId, // Aqui, usamos o userId para buscar o carrinho
+    },
+    include: {
+      cartItems: {
+        include: {
+          product: true, // Inclui as informações do produto relacionadas ao CartItem
+        },
+      },
     },
   });
 

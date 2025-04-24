@@ -18,6 +18,7 @@ export function memoryProductToProductEntityMapper(
     rating: 0,
     reviews: 0,
     stock: product.estoque,
+    isAvailable: product.estoque > 0, // Valor padrão
     isFeatured: false, // Valor padrão
     banner: "", // Valor padrão
     discount: 0, // Valor padrão

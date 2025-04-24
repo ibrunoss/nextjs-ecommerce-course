@@ -8,7 +8,14 @@ export async function getPrismaCartBySessionCartIdService(
 ): Promise<CartDatabase | null> {
   const data = await prisma.cart.findFirst({
     where: {
-      sessionCartId,
+      sessionCartId, // Aqui, usamos o sessionCartId para buscar o carrinho
+    },
+    include: {
+      cartItems: {
+        include: {
+          product: true, // Inclui as informações do produto relacionadas ao CartItem
+        },
+      },
     },
   });
 

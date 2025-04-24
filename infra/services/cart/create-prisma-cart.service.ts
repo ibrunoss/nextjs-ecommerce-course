@@ -5,7 +5,35 @@ import { CartDatabase, CartDatabaseInsert } from "@/infra/types/cart";
 export async function createPrismaCartService(
   cart: CartDatabaseInsert
 ): Promise<CartDatabase> {
-  const resp = await prisma.cart.create({ data: cart });
+  const data = {
+    sessionCartId: cart.sessionCartId,
+    shippingPrice: cart.shippingPrice,
+    taxPrice: cart.taxPrice,
+    itemsPrice: cart.itemsPrice,
+    totalPrice: cart.totalPrice,
+    cartItems: {},
+  };
+
+  if (cart.items.length > 0) {
+    data.cartItems = {
+      create: cart.items.map((item) => ({
+        product: { connect: { id: item.product.id } },
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    };
+  }
+
+  const resp = await prisma.cart.create({
+    data,
+    include: {
+      cartItems: {
+        include: {
+          product: true,
+        },
+      },
+    },
+  });
 
   return cartPrismaToCartDatabaseMapper(resp);
 }

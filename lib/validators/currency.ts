@@ -10,17 +10,23 @@ export const currencyDatabaseSchema = z
 
 // Schema para CurrencyValueEntity
 export const currencyValueEntitySchema = z.object({
-  stringValue: z.string(),
-  numericValue: z.number(),
+  stringValue: z.string({ required_error: "Valor em texto é obrigatório." }),
+  numericValue: z.number({ required_error: "Valor numérico é obrigatório." }),
 });
 
 // Schema para CurrencyEntity
 export const currencyEntitySchema = z.object({
-  originalValue: z.string(),
-  numericValue: z.number(),
-  displayValue: z.string(),
+  originalValue: z.string({ required_error: "Valor original é obrigatório." }),
+  numericValue: z.number({ required_error: "Valor numérico é obrigatório." }),
+  displayValue: z.string({
+    required_error: "Valor de exibição é obrigatório.",
+  }),
   integerPart: currencyValueEntitySchema,
   fractionalPart: currencyValueEntitySchema,
-  currencySymbol: z.string(),
-  fractionalSymbol: z.string(),
+  currencySymbol: z.string({
+    required_error: "Símbolo da moeda é obrigatório.",
+  }),
+  fractionalSymbol: z.string({
+    required_error: "Símbolo fracionário é obrigatório.",
+  }),
 });

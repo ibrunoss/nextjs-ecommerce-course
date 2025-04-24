@@ -43,18 +43,18 @@ export const productDatabaseSchema = productDatabaseInsertSchema.extend({
 });
 
 export const productEntitySchema = z.object({
-  id: z.string(),
-  name: z.string(),
+  id: z.string({ required_error: "ID do produto é obrigatório." }),
+  name: z.string({ required_error: "Nome do produto é obrigatório." }),
   price: currencyEntitySchema,
-  description: z.string(),
-  banner: z.string(),
-  images: z.array(z.string()),
-  stock: z.number().int().nonnegative(),
-  discount: z.number().min(0).max(100), // percentual de desconto, presumivelmente de 0 a 100
-  category: z.string(),
-  rating: z.number().min(0).max(5), // geralmente para avaliação de produto
-  reviews: z.number().int().nonnegative(),
-  brand: z.string(),
+  description: z.string({ required_error: "Descrição é obrigatória." }),
+  banner: z.string({ required_error: "Imagem de banner é obrigatória." }),
+  images: z.array(z.string(), { required_error: "Imagens são obrigatórias." }),
+  stock: z.number({ required_error: "Estoque é obrigatório." }),
+  discount: z.number(),
+  category: z.string({ required_error: "Categoria é obrigatória." }),
+  rating: z.number(),
+  reviews: z.number(),
+  brand: z.string({ required_error: "Marca é obrigatória." }),
   colors: z.array(z.string()),
   sizes: z.array(z.string()),
   tags: z.array(z.string()),
@@ -63,8 +63,9 @@ export const productEntitySchema = z.object({
   newArrival: z.boolean(),
   topRated: z.boolean(),
   isFeatured: z.boolean(),
+  isAvailable: z.boolean(),
   trending: z.boolean(),
   createdAt: dateEntitySchema,
   updatedAt: dateEntitySchema,
-  slug: z.string(),
+  slug: z.string({ required_error: "Slug é obrigatório." }),
 });

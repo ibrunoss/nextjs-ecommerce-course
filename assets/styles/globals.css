@@ -156,3 +156,18 @@
 @utility h3-bold {
   @apply font-bold text-xl lg:text-2xl;
 }
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100dvh) scale(0);
+  }
+  100% {
+    transform: translateY(-10dvh) scale(1);
+  }
+}
+
+.bubble {
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

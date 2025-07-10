@@ -1,0 +1,16 @@
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
+import { CartItemDatabase } from "@/infra/prisma/types/cart";
+import { productEntityToProductDatabaseMapper } from "@/infra/prisma/mappers/product/product-entity-to-product-database.mapper";
+
+export function cartItemEntityToCartItemDatabaseMapper(
+  cartItem: CartItemEntity
+): CartItemDatabase {
+  return {
+    id: cartItem.id,
+    cartId: cartItem.cartId,
+    product: productEntityToProductDatabaseMapper(cartItem.product),
+    price: cartItem.price.originalValue,
+    productId: cartItem.productId,
+    quantity: cartItem.quantity,
+  };
+}

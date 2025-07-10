@@ -7,8 +7,8 @@ import {
 } from "@/lib/actions/utils.actions";
 import { getSessionCartIdAndUserId } from "@/lib/actions/cart.actions/session-cart.util";
 import { getCartAndAddItemToCartHandler } from "@/lib/use-cases-handlers/cart/get-cart-and-add-item-to-cart.handler";
-import { cartRepositoryAdapter } from "@/infra/adapters/cart/cart-repository.adapter";
-import { productRepositoryAdapter } from "@/infra/adapters/product/product-repository.adapter";
+import { cartRepositoryAdapter } from "@/infra/adapters/cart-repository.adapter";
+import { productRepositoryAdapter } from "@/infra/adapters/product-repository.adapter";
 
 export async function addItemToCart(
   prevState: ActionState,

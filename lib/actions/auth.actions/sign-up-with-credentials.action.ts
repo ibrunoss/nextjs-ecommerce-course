@@ -5,7 +5,7 @@ import { hashSync } from "bcrypt-ts-edge";
 import { signIn } from "@/auth";
 import { signUpFormSchema } from "@/lib/validators/user";
 import { PASSWORD_SALT } from "@/lib/constants/auth";
-import { prisma } from "@/infra/db/prisma";
+import { prisma } from "@/infra/prisma/db/prisma-client";
 import {
   ActionState,
   CathActionError,

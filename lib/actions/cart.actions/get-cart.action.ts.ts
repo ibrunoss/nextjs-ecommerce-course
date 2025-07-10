@@ -4,7 +4,7 @@ import {
   withErrorHandling,
 } from "@/lib/actions/utils.actions";
 import { getSessionCartIdAndUserId } from "@/lib/actions/cart.actions/session-cart.util";
-import { cartRepositoryAdapter } from "@/infra/adapters/cart/cart-repository.adapter";
+import { cartRepositoryAdapter } from "@/infra/adapters/cart-repository.adapter";
 import { CartEntity } from "@/domain/entities/cart/cart.entity";
 import { GetOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
 

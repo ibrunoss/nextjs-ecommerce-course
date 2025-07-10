@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@/infra/db/prisma";
+import { prisma } from "@/infra/prisma/db/prisma-client";
 import { authConfig } from "@/auth.config";
 
 export const config: NextAuthConfig = {

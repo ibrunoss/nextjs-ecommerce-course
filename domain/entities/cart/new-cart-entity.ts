@@ -3,7 +3,7 @@ import {
   CurrencyEntity,
 } from "@/domain/entities/currency.entity";
 import { newDateEntity } from "@/domain/entities/date.entity";
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { round2 } from "@/lib/utils";
 import { CartEntity } from "@/domain/entities/cart/cart.entity";
 

@@ -1,7 +1,7 @@
 import { CartEntity } from "@/domain/entities/cart/cart.entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 import { ProductRepository } from "@/domain/repositories/product.repository";
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { GetOrCreateCartUseCase } from "@/domain/use-cases/cart/get-or-create-cart.use-case";
 import { addItemToCartHandler } from "@/lib/use-cases-handlers/cart/add-item-to-cart.handler";
 

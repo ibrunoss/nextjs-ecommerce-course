@@ -1,5 +1,5 @@
 import { CurrencyEntity } from "@/domain/entities/currency.entity";
-import { ProductEntity } from "./product.entity";
+import { ProductEntity } from "../product.entity";
 
 export interface CartItemEntity {
   id: string;

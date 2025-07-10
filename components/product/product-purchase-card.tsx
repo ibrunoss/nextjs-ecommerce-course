@@ -4,7 +4,7 @@ import { ProductPrice } from "@/components/product/product-price";
 import { Card, CardContent } from "@/components/ui/card";
 import { Render } from "@/components/common/render";
 import { Badge } from "@/components/ui/badge";
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { CartItemQuantityActionCartIcon } from "@/components/cart/item-quantity-action/cart-icon/cart-item-quantity-action-cart-icon";
 import { ProductEntity } from "@/domain/entities/product.entity";
 import { newCurrencyEntity } from "@/domain/entities/currency.entity";

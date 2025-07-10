@@ -1,7 +1,7 @@
 "use client";
 import { useTransition } from "react";
 
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { addItemToCart } from "@/lib/actions/cart.actions/add-item-to-cart.action";
 import { removeItemFromCart } from "@/lib/actions/cart.actions/remove-item-from-cart.action";
 import {

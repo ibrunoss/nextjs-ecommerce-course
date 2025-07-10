@@ -6,7 +6,7 @@ import { CartRepository } from "@/domain/repositories/cart.repository";
 import { FindCartByUserOrSessionCartUseCase } from "@/domain/use-cases/cart/find-cart-by-user-or-session-cart.use-case";
 import { RemoveItemFromCartUseCase } from "@/domain/use-cases/cart/remove-item-from-cart.use-case";
 import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 
 type Input = {
   sessionCartId: string;

@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { newCurrencyEntity } from "@/domain/entities/currency.entity";
 import { QuantityAction } from "@/components/cart/list/item-row/quantity-action";
 import { Card, CardContent } from "@/components/ui/card";

@@ -1,7 +1,7 @@
 "use client";
 import { Loader } from "lucide-react";
 
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { CartItemActionProvider } from "@/containers/cart/cart-item-action-provider";
 import { IncrementCartItemButtonPill } from "@/components/cart/item-quantity-action/pill/increment-cart-item-button-pill";
 import { DecrementCartItemButtonPill } from "@/components/cart/item-quantity-action/pill/decrement-cart-item-button-pill";

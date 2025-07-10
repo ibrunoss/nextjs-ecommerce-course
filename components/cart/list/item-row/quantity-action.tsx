@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 
 import { CartItemQuantityActionPill } from "@/components/cart/item-quantity-action/pill/cart-item-quantity-action-pill";
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { RemoveCartItemActionButton } from "@/components/cart/remove-cart-item-action-button";
 import { cn } from "@/lib/utils";
 

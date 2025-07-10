@@ -1,7 +1,7 @@
 "use client";
 import { ComponentProps } from "react";
 
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import { CartItemActionProvider } from "@/containers/cart/cart-item-action-provider";
 import { useCartItemToasts } from "@/hooks/use-cart-item-toasts";
 import { RemoveCartItemButton } from "@/components/cart/remove-cart-item-button";

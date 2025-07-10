@@ -1,5 +1,5 @@
 "use server";
-import { CartItemEntity } from "@/domain/entities/cart-item.entity";
+import { CartItemEntity } from "@/domain/entities/cart/cart-item.entity";
 import {
   ActionState,
   ActionStateMessage,

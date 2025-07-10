@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
 import { CartListItemRow } from "@/components/cart/list/item-row/cart-list-item-row";
 
 type Props = {

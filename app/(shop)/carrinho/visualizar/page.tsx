@@ -1,6 +1,6 @@
 import { CartList } from "@/components/cart/list/cart-list";
 import { Render } from "@/components/common/render";
-import { newCartEntity } from "@/domain/entities/cart.entity";
+import { newCartEntity } from "@/domain/entities/cart/new-cart-entity";
 import { getCart } from "@/lib/actions/cart.actions/get-cart.action.ts";
 import { initialActionDataState } from "@/lib/actions/utils.actions";
 import { HOME_PATH } from "@/lib/constants/routes";

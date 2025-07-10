@@ -6,7 +6,7 @@ import { ProductPurchaseCard } from "@/components/product/product-purchase-card"
 import { ProductImages } from "@/components/product/product-images";
 import { getCart } from "@/lib/actions/cart.actions/get-cart.action.ts";
 import { initialActionDataState } from "@/lib/actions/utils.actions";
-import { newCartEntity } from "@/domain/entities/cart.entity";
+import { newCartEntity } from "@/domain/entities/cart/new-cart-entity";
 
 type ProductDetailsPageProps = Readonly<{
   params: Promise<{ slug: string }>;

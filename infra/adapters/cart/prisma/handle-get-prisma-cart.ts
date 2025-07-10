@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
 import { CartDatabase } from "@/infra/types/cart";
 import { cartDatabaseToCartEntity } from "@/infra/mappers/cart/cart-database-to-cart-entity";
 

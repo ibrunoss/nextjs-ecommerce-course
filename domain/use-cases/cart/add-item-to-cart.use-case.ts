@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 

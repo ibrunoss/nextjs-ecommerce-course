@@ -4,7 +4,7 @@ import { PRODUCT_DETAIL_PATH } from "@/lib/constants/routes";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 import { ProductRepository } from "@/domain/repositories/product.repository";
 import { AddItemToCartUseCase } from "@/domain/use-cases/cart/add-item-to-cart.use-case";
-import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 
 type Input = {

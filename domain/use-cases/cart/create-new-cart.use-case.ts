@@ -1,4 +1,5 @@
-import { CartEntity, newCartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
+import { newCartEntity } from "@/domain/entities/cart/new-cart-entity";
 import { CartRepository } from "@/domain/repositories/cart.repository";
 
 type Input = {

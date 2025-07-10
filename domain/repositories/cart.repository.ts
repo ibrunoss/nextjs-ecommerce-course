@@ -1,4 +1,4 @@
-import { CartEntity } from "@/domain/entities/cart.entity";
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
 
 export interface CartRepository {
   create(cart: CartEntity): Promise<CartEntity>;

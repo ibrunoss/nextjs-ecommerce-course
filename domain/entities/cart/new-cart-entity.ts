@@ -2,30 +2,15 @@ import {
   newCurrencyEntity,
   CurrencyEntity,
 } from "@/domain/entities/currency.entity";
-import { newDateEntity, DateEntity } from "@/domain/entities/date.entity";
+import { newDateEntity } from "@/domain/entities/date.entity";
 import { CartItemEntity } from "@/domain/entities/cart-item.entity";
 import { round2 } from "@/lib/utils";
-
-export interface CartEntity {
-  id: string;
-  sessionCartId: string;
-  items: Array<CartItemEntity>;
-  itemsPrice: CurrencyEntity;
-  shippingPrice: CurrencyEntity;
-  taxPrice: CurrencyEntity;
-  totalPrice: CurrencyEntity;
-  userId: string;
-  createdAt: DateEntity;
-  updatedAt: DateEntity;
-  addItem(cartItem: CartItemEntity): CartEntity;
-  removeItem(productId: string, quantityToRemove?: number): CartEntity;
-  getItemByProductId(productId: string): CartItemEntity | undefined;
-}
+import { CartEntity } from "@/domain/entities/cart/cart.entity";
 
 export const newCartEntity = (
   params?: Omit<
     Partial<CartEntity>,
-    "addItem" | "removeItem" | "getItemByProductId"
+    "addItem" | "getItemByProductId" | "removeItem" | "updatePrices"
   >
 ): CartEntity => {
   const defaultValue: Required<typeof params> = {
@@ -42,17 +27,36 @@ export const newCartEntity = (
     ...params,
   };
 
-  const { createdAt, id, items, sessionCartId, userId } = defaultValue;
+  const { createdAt, id, items, sessionCartId, userId, updatedAt } =
+    defaultValue;
 
-  const updatePrices = (): CartPricesWithUpdatedAt => {
+  const getItemByProductId = (productId: string) =>
+    items.find((x) => x.productId === productId);
+  const calcPricesWithUpdatedAt = (): CartPricesWithUpdatedAt => {
     return {
-      ...calcPrice(items),
+      ...calcPrice({
+        items,
+        shippingPrice: defaultValue.shippingPrice,
+        taxPrice: defaultValue.taxPrice,
+      }),
       updatedAt: newDateEntity(new Date()),
     };
   };
 
-  const getItemByProductId = (productId: string) =>
-    items.find((x) => x.productId === productId);
+  const updatePrices = (): CartEntity => {
+    return {
+      addItem,
+      getItemByProductId,
+      removeItem,
+      updatePrices,
+      createdAt,
+      id,
+      items,
+      sessionCartId,
+      userId,
+      ...calcPricesWithUpdatedAt(),
+    };
+  };
 
   const addItem = (cartItem: CartItemEntity): CartEntity => {
     const itemFound = getItemByProductId(cartItem.productId);
@@ -80,12 +84,18 @@ export const newCartEntity = (
       addItem,
       removeItem,
       getItemByProductId,
+      updatePrices,
       createdAt,
       id,
       items,
       sessionCartId,
       userId,
-      ...updatePrices(),
+      updatedAt,
+      ...calcPrice({
+        items,
+        shippingPrice: defaultValue.shippingPrice,
+        taxPrice: defaultValue.taxPrice,
+      }),
     };
   };
 
@@ -95,9 +105,11 @@ export const newCartEntity = (
     if (itemIndex < 0) {
       return {
         addItem,
-        removeItem,
         getItemByProductId,
+        removeItem,
+        updatePrices,
         ...defaultValue,
+        ...calcPricesWithUpdatedAt(),
       };
     }
 
@@ -110,14 +122,15 @@ export const newCartEntity = (
 
       return {
         addItem,
-        removeItem,
         getItemByProductId,
+        removeItem,
+        updatePrices,
         createdAt,
         id,
         items,
         sessionCartId,
         userId,
-        ...updatePrices(),
+        ...calcPricesWithUpdatedAt(),
       };
     }
 
@@ -125,38 +138,44 @@ export const newCartEntity = (
 
     return {
       addItem,
-      removeItem,
       getItemByProductId,
+      removeItem,
+      updatePrices,
       createdAt,
       id,
       items,
       sessionCartId,
       userId,
-      ...updatePrices(),
+      ...calcPricesWithUpdatedAt(),
     };
   };
 
   return {
     addItem,
     removeItem,
+    updatePrices,
     getItemByProductId,
     ...defaultValue,
   };
 };
 
-type CartPrices = {
-  itemsPrice: CurrencyEntity;
-  shippingPrice: CurrencyEntity;
-  taxPrice: CurrencyEntity;
-  totalPrice: CurrencyEntity;
-};
+type CartPrices = Pick<
+  CartEntity,
+  "itemsPrice" | "shippingPrice" | "taxPrice" | "totalPrice"
+>;
 
-type CartPricesWithUpdatedAt = CartPrices & {
-  updatedAt: DateEntity;
-};
+type CartPricesWithUpdatedAt = CartPrices & Pick<CartEntity, "updatedAt">;
 
 // Calculate cart prices
-function calcPrice(items: CartItemEntity[]): CartPrices {
+function calcPrice({
+  items,
+  shippingPrice,
+  taxPrice,
+}: {
+  items: CartItemEntity[];
+  shippingPrice: CurrencyEntity;
+  taxPrice: CurrencyEntity;
+}): CartPrices {
   const itemsPrice = newCurrencyEntity(
     round2(
       items.reduce(
@@ -165,10 +184,6 @@ function calcPrice(items: CartItemEntity[]): CartPrices {
       )
     )
   );
-  const shippingPrice = newCurrencyEntity(
-    round2(itemsPrice.numericValue > 100 ? 0 : 10)
-  );
-  const taxPrice = newCurrencyEntity(round2(0 * itemsPrice.numericValue));
   const totalPrice = newCurrencyEntity(
     round2(
       itemsPrice.numericValue +
